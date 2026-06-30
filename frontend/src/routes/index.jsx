@@ -1,14 +1,22 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 
+import Login from "../features/authentication/pages/Login";
+import ForgotPassword from "../features/authentication/pages/ForgotPassword";
 
 export default function AppRoutes() {
   return (
-    <BrowserRouter>
-      <Routes>
+    <Routes>
+      <Route path="/login" element={<Login />} />
 
-        <Route path="*" element={<h1>404 Not Found</h1>} />
+      <Route
+        path="/forgot-password"
+        element={<ForgotPassword />}
+      />
 
-      </Routes>
-    </BrowserRouter>
+      <Route
+        path="*"
+        element={<Navigate to="/login" replace />}
+      />
+    </Routes>
   );
 }
