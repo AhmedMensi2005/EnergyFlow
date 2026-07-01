@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Dashboard from "../features/dashboard/Dashboard"
+import Main from "../features/main/mainPage"
 
 export default function AppRoutes() {
   return (
     <BrowserRouter>
       <Routes>
         
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/main" element={<Main />} />
         <Route path="*" element={<h1>404 Not Found</h1>} />
       </Routes>
     </BrowserRouter>

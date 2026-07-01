@@ -1,9 +1,9 @@
 import HeaderStructure from "./headerStructure";
 import "./styleHeader.css";
-export default function Header(){
+export default function Header({label}){
     return(
         <HeaderStructure
-            title="test"
+            title={label}
             username="Test"
             role="admin"
             avatar="https://i.pravatar.cc/40"
