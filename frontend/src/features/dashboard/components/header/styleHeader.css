@@ -1,0 +1,313 @@
+:root {
+
+  /* =================================
+     BRAND COLORS
+  ================================= */
+
+  --primary: #10b981;
+  --primary-dark: #059669;
+
+  --secondary: #06b6d4;
+  --secondary-dark: #0891b2;
+
+  /* =================================
+     GRADIENTS
+  ================================= */
+
+  --gradient-primary:
+    linear-gradient(
+      90deg,
+      #10b981 0%,
+      #06b6d4 100%
+    );
+
+  --gradient-hover:
+    linear-gradient(
+      90deg,
+      #059669 0%,
+      #0891b2 100%
+    );
+
+  /* =================================
+     BACKGROUNDS
+  ================================= */
+
+  --background: #f7f9fc;
+
+  --card: #ffffff;
+
+  --panel: #edf1f2;
+
+  --surface: #f8fafc;
+
+  --hover: rgba(16, 185, 129, 0.08);
+
+  /* =================================
+     TEXT
+  ================================= */
+
+  --text-primary: #111827;
+
+  --text-secondary: #6b7280;
+
+  --text-light: #9ca3af;
+
+  --text-white: #ffffff;
+
+  /* =================================
+     BORDERS
+  ================================= */
+
+  --border: #e5e7eb;
+
+  --border-dark: #d1d5db;
+
+  /* =================================
+     STATUS COLORS
+  ================================= */
+
+  --success: #22c55e;
+
+  --warning: #f59e0b;
+
+  --error: #ef4444;
+
+  --info: #3b82f6;
+
+  /* =================================
+     CHART COLORS
+  ================================= */
+
+  --chart-green: #10b981;
+
+  --chart-blue: #06b6d4;
+
+  --chart-orange: #f59e0b;
+
+  --chart-teal: #14b8a6;
+
+  /* =================================
+     SHADOWS
+  ================================= */
+
+  --shadow-sm:
+    0 2px 8px rgba(0, 0, 0, 0.05);
+
+  --shadow-md:
+    0 8px 20px rgba(0, 0, 0, 0.08);
+
+  --shadow-lg:
+    0 15px 40px rgba(0, 0, 0, 0.08);
+
+  --shadow-primary:
+    0 8px 20px rgba(16, 185, 129, 0.25);
+
+  /* =================================
+     BORDER RADIUS
+  ================================= */
+
+  --radius-sm: 8px;
+
+  --radius-md: 12px;
+
+  --radius: 16px;
+
+  --radius-lg: 24px;
+
+  --radius-xl: 32px;
+
+  /* =================================
+     SPACING
+  ================================= */
+
+  --space-xs: 4px;
+
+  --space-sm: 8px;
+
+  --space-md: 16px;
+
+  --space-lg: 24px;
+
+  --space-xl: 32px;
+
+  /* =================================
+     LAYOUT
+  ================================= */
+
+  --sidebar-width: 280px;
+
+  --header-height: 90px;
+
+  /* =================================
+     TRANSITIONS
+  ================================= */
+
+  --transition-fast: 0.15s ease;
+
+  --transition: 0.25s ease;
+
+  --transition-slow: 0.4s ease;
+
+  /* =================================
+     TYPOGRAPHY
+  ================================= */
+
+  --font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+
+.main-header {
+  width: 100%;
+  height: 100%;
+
+  background: var(--card);
+
+  border-radius: 32px;
+
+  box-shadow: var(--shadow);
+
+  padding: 0 28px;
+
+  display: flex;
+  align-items: center;
+
+  border: 1px solid var(--border);
+}
+
+/* ======================
+   INNER CONTAINER
+====================== */
+
+.header-container {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* ======================
+   LEFT
+====================== */
+
+.header-left {
+  display: flex;
+  align-items: center;
+}
+
+.menu-title-box h1 {
+  margin: 0;
+
+  font-size: 2rem;
+  font-weight: 700;
+
+  color: var(--text-primary);
+}
+
+/* ======================
+   RIGHT
+====================== */
+
+.header-menu {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* ======================
+   ICONS
+====================== */
+
+.menu-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-icon-btn {
+  width: 42px;
+  height: 42px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: transparent;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+
+  transition: var(--transition);
+}
+
+.menu-icon-btn:hover {
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.menu-icon-btn img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+/* ======================
+   USER SECTION
+====================== */
+
+.menu-user-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-user-avatar {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+  object-fit: cover;
+
+  border: 2px solid var(--border);
+}
+
+.menu-user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-user-name {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.menu-user-role {
+  color: var(--text-light);
+  font-size: 12px;
+}
+
+/* ======================
+   RESPONSIVE
+====================== */
+
+@media (max-width: 768px) {
+  .main-header {
+    padding: 0 16px;
+  }
+
+  .menu-user-info {
+    display: none;
+  }
+
+  .menu-title-box h1 {
+    font-size: 1.4rem;
+  }
+}

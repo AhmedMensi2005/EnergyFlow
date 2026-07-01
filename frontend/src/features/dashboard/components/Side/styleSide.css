@@ -1,0 +1,381 @@
+:root {
+
+  /* =================================
+     BRAND COLORS
+  ================================= */
+
+  --primary: #10b981;
+  --primary-dark: #059669;
+
+  --secondary: #06b6d4;
+  --secondary-dark: #0891b2;
+
+  /* =================================
+     GRADIENTS
+  ================================= */
+
+  --gradient-primary:
+    linear-gradient(
+      90deg,
+      #10b981 0%,
+      #06b6d4 100%
+    );
+
+  --gradient-hover:
+    linear-gradient(
+      90deg,
+      #059669 0%,
+      #0891b2 100%
+    );
+
+  /* =================================
+     BACKGROUNDS
+  ================================= */
+
+  --background: #f7f9fc;
+
+  --card: #ffffff;
+
+  --panel: #edf1f2;
+
+  --surface: #f8fafc;
+
+  --hover: rgba(16, 185, 129, 0.08);
+
+  /* =================================
+     TEXT
+  ================================= */
+
+  --text-primary: #111827;
+
+  --text-secondary: #6b7280;
+
+  --text-light: #9ca3af;
+
+  --text-white: #ffffff;
+
+  /* =================================
+     BORDERS
+  ================================= */
+
+  --border: #e5e7eb;
+
+  --border-dark: #d1d5db;
+
+  /* =================================
+     STATUS COLORS
+  ================================= */
+
+  --success: #22c55e;
+
+  --warning: #f59e0b;
+
+  --error: #ef4444;
+
+  --info: #3b82f6;
+
+  /* =================================
+     CHART COLORS
+  ================================= */
+
+  --chart-green: #10b981;
+
+  --chart-blue: #06b6d4;
+
+  --chart-orange: #f59e0b;
+
+  --chart-teal: #14b8a6;
+
+  /* =================================
+     SHADOWS
+  ================================= */
+
+  --shadow-sm:
+    0 2px 8px rgba(0, 0, 0, 0.05);
+
+  --shadow-md:
+    0 8px 20px rgba(0, 0, 0, 0.08);
+
+  --shadow-lg:
+    0 15px 40px rgba(0, 0, 0, 0.08);
+
+  --shadow-primary:
+    0 8px 20px rgba(16, 185, 129, 0.25);
+
+  /* =================================
+     BORDER RADIUS
+  ================================= */
+
+  --radius-sm: 8px;
+
+  --radius-md: 12px;
+
+  --radius: 16px;
+
+  --radius-lg: 24px;
+
+  --radius-xl: 32px;
+
+  /* =================================
+     SPACING
+  ================================= */
+
+  --space-xs: 4px;
+
+  --space-sm: 8px;
+
+  --space-md: 16px;
+
+  --space-lg: 24px;
+
+  --space-xl: 32px;
+
+  /* =================================
+     LAYOUT
+  ================================= */
+
+  --sidebar-width: 280px;
+
+  --header-height: 90px;
+
+  /* =================================
+     TRANSITIONS
+  ================================= */
+
+  --transition-fast: 0.15s ease;
+
+  --transition: 0.25s ease;
+
+  --transition-slow: 0.4s ease;
+
+  /* =================================
+     TYPOGRAPHY
+  ================================= */
+
+  --font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.sidebar {
+  width: 100%;
+  height: 100%;
+
+  background: var(--card);
+
+  border-radius: 32px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 28px 20px;
+
+  box-shadow: var(--shadow);
+}
+
+/* ======================
+   HEADER
+====================== */
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  padding-bottom: 24px;
+
+  border-bottom: 1px solid var(--border);
+}
+
+/* Logo */
+.logo-icon {
+    width: 40px;
+    height: 40px;
+  
+    border-radius: 8px;
+  
+    background: var(--gradient-primary);
+  
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+    color: white;
+    font-weight: 800;
+    font-size: 20px;
+  }
+
+
+/* Text Container */
+
+.sidebar-header-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* EnergyFlow */
+
+.sidebar-header-text h2 {
+  margin: 0;
+
+  font-size: 1.75rem;
+  font-weight: 700;
+
+  color: var(--text-primary);
+
+  line-height: 1.1;
+}
+
+/* Startup Village */
+
+.sidebar-header-text span {
+  margin: 0;
+
+  font-size: 0.75rem;
+
+  letter-spacing: 1.2px;
+
+  color: var(--text-secondary);
+
+  line-height: 1.2;
+}
+
+/* ======================
+   NAVIGATION
+====================== */
+
+.sidebar-nav {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+  margin-top: 28px;
+}
+
+.sidebar-item {
+  width: 100%;
+
+  border: none;
+  background: transparent;
+
+  display: flex;
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 14px 18px;
+
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  color: var(--text-secondary);
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: var(--transition);
+}
+
+.sidebar-item:hover {
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.sidebar-item.active {
+  background: var(--gradient-primary);
+
+  color: white;
+
+  box-shadow:
+    0 10px 24px rgba(16, 185, 129, 0.25);
+}
+
+.sidebar-item.active .sidebar-icon {
+  color: white;
+}
+
+.sidebar-icon {
+  width: 18px;
+  height: 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: var(--text-secondary);
+}
+
+.sidebar-label {
+  font-size: 14px;
+}
+
+/* ======================
+   FOOTER
+====================== */
+
+.sidebar-footer {
+  margin-top: auto;
+
+  padding-top: 24px;
+
+  border-top: 1px solid var(--border);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.user-role {
+  color: var(--text-light);
+  font-size: 12px;
+}
+
+.logout-icon {
+  cursor: pointer;
+  color: var(--text-light);
+  font-size: 20px;
+
+  transition: var(--transition);
+}
+
+.logout-icon:hover {
+  color: var(--error);
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
