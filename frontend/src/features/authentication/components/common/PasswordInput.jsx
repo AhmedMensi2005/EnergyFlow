@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import "../../../../styles/components/input.css";
 
 export default function PasswordInput({
   label,
@@ -7,36 +7,27 @@ export default function PasswordInput({
   onChange,
   placeholder,
 }) {
-  const [showPassword, setShowPassword] =
-    useState(false);
+  const [show, setShow] = useState(false);
 
   return (
     <div className="input-group">
-      <label className="input-label">
-        {label}
-      </label>
+      <label className="input-label">{label}</label>
 
       <div className="password-wrapper">
         <input
           className="input-field"
-          type={
-            showPassword
-              ? "text"
-              : "password"
-          }
-          placeholder={placeholder}
+          type={show ? "text" : "password"}
           value={value}
           onChange={onChange}
+          placeholder={placeholder}
         />
 
         <button
           type="button"
           className="eye-button"
-          onClick={() =>
-            setShowPassword(!showPassword)
-          }
+          onClick={() => setShow(!show)}
         >
-          {showPassword ? "🙈" : "👁"}
+          {show ? "👁" : "⌣"}
         </button>
       </div>
     </div>

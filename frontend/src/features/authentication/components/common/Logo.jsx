@@ -1,21 +1,25 @@
-
+import "../../../../styles/components/logo.css";
 
 export default function Logo() {
   return (
-    <div className="logo-container">
+    <div className="logo">
+
       <div className="logo-icon">
-        ⚡
+      ⚡︎
       </div>
 
-      <div>
-        <h2 className="logo-title">
+      <div className="logo-text">
+
+        <div className="logo-title">
           EnergyFlow
-        </h2>
+        </div>
 
-        <p className="logo-subtitle">
-          STARTUP VILLAGE
-        </p>
+        <div className="logo-subtitle">
+          Startup Village
+        </div>
+
       </div>
+
     </div>
   );
 }

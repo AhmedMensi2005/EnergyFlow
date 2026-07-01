@@ -1,19 +1,4 @@
-
-
-export default function Button({
-  children,
-  loading,
-  type = "submit",
-}) {
-  return (
-    <button
-      className="primary-button"
-      type={type}
-      disabled={loading}
-    >
-      {loading
-        ? "Signing In..."
-        : children}
-    </button>
-  );
+import "../../../../styles/components/button.css";
+export default function Button({ children }) {
+  return <button className="btn-primary">{children}</button>;
 }
