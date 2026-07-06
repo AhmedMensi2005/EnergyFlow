@@ -2,6 +2,7 @@ import Side from "./components/Side/Side";
 import Header from "./components/header/header";
 import "./styleMain.css"
 import { useState } from "react";
+import Monitoring from "../Monitoring/Monitoring.jsx"
 
 export default function Main() {
   const [activePage, setActivePage] = useState("Dashboard");
@@ -33,9 +34,6 @@ function DashboardPage() {
   return <h1>Dashboard</h1>;
 }
 
-function Monitoring() {
-  return <h1>Monitoring</h1>;
-}
 
 function Analytics() {
   return <h1>Analytics</h1>;

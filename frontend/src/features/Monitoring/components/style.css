@@ -1,0 +1,211 @@
+/* ==========================
+   Color Palette
+========================== */
+
+:root {
+    /* Main Colors */
+    --card-bg: #FFFFFF;
+    --page-bg: #F7FAFC;
+
+    /* Text */
+    --title-color: #0F172A;
+    --text-color: #64748B;
+    --muted-color: #94A3B8;
+
+    /* Temperature Card */
+    --temp-bg: #EEF4FF;
+
+    /* Power Card */
+    --power-bg: #F8FAFC;
+
+    /* Graph */
+    --graph-color: #3B82F6;
+
+    /* Status */
+    --online-bg: #ECFDF3;
+    --online-color: #16A34A;
+
+    --offline-bg: #FEF2F2;
+    --offline-color: #DC2626;
+
+    /* Mode Badge */
+    --mode-bg: #DBEAFE;
+    --mode-color: #2563EB;
+
+    /* Borders & Shadows */
+    --border-color: #E2E8F0;
+    --shadow: 0 12px 32px rgba(15, 23, 42, .08);
+}
+
+/* ==========================
+   AC Card
+========================== */
+
+.ac-card {
+    width: 420px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    box-shadow: var(--shadow);
+    transition: all .25s ease;
+}
+
+.ac-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, .12);
+}
+
+/* ==========================
+   Header
+========================== */
+
+.ac-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.ac-card-header h3 {
+    margin: 0;
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--title-color);
+}
+
+.ac-card-header p {
+    margin-top: 6px;
+    color: var(--text-color);
+    font-size: .95rem;
+}
+
+/* ==========================
+   Status
+========================== */
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: .85rem;
+    font-weight: 600;
+}
+
+.status.online {
+    background: var(--online-bg);
+    color: var(--online-color);
+}
+
+.status.offline {
+    background: var(--offline-bg);
+    color: var(--offline-color);
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+}
+
+/* ==========================
+   Graph
+========================== */
+
+.graph-container {
+    width: 100%;
+    height: 130px;
+}
+
+/* ==========================
+   Metrics
+========================== */
+
+.metrics {
+    display: flex;
+    gap: 16px;
+}
+
+.metric-box {
+    flex: 1;
+    border-radius: 18px;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.metric-box:first-child {
+    background: var(--temp-bg);
+}
+
+.metric-box:last-child {
+    background: var(--power-bg);
+}
+
+.metric-icon {
+    font-size: 1.6rem;
+    color: var(--graph-color);
+}
+
+.metric-box .label {
+    display: block;
+    font-size: .75rem;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: var(--muted-color);
+    margin-bottom: 4px;
+}
+
+.metric-box h2 {
+    margin: 0;
+    font-size: 1.9rem;
+    color: var(--title-color);
+    font-weight: 700;
+}
+
+/* ==========================
+   Footer
+========================== */
+
+.ac-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 4px;
+}
+
+.mode {
+    background: var(--mode-bg);
+    color: var(--mode-color);
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: .85rem;
+    font-weight: 600;
+}
+
+.updated {
+    font-size: .85rem;
+    color: var(--text-color);
+}
+
+/* ==========================
+   Responsive
+========================== */
+
+@media (max-width: 768px) {
+
+    .ac-card {
+        width: 100%;
+    }
+
+    .metrics {
+        flex-direction: column;
+    }
+
+}
