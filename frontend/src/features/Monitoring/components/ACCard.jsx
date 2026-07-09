@@ -1,19 +1,7 @@
 import "./style.css";
-import {
-  ResponsiveContainer,
-  LineChart,
-  Line,
-  CartesianGrid,
-  Tooltip,
-  YAxis,
-  XAxis,
-  LabelList,
-} from "recharts";
+import {ResponsiveContainer, LineChart, Line, CartesianGrid, Tooltip, YAxis, XAxis, LabelList} from "recharts";
 
-import {
-  FiThermometer,
-  FiZap,
-} from "react-icons/fi";
+import {FiThermometer, FiZap} from "react-icons/fi";
 
 const ACCard = ({
   name,

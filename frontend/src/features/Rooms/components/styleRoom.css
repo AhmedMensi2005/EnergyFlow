@@ -1,0 +1,312 @@
+/* ==========================
+   ROOMS HEADER
+========================== */
+
+.rooms-header{
+    width: 100%;
+    height: 70px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 var(--space-xl);
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+
+}
+
+/* ==========================
+   SEARCH BAR
+========================== */
+
+.search-container{
+
+    width: 330px;
+    height: 30px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 0 18px;
+
+    background: var(--surface);
+
+    border: 1px solid var(--border);
+
+    border-radius: 999px;
+
+    transition: var(--transition);
+}
+
+.search-container:hover{
+
+    border-color: var(--border-dark);
+
+}
+
+.search-container:focus-within{
+
+    background: var(--card);
+
+    border-color: var(--primary);
+
+    box-shadow: 0 0 0 4px rgba(16,185,129,.12);
+}
+
+.search-icon{
+
+    color: var(--text-light);
+
+    font-size: 18px;
+
+    flex-shrink: 0;
+}
+
+.search-container input{
+
+    flex: 1;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: var(--text-primary);
+
+    font-size: 15px;
+
+    font-family: var(--font-family);
+}
+
+.search-container input::placeholder{
+
+    color: var(--text-light);
+}
+
+/* ==========================
+   BUTTON
+========================== */
+
+.create-room-btn{
+
+    height: 33px;
+
+    padding: 0 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 10px;
+
+    border: none;
+
+    border-radius: var(--radius);
+
+    background: var(--gradient-primary);
+
+    color: var(--text-white);
+
+    font-size: 13px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+
+    box-shadow: var(--shadow-primary);
+}
+
+.create-room-btn svg{
+
+    font-size: 18px;
+}
+
+.create-room-btn:hover{
+
+    background: var(--gradient-hover);
+
+    transform: translateY(-1px);
+
+    box-shadow: 0 12px 24px rgba(16,185,129,.30);
+}
+
+.create-room-btn:active{
+
+    transform: scale(.97);
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 900px){
+
+    .rooms-header{
+
+        flex-direction: column;
+
+        justify-content: center;
+
+        align-items: stretch;
+
+        height: auto;
+
+        gap: var(--space-md);
+
+        padding: var(--space-lg);
+    }
+
+    .search-container{
+
+        width: 100%;
+    }
+
+    .create-room-btn{
+
+        width: 100%;
+    }
+
+}
+
+
+/* ==========================
+   ROOM ITEM
+========================== */
+
+.room-item{
+
+    width:100%;
+
+    min-height:70px;
+
+    display:grid;
+
+    grid-template-columns:
+        2fr
+        1fr
+        1.2fr
+        1fr
+        1.2fr
+        90px;
+
+    align-items:center;
+
+    padding:0 20px;
+
+    background:var(--card);
+
+    border:1px solid var(--border);
+
+    border-radius:var(--radius-lg);
+
+    box-shadow:var(--shadow-sm);
+
+    transition:var(--transition);
+}
+
+
+/* ==========================
+   CELLS
+========================== */
+
+.room-cell{
+
+    font-size:15px;
+
+    color:var(--text-secondary);
+
+    display:flex;
+
+    align-items:center;
+}
+
+.room-name{
+
+    font-weight:500;
+
+    font-size:15px;
+
+    color:var(--text-primary);
+}
+
+/* ==========================
+   ACTIONS
+========================== */
+
+.room-actions{
+
+    display:flex;
+
+    justify-content:flex-end;
+
+    gap:10px;
+}
+
+.action-btn{
+
+    width:38px;
+
+    height:38px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:transparent;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    color:var(--text-light);
+
+    transition:var(--transition);
+}
+
+.action-btn:hover{
+
+    background:var(--hover);
+
+    color:var(--primary);
+}
+
+.action-btn.delete:hover{
+
+    background:rgba(239,68,68,.10);
+
+    color:var(--error);
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media(max-width:900px){
+
+    .room-item{
+
+        grid-template-columns:1fr;
+
+        gap:16px;
+
+        padding:20px;
+    }
+
+    .room-actions{
+
+        justify-content:flex-start;
+    }
+
+}

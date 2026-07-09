@@ -1,57 +1,18 @@
 /* ==========================
-   Color Palette
-========================== */
-
-:root {
-    /* Main Colors */
-    --card-bg: #FFFFFF;
-    --page-bg: #F7FAFC;
-
-    /* Text */
-    --title-color: #0F172A;
-    --text-color: #64748B;
-    --muted-color: #94A3B8;
-
-    /* Temperature Card */
-    --temp-bg: #EEF4FF;
-
-    /* Power Card */
-    --power-bg: #F8FAFC;
-
-    /* Graph */
-    --graph-color: #3B82F6;
-
-    /* Status */
-    --online-bg: #ECFDF3;
-    --online-color: #16A34A;
-
-    --offline-bg: #FEF2F2;
-    --offline-color: #DC2626;
-
-    /* Mode Badge */
-    --mode-bg: #DBEAFE;
-    --mode-color: #2563EB;
-
-    /* Borders & Shadows */
-    --border-color: #E2E8F0;
-    --shadow: 0 12px 32px rgba(15, 23, 42, .08);
-}
-
-/* ==========================
    AC Card
 ========================== */
 
 .ac-card {
     width: 420px;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 24px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
     padding: 24px;
     display: flex;
     flex-direction: column;
     gap: 22px;
     box-shadow: var(--shadow);
-    transition: all .25s ease;
+    transition: var(--transition);
 }
 
 .ac-card:hover {
@@ -73,12 +34,12 @@
     margin: 0;
     font-size: 1.55rem;
     font-weight: 700;
-    color: var(--title-color);
+    color: var(--text-primary);
 }
 
 .ac-card-header p {
     margin-top: 6px;
-    color: var(--text-color);
+    color: var(--text-secondary);
     font-size: .95rem;
 }
 
@@ -150,7 +111,7 @@
 
 .metric-icon {
     font-size: 1.6rem;
-    color: var(--graph-color);
+    color: var(--chart-blue);
 }
 
 .metric-box .label {
@@ -158,14 +119,14 @@
     font-size: .75rem;
     letter-spacing: 1px;
     font-weight: 700;
-    color: var(--muted-color);
+    color: var(--text-light);
     margin-bottom: 4px;
 }
 
 .metric-box h2 {
     margin: 0;
     font-size: 1.9rem;
-    color: var(--title-color);
+    color: var(--text-primary);
     font-weight: 700;
 }
 
@@ -191,7 +152,7 @@
 
 .updated {
     font-size: .85rem;
-    color: var(--text-color);
+    color: var(--text-secondary);
 }
 
 /* ==========================

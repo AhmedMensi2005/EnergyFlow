@@ -1,8 +1,15 @@
+//main components
 import Side from "./components/Side/Side";
 import Header from "./components/header/header";
+//style sheets
 import "./styleMain.css"
+import "../styles/variables.css";
+import "../styles/global.css";
+//react use state
 import { useState } from "react";
+//content pages
 import Monitoring from "../Monitoring/Monitoring.jsx"
+import Rooms from "../Rooms/Rooms.jsx"
 
 export default function Main() {
   const [activePage, setActivePage] = useState("Dashboard");
@@ -39,9 +46,6 @@ function Analytics() {
   return <h1>Analytics</h1>;
 }
 
-function Rooms() {
-  return <h1>Rooms</h1>;
-}
 
 function AirConditioners() {
   return <h1>Air Conditioners</h1>;

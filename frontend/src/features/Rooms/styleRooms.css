@@ -1,0 +1,70 @@
+/* ==========================
+   ROOMS PAGE LAYOUT
+========================== */
+
+.rooms-page{
+
+    display:grid;
+
+    grid-template-rows:auto 1fr;
+
+    height:100vh;
+
+    gap:0;
+}
+
+/* ==========================
+   LIST CONTAINER (SCROLL AREA)
+========================== */
+
+.rooms-list-container{
+    
+    overflow-y:auto;
+
+
+    min-height:0;
+
+    mask-image:linear-gradient(
+        to bottom,
+        transparent 0,
+        black 15px,
+        black calc(100% - 15px),
+        transparent 100%
+    );
+
+    -webkit-mask-image:linear-gradient(
+        to bottom,
+        transparent 0,
+        black 15px,
+        black calc(100% - 15px),
+        transparent 100%
+    );
+
+
+    scrollbar-width:none;
+
+    -ms-overflow-style:none;
+    padding-bottom: 5%;
+    
+}
+
+.rooms-list-container::-webkit-scrollbar{
+
+    display:none;
+}
+
+/* ==========================
+   LIST
+========================== */
+
+.rooms-list{
+
+
+    display:flex;
+
+    flex-direction:column;
+    margin-bottom: 7%;
+    margin-top: 1%;
+    gap:2%;
+
+}
