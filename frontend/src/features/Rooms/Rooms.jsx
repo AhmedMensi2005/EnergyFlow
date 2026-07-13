@@ -1,70 +1,91 @@
-import { useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+
+// components
 import RoomsHeader from "./components/roomHeader";
 import RoomItem from "./components/roomItem";
+import RoomFormModal from "./components/roomForm";
+import RoomDelConfirm from "./components/roomDelConfirm.jsx"
+import RoomCreateModal from "./components/roomCreateModal.jsx";
+
+//style
 import "./styleRooms.css"
 
-
+//api
+import api from "../../services/api.js"
 
 
 function Rooms() {
-    const rooms = [
-    {
-        id: 1,
-        name: "Server Room",
-        floor: "B1",
-        airConditioners: 2,
-        area: 18,
-        consumption: 4.6,
-    },
-    {
-        id: 2,
-        name: "Meeting Room A",
-        floor: "1",
-        airConditioners: 1,
-        area: 32,
-        consumption: 2.1,
-    },
-    {
-        id: 3,
-        name: "Open Space",
-        floor: "2",
-        airConditioners: 6,
-        area: 120,
-        consumption: 15.8,
-    },
-    {
-        id: 4,
-        name: "CEO Office",
-        floor: "2",
-        airConditioners: 1,
-        area: 28,
-        consumption: 1.7,
-    },
-    {
-        id: 5,
-        name: "Reception",
-        floor: "Ground",
-        airConditioners: 2,
-        area: 45,
-        consumption: 3.9,
-    },
-    {
-        id: 6,
-        name: "Training Room",
-        floor: "1",
-        airConditioners: 3,
-        area: 70,
-        consumption: 7.4,
-    },
-    ];
 
+    //popUps
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [showCreate, setShowCreate] = useState(false);
+
+    //selection in edit and delete
+    const [selectedRoom, setSelectedRoom] = useState(null);
+
+    //search
     const [search, setSearch] = useState("");
 
-    const handleCreate = () => {
+    //sort
+    const [sort,setSort] = useState("name")
+    const [sortSens,setSortSens] = useState("Ascendent")
 
-        console.log("Open Create Room Modal");
+    //main data
+    const [rooms, setRooms] = useState([])
 
-    };
+
+
+    async function fetchRooms() {
+        try {
+            const response = await api.get(`rooms/?search=${search}`);
+
+            const roomsData = response.data.map(room => ({
+                ...room,
+                consumption: 0,
+                airConditioners: 0,
+            }));
+
+            setRooms(roomsData);
+
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    useEffect(()=>{
+        fetchRooms();
+    },[search])
+
+    const sortedRooms = useMemo(() => {
+        const sorted = [...rooms];
+        sorted.sort((a, b) => {
+            let comparison = 0;
+            switch (sort) {
+                case "name":
+                    comparison = a.name.localeCompare(b.name);
+                    break;
+                case "area":
+                    comparison = a.area - b.area;
+                    break;
+                case "floor":
+                    comparison = a.floor.localeCompare(b.floor);
+                    break;
+                case "airConditioners":
+                    comparison = a.airConditioners - b.airConditioners;
+                    break;
+                case "consumption":
+                    comparison = a.consumption - b.consumption;
+                    break;
+                default:
+                    comparison = 0;
+            }
+            return sortSens === "Ascendent"
+                ? comparison
+                : -comparison;
+        });
+        return sorted;
+    }, [rooms, sort, sortSens]);
 
     return (
 
@@ -72,20 +93,54 @@ function Rooms() {
             <RoomsHeader
                 search={search}
                 setSearch={setSearch}
-                onCreate={handleCreate}
+                sort={sort}
+                setSort={setSort}
+                sortSens={sortSens}
+                setSortSens={setSortSens}
+                onCreate={() => {
+                            setShowCreate(true);
+                        }}
             />
             <div className="rooms-list-container">
                 <div className="rooms-list">
-                    {rooms.map((room) => (
+                    {sortedRooms.map((room) => (
                         <RoomItem
                         key={room.id}
                         room={room}
-                        onEdit={(room) => console.log("Edit:", room)}
-                        onDelete={(id) => console.log("Delete:", id)}
+                        onEdit={(room) => {
+                                setSelectedRoom(room);
+                                setShowModal(true);
+                                }}
+                        onDelete={(room) => {
+                                setSelectedRoom(room);
+                                setShowConfirm(true);
+                                }}
                         />
                     ))}
                 </div>
             </div>
+            
+            {showCreate && (
+                <RoomCreateModal
+                    onClose={() => setShowCreate(false)}
+                    onSaved={fetchRooms}
+                />
+            )}   
+            
+            {showModal && (
+                <RoomFormModal
+                    room={selectedRoom}
+                    onClose={() => setShowModal(false)}
+                    onSaved={fetchRooms}
+                />
+            )}
+            {showConfirm && (
+                <RoomDelConfirm
+                    room={selectedRoom}
+                    onClose={() => setShowConfirm(false)}
+                    onSaved={fetchRooms}
+                />
+            )}
         </div>
 
     );

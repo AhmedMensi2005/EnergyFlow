@@ -1,12 +1,15 @@
 //main components
 import Side from "./components/Side/Side";
 import Header from "./components/header/header";
+
 //style sheets
 import "./styleMain.css"
-import "../styles/variables.css";
-import "../styles/global.css";
+import "../../styles/variables.css";
+import "../../styles/global.css";
+
 //react use state
 import { useState } from "react";
+
 //content pages
 import Monitoring from "../Monitoring/Monitoring.jsx"
 import Rooms from "../Rooms/Rooms.jsx"

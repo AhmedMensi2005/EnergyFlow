@@ -40,7 +40,7 @@ function RoomItem({
 
                 <button
                     className="action-btn delete"
-                    onClick={() => onDelete(room.id)}
+                    onClick={() => onDelete(room)}
                 >
                     <FiTrash2 />
                 </button>
