@@ -1,0 +1,39 @@
+.btn-primary{
+
+    width:100%;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:var(--gradient-primary);
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:var(--transition);
+
+}
+
+.btn-primary:hover{
+
+    background:var(--gradient-hover);
+
+    transform:translateY(-2px);
+
+}
+
+.btn-primary:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+}
