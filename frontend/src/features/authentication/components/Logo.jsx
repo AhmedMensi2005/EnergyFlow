@@ -1,4 +1,4 @@
-import "../../../../styles/components/logo.css";
+import "../../../styles/components/logo.css";
 
 export default function Logo() {
   return (

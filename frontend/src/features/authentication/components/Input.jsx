@@ -1,4 +1,4 @@
-import "../../../../styles/components/input.css";
+import "../../../styles/components/input.css";
 
 export default function Input({
   label,
