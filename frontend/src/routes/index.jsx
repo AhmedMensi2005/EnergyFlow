@@ -11,7 +11,6 @@ import Main from "../features/main/mainPage"
 
 export default function AppRoutes() {
   return (
-    <BrowserRouter>
         <Routes>
 
 
@@ -38,7 +37,7 @@ export default function AppRoutes() {
 
             {/* Dashboard protected */}
             <Route
-                path="/dashboard"
+                path="/main"
                 element={
                     <ProtectedRoute>
                         <Main />
@@ -72,8 +71,7 @@ export default function AppRoutes() {
 
 
         </Routes>
-        <Route path="*" element={<h1>404 Not Found</h1>} />
 
-    </BrowserRouter>
+
     );
 }

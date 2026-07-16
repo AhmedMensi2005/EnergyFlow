@@ -61,7 +61,7 @@ export default function Login() {
         );
 
 
-        navigate("/dashboard");
+        navigate("/main");
 
 
     } catch (err) {

@@ -1,4 +1,4 @@
-import api from "./api";
+import api from "./api"
 
 // GET all rooms
 export const getRooms = async () => {
