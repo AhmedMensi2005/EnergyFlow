@@ -10,8 +10,7 @@ import { resetPassword } from "../../../services/authService";
 
 export default function ResetPasswordForm() {
 
-    const { user_id, token } = useParams();
-
+    const { uid, token } = useParams();
     const navigate = useNavigate();
 
 
@@ -37,7 +36,7 @@ export default function ResetPasswordForm() {
         try {
 
             await resetPassword(
-                user_id,
+                uid,
                 token,
                 password,
                 passwordConfirm

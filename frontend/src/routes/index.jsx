@@ -31,7 +31,7 @@ export default function AppRoutes() {
 
             {/* Reset password */}
             <Route
-                path="/reset-password/:user_id/:token"
+                path="/reset-password/:uid/:token"
                 element={<ResetPassword />}
             />
 

@@ -60,7 +60,7 @@ export const forgotPassword = async (email) => {
 
 // Reset password
 export const resetPassword = async (
-    user_id,
+    uid,
     token,
     password,
     passwordConfirm
@@ -68,7 +68,7 @@ export const resetPassword = async (
 
     const response = await api.post(
 
-        `/auth/reset-password/${user_id}/${token}/`,
+        `/auth/reset-password/${uid}/${token}/`,
 
         {
             password,

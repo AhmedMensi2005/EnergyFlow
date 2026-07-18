@@ -8,27 +8,37 @@ import Logo from "../components/Logo";
 import Input from "../components/Input";
 import Button from "../components/Button";
 import ErrorMessage from "../components/ErrorMessage";
-
+import { forgotPassword } from "../../../services/authService";
 export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     setLoading(true);
+    setMessage("");
 
-    console.log("Reset password:", email);
+    try {
 
-    setTimeout(() => {
-      setMessage(
-        "A password reset link has been sent to your email."
-      );
-      setLoading(false);
-    }, 1000);
-  };
+        const response = await forgotPassword(email);
 
+        setMessage(response.message);
+
+    } catch (err) {
+
+        setMessage(
+            err.response?.data?.error ||
+            "Something went wrong."
+        );
+
+    } finally {
+
+        setLoading(false);
+
+    }
+};
   return (
     <div className="auth-page">
       <div className="auth-card">
