@@ -127,7 +127,6 @@ class UserDetailView(APIView):
                 status=404
             )
 
-
         serializer = UtilisateurSerializer(
             user
         )
@@ -144,7 +143,6 @@ class UserUpdateView(APIView):
         IsAdmin
     ]
 
-
     def put(self, request, pk):
 
         try:
@@ -162,12 +160,10 @@ class UserUpdateView(APIView):
                 status=404
             )
 
-
         serializer = UserUpdateSerializer(
             user,
             data=request.data
         )
-
 
         if serializer.is_valid():
 
@@ -178,7 +174,6 @@ class UserUpdateView(APIView):
                     "message": "User updated"
                 }
             )
-
 
         return Response(
             serializer.errors,
@@ -193,7 +188,6 @@ class ChangePasswordView(APIView):
         IsAdmin
     ]
 
-
     def put(self, request, pk):
 
         try:
@@ -211,12 +205,10 @@ class ChangePasswordView(APIView):
                 status=404
             )
 
-
         serializer = PasswordUpdateSerializer(
             user,
             data=request.data
         )
-
 
         if serializer.is_valid():
 
@@ -227,7 +219,6 @@ class ChangePasswordView(APIView):
                     "message": "Password updated"
                 }
             )
-
 
         return Response(
             serializer.errors,
@@ -241,7 +232,6 @@ class DeleteOperateurView(APIView):
         IsAuthenticated,
         IsAdmin
     ]
-
 
     def delete(self, request, pk):
 
@@ -260,10 +250,8 @@ class DeleteOperateurView(APIView):
                 status=404
             )
 
-
         operateur.date_suppression = timezone.now()
         operateur.save()
-
 
         return Response(
             {
@@ -279,31 +267,25 @@ class ForgotPasswordView(APIView):
         AllowAny
     ]
 
-
     def post(self, request):
 
         serializer = ForgotPasswordSerializer(
             data=request.data
         )
 
-
         serializer.is_valid(
             raise_exception=True
         )
 
-
         email = serializer.validated_data["email"]
-
 
         user = User.objects.get(
             email=email
         )
 
-
         token = default_token_generator.make_token(
             user
         )
-
 
         return Response(
             {
@@ -320,18 +302,15 @@ class ResetPasswordView(APIView):
         AllowAny
     ]
 
-
     def post(self, request, user_id, token):
 
         serializer = ResetPasswordSerializer(
             data=request.data
         )
 
-
         serializer.is_valid(
             raise_exception=True
         )
-
 
         try:
 
@@ -348,7 +327,6 @@ class ResetPasswordView(APIView):
                 status=404
             )
 
-
         if not default_token_generator.check_token(
             user,
             token
@@ -361,13 +339,11 @@ class ResetPasswordView(APIView):
                 status=400
             )
 
-
         user.set_password(
             serializer.validated_data["password"]
         )
 
         user.save()
-
 
         return Response(
             {

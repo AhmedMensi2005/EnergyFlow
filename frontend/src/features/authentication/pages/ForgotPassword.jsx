@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import "../../../styles/auth/auth.css";
 import "../../../styles/auth/forgot-password.css";
-
+import { forgotPassword } from "../../../services/authService";
 import Logo from "../components/Logo";
 import Input from "../components/Input";
 import Button from "../components/Button";
@@ -13,21 +13,51 @@ export default function ForgotPassword() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const handleSubmit = async(e)=>{
 
-  const handleSubmit = (e) => {
     e.preventDefault();
+    if(!email){
+      setError("Please enter your email.");
+      return;
+  }
 
     setLoading(true);
+    setMessage("");
+    setError("");
 
-    console.log("Reset password:", email);
+    try {
 
-    setTimeout(() => {
-      setMessage(
-        "A password reset link has been sent to your email."
-      );
-      setLoading(false);
-    }, 1000);
-  };
+        const data = await forgotPassword(email);
+
+        setMessage(data.message);
+
+
+    } catch(err){
+
+        if(err.response){
+
+            setError(
+                err.response.data.error
+            );
+
+        }
+        else{
+
+            setError(
+                "Something went wrong."
+            );
+
+        }
+
+    }
+    finally{
+
+        setLoading(false);
+
+    }
+
+};
 
   return (
     <div className="auth-page">
@@ -55,8 +85,15 @@ export default function ForgotPassword() {
             onChange={(e) => setEmail(e.target.value)}
           />
 
+          {error && (
+              <ErrorMessage message={error}/>
+          )}
+
           {message && (
-            <ErrorMessage message={message} success />
+              <ErrorMessage 
+                  message={message}
+                  success
+              />
           )}
 
           <Button loading={loading}>

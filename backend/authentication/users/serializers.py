@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from authentication.models import Admin, Operateur, Utilisateur
 User = get_user_model()
 
+
 class AdminCreateSerializer(serializers.ModelSerializer):
 
     password = serializers.CharField(write_only=True)
@@ -24,7 +25,6 @@ class AdminCreateSerializer(serializers.ModelSerializer):
         )
 
         return admin
-
 
 
 class OperateurCreateSerializer(serializers.ModelSerializer):
@@ -50,15 +50,6 @@ class OperateurCreateSerializer(serializers.ModelSerializer):
         return operateur
 
 
-
-from rest_framework import serializers
-from authentication.models import Utilisateur, Admin, Operateur
-
-
-from rest_framework import serializers
-from authentication.models import Utilisateur
-
-
 class UtilisateurSerializer(serializers.ModelSerializer):
 
     role = serializers.SerializerMethodField()
@@ -66,7 +57,6 @@ class UtilisateurSerializer(serializers.ModelSerializer):
     date_ajout = serializers.SerializerMethodField()
     date_suppression = serializers.SerializerMethodField()
     derniere_connexion = serializers.SerializerMethodField()
-
 
     class Meta:
         model = Utilisateur
@@ -81,7 +71,6 @@ class UtilisateurSerializer(serializers.ModelSerializer):
             "derniere_connexion",
         ]
 
-
     def get_role(self, obj):
 
         if hasattr(obj, "admin"):
@@ -92,14 +81,12 @@ class UtilisateurSerializer(serializers.ModelSerializer):
 
         return "UTILISATEUR"
 
-
     def get_date_ajout(self, obj):
 
         if hasattr(obj, "operateur"):
             return obj.operateur.date_ajout
 
         return None
-
 
     def get_date_suppression(self, obj):
 
@@ -108,14 +95,12 @@ class UtilisateurSerializer(serializers.ModelSerializer):
 
         return None
 
-
     def get_derniere_connexion(self, obj):
 
         if hasattr(obj, "operateur"):
             return obj.operateur.derniere_connexion
 
         return None
-
 
     def to_representation(self, instance):
 
@@ -128,6 +113,7 @@ class UtilisateurSerializer(serializers.ModelSerializer):
 
         return data
 
+
 class UserUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -136,6 +122,8 @@ class UserUpdateSerializer(serializers.ModelSerializer):
             "username",
             "email",
         ]
+
+
 class PasswordUpdateSerializer(serializers.Serializer):
 
     password = serializers.CharField(
@@ -152,6 +140,7 @@ class PasswordUpdateSerializer(serializers.Serializer):
 
         return instance
     
+
 class ForgotPasswordSerializer(serializers.Serializer):
 
     email = serializers.EmailField()
@@ -164,6 +153,7 @@ class ForgotPasswordSerializer(serializers.Serializer):
             )
 
         return value
+
 
 class ResetPasswordSerializer(serializers.Serializer):
 
@@ -182,5 +172,4 @@ class ResetPasswordSerializer(serializers.Serializer):
             raise serializers.ValidationError(
                 "Passwords do not match."
             )
-
         return data

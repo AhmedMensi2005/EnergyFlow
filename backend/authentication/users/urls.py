@@ -56,7 +56,7 @@ urlpatterns = [
     ),
 
     path(
-        "reset-password/<int:user_id>/<str:token>/",
+        "reset-password/<int:uid>/<str:token>/",
         ResetPasswordView.as_view()
     ),
 

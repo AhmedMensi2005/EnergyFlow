@@ -21,20 +21,6 @@ export default function AppRoutes() {
             />
 
 
-            {/* Forgot password */}
-            <Route
-                path="/forgot-password"
-                element={<ForgotPassword />}
-            />
-
-
-            {/* Reset password */}
-            <Route
-                path="/reset-password/:user_id/:token"
-                element={<ResetPassword />}
-            />
-
-
             {/* Dashboard protected */}
             <Route
                 path="/main"
@@ -55,6 +41,17 @@ export default function AppRoutes() {
                         replace
                     />
                 }
+            />
+
+            <Route
+            path="/forgot-password"
+            element={<ForgotPassword/>}
+            />
+
+
+            <Route
+            path="/reset-password/:uid/:token"
+            element={<ResetPassword/>}
             />
 
 
