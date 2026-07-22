@@ -11,54 +11,25 @@ const api = axios.create({
 
 });
 
-
-
 // Add JWT only for protected routes
 api.interceptors.request.use(
-
     (config) => {
-
-
-        const publicRoutes = [
-
-            "/auth/login/",
-            "/auth/forgot-password/",
-            "/auth/reset-password/"
-
-        ];
-
-
+        const publicRoutes = ["/auth/login/","/auth/forgot-password/","/auth/reset-password/"];
         const isPublicRoute = publicRoutes.some(
             (route) => config.url.includes(route)
         );
 
 
         if (!isPublicRoute) {
-
-            const token = localStorage.getItem(
-                "access_token"
-            );
-
-
+            const token = localStorage.getItem("access_token");
             if (token) {
-
-                config.headers.Authorization =
-                    `Bearer ${token}`;
-
+                config.headers.Authorization =`Bearer ${token}`;
             }
-
         }
-
-
         return config;
-
     },
-
-
     (error) => {
-
         return Promise.reject(error);
-
     }
 
 );

@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "rest_framework",
     "authentication",
-    'monitoring',
+    'devices',
     'rooms',
 ]
 
