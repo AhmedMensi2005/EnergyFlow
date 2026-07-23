@@ -1,4 +1,4 @@
-{
+[{
   "deviceId": "9d0677a2-d69f-93f2-2e20-a67890bd9f40",
   "ownerId": "87cb1dd2-0e66-667e-7cc4-e3f11dc61d81",
   "name": "Samsung Room A/C",
@@ -287,7 +287,7 @@
                 "start": "2026-07-06T13:26:32Z",
                 "end": "2026-07-06T13:40:52Z"
               },
-              "timestamp": "2026-07-21T13:40:52.706Z"
+              "timestamp": "2026-07-21T12:40:52.706Z"
             }
           }
         },
@@ -991,4 +991,178 @@
   ],
   "executionContext": "CLOUD",
   "relationships": []
-}
+},
+{
+  "deviceId": "d482aa2b-97ac-4e4b-a914-ff891ea54120",
+  "name": "Samsung AC Office",
+  "label": "Office AC",
+  "manufacturerName": "Samsung Electronics",
+  "presentationId": "DA-AC-002",
+  "locationId": "office-location-01",
+  "ownerId": "owner-002",
+  "healthState": {
+    "state": "ONLINE",
+    "lastUpdatedDate": "2026-07-23T10:42:01Z"
+  },
+  "ocf": {
+    "modelNumber": "AR12TXEAAWK",
+    "vendorId": "Samsung",
+    "firmwareVersion": "2.4.0",
+    "ocfVersion": "2.1.0"
+  },
+  "components": [
+    {
+      "id": "main",
+      "capabilities": [
+        {
+          "id": "switch",
+          "status": {
+            "switch": {
+              "value": "off"
+            }
+          }
+        },
+        {
+          "id": "temperatureMeasurement",
+          "status": {
+            "temperature": {
+              "value": 27
+            }
+          }
+        },
+        {
+          "id": "relativeHumidityMeasurement",
+          "status": {
+            "humidity": {
+              "value": 54
+            }
+          }
+        },
+        {
+          "id": "thermostatCoolingSetpoint",
+          "status": {
+            "coolingSetpoint": {
+              "value": 24
+            }
+          }
+        },
+        {
+          "id": "airConditionerMode",
+          "status": {
+            "airConditionerMode": {
+              "value": "auto"
+            }
+          }
+        },
+        {
+          "id": "airConditionerFanMode",
+          "status": {
+            "fanMode": {
+              "value": "auto"
+            }
+          }
+        },
+        {
+          "id": "powerConsumptionReport",
+          "status": {
+            "powerConsumption": {
+              "value": {
+                "power": 0,
+                "energy": 21587,
+                "deltaEnergy": 0
+              },
+              "timestamp": "2026-07-23T10:42:00Z"
+            }
+          }
+        }
+      ]
+    }
+  ]
+},
+{
+  "deviceId": "a9c23491-12fc-4bc7-b54d-81e6d872c001",
+  "name": "Samsung AC Bedroom",
+  "label": "Bedroom AC",
+  "manufacturerName": "Samsung Electronics",
+  "presentationId": "DA-AC-001",
+  "locationId": "home-location-02",
+  "ownerId": "owner-002",
+  "healthState": {
+    "state": "ONLINE",
+    "lastUpdatedDate": "2026-07-23T09:35:14Z"
+  },
+  "ocf": {
+    "modelNumber": "AR18TXHQASIN",
+    "vendorId": "Samsung",
+    "firmwareVersion": "2.3.5",
+    "ocfVersion": "2.1.0"
+  },
+  "components": [
+    {
+      "id": "main",
+      "capabilities": [
+        {
+          "id": "switch",
+          "status": {
+            "switch": {
+              "value": "on"
+            }
+          }
+        },
+        {
+          "id": "temperatureMeasurement",
+          "status": {
+            "temperature": {
+              "value": 20
+            }
+          }
+        },
+        {
+          "id": "relativeHumidityMeasurement",
+          "status": {
+            "humidity": {
+              "value": 48
+            }
+          }
+        },
+        {
+          "id": "thermostatCoolingSetpoint",
+          "status": {
+            "coolingSetpoint": {
+              "value": 19
+            }
+          }
+        },
+        {
+          "id": "airConditionerMode",
+          "status": {
+            "airConditionerMode": {
+              "value": "cool"
+            }
+          }
+        },
+        {
+          "id": "airConditionerFanMode",
+          "status": {
+            "fanMode": {
+              "value": "medium"
+            }
+          }
+        },
+        {
+          "id": "powerConsumptionReport",
+          "status": {
+            "powerConsumption": {
+              "value": {
+                "power": 1120,
+                "energy": 15423,
+                "deltaEnergy": 18
+              },
+              "timestamp": "2026-07-23T09:35:00Z"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}]

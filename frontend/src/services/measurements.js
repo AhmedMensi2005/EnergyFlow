@@ -12,7 +12,7 @@ export const getMeasurement = async (id) => {
     return response.data;
 };
 
-export const getLatestMeasurement = async (id) => {
+export const getLatestMeasurements = async (id) => {
     const response = await api.get(`measurements/latest/`);
     return response.data;
 };
