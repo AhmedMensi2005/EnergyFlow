@@ -1,64 +1,61 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from authentication.models import Admin, Operateur, Utilisateur
+
 User = get_user_model()
 
 
-class AdminCreateSerializer(serializers.ModelSerializer):
+class AdminCreateSerializer(serializers.Serializer):
 
+    username = serializers.CharField()
+    email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
-
-    class Meta:
-        model = Admin
-        fields = [
-            "username",
-            "email",
-            "password"
-        ]
 
     def create(self, validated_data):
 
-        admin = Admin.objects.create_user(
+        user = Utilisateur.objects.create_user(
             username=validated_data["username"],
             email=validated_data["email"],
             password=validated_data["password"]
         )
 
-        return admin
+        Admin.objects.create(
+            utilisateur=user
+        )
+
+        return user
 
 
-class OperateurCreateSerializer(serializers.ModelSerializer):
+class OperateurCreateSerializer(serializers.Serializer):
 
+    username = serializers.CharField()
+    email = serializers.EmailField()
     password = serializers.CharField(write_only=True)
-
-    class Meta:
-        model = Operateur
-        fields = [
-            "username",
-            "email",
-            "password"
-        ]
 
     def create(self, validated_data):
 
-        operateur = Operateur.objects.create_user(
+        user = Utilisateur.objects.create_user(
             username=validated_data["username"],
             email=validated_data["email"],
             password=validated_data["password"]
         )
 
-        return operateur
+        Operateur.objects.create(
+            utilisateur=user
+        )
+
+        return user
 
 
 class UtilisateurSerializer(serializers.ModelSerializer):
 
-    role = serializers.SerializerMethodField()
+    role = serializers.ReadOnlyField()
 
     date_ajout = serializers.SerializerMethodField()
     date_suppression = serializers.SerializerMethodField()
-    derniere_connexion = serializers.SerializerMethodField()
 
     class Meta:
+
         model = Utilisateur
 
         fields = [
@@ -68,20 +65,13 @@ class UtilisateurSerializer(serializers.ModelSerializer):
             "role",
             "date_ajout",
             "date_suppression",
-            "derniere_connexion",
+            "last_login",
         ]
-
-    def get_role(self, obj):
+        
+    def get_date_ajout(self, obj):
 
         if hasattr(obj, "admin"):
-            return "ADMIN"
-
-        if hasattr(obj, "operateur"):
-            return "OPERATEUR"
-
-        return "UTILISATEUR"
-
-    def get_date_ajout(self, obj):
+            return obj.admin.date_ajout
 
         if hasattr(obj, "operateur"):
             return obj.operateur.date_ajout
@@ -90,37 +80,23 @@ class UtilisateurSerializer(serializers.ModelSerializer):
 
     def get_date_suppression(self, obj):
 
+        if hasattr(obj, "admin"):
+            return obj.admin.date_suppression
+
         if hasattr(obj, "operateur"):
             return obj.operateur.date_suppression
 
         return None
 
-    def get_derniere_connexion(self, obj):
-
-        if hasattr(obj, "operateur"):
-            return obj.operateur.derniere_connexion
-
-        return None
-
-    def to_representation(self, instance):
-
-        data = super().to_representation(instance)
-
-        if hasattr(instance, "admin"):
-            data.pop("date_ajout", None)
-            data.pop("date_suppression", None)
-            data.pop("derniere_connexion", None)
-
-        return data
-
 
 class UserUpdateSerializer(serializers.ModelSerializer):
 
     class Meta:
+
         model = Utilisateur
+
         fields = [
-            "username",
-            "email",
+            "username"
         ]
 
 
@@ -139,7 +115,7 @@ class PasswordUpdateSerializer(serializers.Serializer):
         instance.save()
 
         return instance
-    
+
 
 class ForgotPasswordSerializer(serializers.Serializer):
 
@@ -147,7 +123,8 @@ class ForgotPasswordSerializer(serializers.Serializer):
 
     def validate_email(self, value):
 
-        if not User.objects.filter(email=value).exists():
+        if not Utilisateur.objects.filter(email=value).exists():
+
             raise serializers.ValidationError(
                 "No user with this email exists."
             )
@@ -169,7 +146,21 @@ class ResetPasswordSerializer(serializers.Serializer):
     def validate(self, data):
 
         if data["password"] != data["password_confirm"]:
+
             raise serializers.ValidationError(
                 "Passwords do not match."
             )
+
         return data
+
+
+class InviteUserSerializer(serializers.Serializer):
+
+    email = serializers.EmailField()
+
+    role = serializers.ChoiceField(
+        choices=[
+            ("ADMIN", "ADMIN"),
+            ("OPERATEUR", "OPERATEUR")
+        ]
+    )

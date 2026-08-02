@@ -13,7 +13,7 @@ import { useState } from "react";
 //content pages
 import Monitoring from "../Monitoring/Monitoring.jsx"
 import Rooms from "../Rooms/Rooms.jsx"
-
+import Users from "../Users/pages/Users.jsx";
 export default function Main() {
   const [activePage, setActivePage] = useState("Dashboard");
 
@@ -32,7 +32,7 @@ export default function Main() {
           {activePage === "Analytics" && <Analytics />}
           {activePage === "Rooms" && <Rooms />}
           {activePage === "Air Conditioners" && <AirConditioners />}
-          {activePage === "Operators" && <Operators />}
+          {activePage === "Users" && <Users />}
           {activePage === "Alerts" && <Alerts />}
         </div>
       </div>
@@ -54,9 +54,6 @@ function AirConditioners() {
   return <h1>Air Conditioners</h1>;
 }
 
-function Operators() {
-  return <h1>Operators</h1>;
-}
 
 function Alerts() {
   return <h1>Alerts</h1>;

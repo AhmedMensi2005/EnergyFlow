@@ -11,12 +11,12 @@ export default function SidebarNav({activePage,setActivePage}) {
   
   return (
     <div className="sidebar-nav">
-      <SidebarItem label="Dashboard" active={activePage === "Dashboard"} onClick={setActivePage} icon={<img src={DashboardIcon} alt="dashboard"></img>}icon={<img src={DashboardIcon} alt="dashboard"></img>} />
+      <SidebarItem label="Dashboard" active={activePage === "Dashboard"} onClick={setActivePage} icon={<img src={DashboardIcon} alt="dashboard"></img>} />
       <SidebarItem label="Monitoring" active={activePage === "Monitoring"} onClick={setActivePage} icon={<img src={MonitoringIcon} alt="monitoring"></img>} />
       <SidebarItem label="Analytics" active={activePage === "Analytics"} onClick={setActivePage} icon={<img src={AnalyticsIcon} alt="analitics"></img>} />
       <SidebarItem label="Rooms" active={activePage === "Rooms"} onClick={setActivePage} icon={<img src={RoomsIcon} alt="rooms"></img>} />
       <SidebarItem label="Air Conditioners" active={activePage === "Air Conditioners"} onClick={setActivePage} icon={<img src={AirConditionerIcon} alt="airconditioners"></img>} />
-      <SidebarItem label="Operators" active={activePage === "Operators"} onClick={setActivePage} icon={<img src={OperatorsIcon} alt="operators"></img>} />
+      <SidebarItem label="Users" active={activePage === "Users"} onClick={setActivePage} icon={<img src={OperatorsIcon} alt="Users"></img>} />
       <SidebarItem label="Alerts" active={activePage === "Alerts"} onClick={setActivePage} icon={<img src={AlertsIcon} alt="alerts"></img>} />
     </div>
   );

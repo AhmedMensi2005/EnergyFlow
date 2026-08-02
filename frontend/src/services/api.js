@@ -1,6 +1,5 @@
 import axios from "axios";
 
-
 const api = axios.create({
 
     baseURL: "http://127.0.0.1:8000/api",
@@ -12,57 +11,116 @@ const api = axios.create({
 });
 
 
+// REQUEST
+api.interceptors.request.use((config) => {
 
-// Add JWT only for protected routes
-api.interceptors.request.use(
+    const publicRoutes = [
 
-    (config) => {
+        "/auth/login/",
+        "/auth/forgot-password/",
+        "/auth/reset-password/",
+        "/auth/refresh/"
+
+    ];
+
+    const isPublic = publicRoutes.some(route =>
+        config.url.includes(route)
+    );
+
+    if (!isPublic) {
+
+        const token = localStorage.getItem("access_token");
+
+        if (token) {
+
+            config.headers.Authorization =
+                `Bearer ${token}`;
+
+        }
+
+    }
+
+    return config;
+
+});
 
 
-        const publicRoutes = [
+// RESPONSE
+api.interceptors.response.use(
 
-            "/auth/login/",
-            "/auth/forgot-password/",
-            "/auth/reset-password/"
+    response => response,
 
-        ];
+    async error => {
 
+        const originalRequest = error.config;
 
-        const isPublicRoute = publicRoutes.some(
-            (route) => config.url.includes(route)
-        );
+        if (
 
+            error.response?.status === 401 &&
+            !originalRequest._retry
 
-        if (!isPublicRoute) {
+        ) {
 
-            const token = localStorage.getItem(
-                "access_token"
+            originalRequest._retry = true;
+
+            const refresh = localStorage.getItem(
+                "refresh_token"
             );
 
+            if (!refresh) {
 
-            if (token) {
+                localStorage.clear();
 
-                config.headers.Authorization =
-                    `Bearer ${token}`;
+                window.location.href = "/login";
+
+                return Promise.reject(error);
+
+            }
+
+            try {
+
+                const response = await axios.post(
+
+                    "http://127.0.0.1:8000/api/auth/refresh/",
+
+                    {
+                        refresh: refresh
+                    }
+
+                );
+
+                const newAccess =
+                    response.data.access;
+
+                localStorage.setItem(
+
+                    "access_token",
+
+                    newAccess
+
+                );
+
+                originalRequest.headers.Authorization =
+                    `Bearer ${newAccess}`;
+
+                return api(originalRequest);
+
+            }
+
+            catch {
+
+                localStorage.clear();
+
+                window.location.href = "/login";
 
             }
 
         }
-
-
-        return config;
-
-    },
-
-
-    (error) => {
 
         return Promise.reject(error);
 
     }
 
 );
-
-
 
 export default api;

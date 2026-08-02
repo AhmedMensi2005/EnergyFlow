@@ -8,11 +8,15 @@ from .views import (
     UserUpdateView,
     ChangePasswordView,
     ForgotPasswordView,
-    ResetPasswordView
+    ResetPasswordView,
+    InviteUserView,
+    CreateAccountView,
+    InvitationListView
 )
+from .views import DeleteAdminView
 from .views import DeleteOperateurView
-
 urlpatterns = [
+
     path(
         "",
         UserListView.as_view(),
@@ -32,25 +36,6 @@ urlpatterns = [
     ),
 
     path(
-        "<int:pk>/",
-        UserDetailView.as_view(),
-        name="user-detail",
-    ),
-    path(
-        "<int:pk>/update/",
-        UserUpdateView.as_view()
-    ),
-
-    path(
-        "<int:pk>/password/",
-        ChangePasswordView.as_view()
-    ),
-
-    path(
-        "operator/<int:pk>/delete/",
-        DeleteOperateurView.as_view()
-    ),
-    path(
         "forgot-password/",
         ForgotPasswordView.as_view()
     ),
@@ -60,4 +45,41 @@ urlpatterns = [
         ResetPasswordView.as_view()
     ),
 
+    path(
+        "admin/<int:pk>/delete/",
+        DeleteAdminView.as_view()
+    ),
+
+    path(
+        "operator/<int:pk>/delete/",
+        DeleteOperateurView.as_view()
+    ),
+
+    path(
+        "<int:pk>/",
+        UserDetailView.as_view(),
+        name="user-detail",
+    ),
+
+    path(
+        "<int:pk>/update/",
+        UserUpdateView.as_view()
+    ),
+
+    path(
+        "<int:pk>/password/",
+        ChangePasswordView.as_view()
+    ),
+    path(
+        "invite/",
+        InviteUserView.as_view()
+    ),
+    path(
+        "create-account/",
+        CreateAccountView.as_view()
+    ),
+    path(
+        "invitations/",
+        InvitationListView.as_view()
+    ),
 ]

@@ -1,0 +1,169 @@
+.create-account-page{
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:#f8fafc;
+
+    padding:20px;
+
+}
+
+
+.create-account-card{
+
+    width:420px;
+
+    background:white;
+
+    border-radius:22px;
+
+    padding:40px;
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.08);
+
+}
+
+
+.create-account-header{
+
+    text-align:center;
+
+    margin-bottom:30px;
+
+}
+
+
+.create-account-header h1{
+
+    margin:0;
+
+    font-size:28px;
+
+    font-weight:700;
+
+    color:#111827;
+
+}
+
+
+.create-account-header p{
+
+    margin-top:10px;
+
+    color:#6b7280;
+
+    font-size:14px;
+
+}
+
+
+
+.create-account-form{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+
+
+.create-account-form input{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border-radius:12px;
+
+    border:1px solid #e5e7eb;
+
+    font-size:15px;
+
+    outline:none;
+
+    transition:.2s;
+
+}
+
+
+.create-account-form input:focus{
+
+    border-color:#10b981;
+
+    box-shadow:
+    0 0 0 3px rgba(16,185,129,.12);
+
+}
+
+.create-account-btn{
+
+    margin-top:10px;
+
+    padding:14px;
+
+    width:100%;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:var(--gradient-primary);
+
+    color:white;
+
+    font-weight:600;
+
+    font-size:15px;
+
+    cursor:pointer;
+
+    transition:.25s ease;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+
+.create-account-btn:hover{
+
+    opacity:.9;
+
+    transform:translateY(-2px);
+
+}
+
+
+.create-account-btn:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+}
+
+
+.create-account-error{
+
+    background:#fee2e2;
+
+    color:#dc2626;
+
+    padding:12px;
+
+    border-radius:10px;
+
+    font-size:14px;
+
+    text-align:center;
+
+}

@@ -81,3 +81,17 @@ export const resetPassword = async (
     return response.data;
 
 };
+export const createAccount = async(data)=>{
+
+    const response = await api.post(
+
+        "/users/create-account/",
+
+        data
+
+    );
+
+
+    return response.data;
+
+};

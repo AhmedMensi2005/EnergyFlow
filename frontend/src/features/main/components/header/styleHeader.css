@@ -106,14 +106,32 @@
   gap: 12px;
 }
 
-.menu-user-avatar {
-  width: 42px;
-  height: 42px;
+.menu-user-avatar{
 
-  border-radius: 50%;
-  object-fit: cover;
+  width:36px;
 
-  border: 2px solid var(--border);
+  height:36px;
+
+  border-radius:50%;
+
+  background:var(--gradient-primary);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  color:white;
+
+  font-size:13px;
+
+  font-weight:700;
+
+  letter-spacing:1px;
+
+  flex-shrink:0;
+
 }
 
 .menu-user-info {
@@ -121,16 +139,7 @@
   flex-direction: column;
 }
 
-.menu-user-name {
-  color: var(--text-primary);
-  font-size: 14px;
-  font-weight: 600;
-}
 
-.menu-user-role {
-  color: var(--text-light);
-  font-size: 12px;
-}
 
 /* ======================
    RESPONSIVE

@@ -3,7 +3,7 @@ import { BrowserRouter,Routes, Route, Navigate } from "react-router-dom";
 import Login from "../features/authentication/pages/Login";
 import ForgotPassword from "../features/authentication/pages/ForgotPassword";
 import ResetPassword from "../features/authentication/pages/ResetPassword";
-
+import CreateAccount from "../features/authentication/pages/CreateAccount";
 import ProtectedRoute from "./ProtectedRoute";
 
 import Main from "../features/main/mainPage"
@@ -54,6 +54,10 @@ export default function AppRoutes() {
             element={<ResetPassword/>}
             />
 
+            <Route
+                path="/create-account/:invitation_id/:token"
+                element={<CreateAccount />}
+            />
 
             {/* Unknown routes */}
             <Route
@@ -65,6 +69,8 @@ export default function AppRoutes() {
                     />
                 }
             />
+
+            
 
 
         </Routes>

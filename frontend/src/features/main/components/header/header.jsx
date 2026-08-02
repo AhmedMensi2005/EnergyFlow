@@ -1,12 +1,29 @@
 import HeaderStructure from "./headerStructure";
 import "./styleHeader.css";
-export default function Header({label}){
-    return(
+
+export default function Header({label}) {
+
+    const user = JSON.parse(
+        localStorage.getItem("user")
+    );
+
+    const initials = user?.username
+    ? user.username
+          .split(" ")
+          .map(word => word[0])
+          .join("")
+          .substring(0, 2)
+          .toUpperCase()
+    : "?";
+
+    return (
+
         <HeaderStructure
             title={label}
-            username="Test"
-            role="admin"
-            avatar="https://i.pravatar.cc/40"
+            username={user?.username || "Unknown"}
+            role={user?.role || ""}
+            avatar={initials}
         />
+
     );
 }

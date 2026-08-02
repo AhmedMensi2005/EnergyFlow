@@ -1,23 +1,23 @@
 from django.contrib.auth import authenticate
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from rest_framework_simplejwt.tokens import RefreshToken
-import os
-
-from django.conf import settings
 from django.contrib.auth.tokens import default_token_generator
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.encoding import force_bytes
 from django.utils.http import (
     urlsafe_base64_encode,
     urlsafe_base64_decode
 )
-from django.utils.encoding import force_bytes
-
-from django.template.loader import render_to_string
-
-from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
 from django.utils.html import strip_tags
+from django.utils import timezone
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+
+from rest_framework_simplejwt.tokens import RefreshToken
+
+import os
 
 from authentication.models import Utilisateur
 
@@ -37,8 +37,6 @@ class LoginView(APIView):
             password=password
         )
 
-        print("USER:", user)
-
         if user is None:
 
             return Response(
@@ -48,6 +46,9 @@ class LoginView(APIView):
                 status=401
             )
 
+        user.last_login = timezone.now()
+        user.save(update_fields=["last_login"])
+
         refresh = RefreshToken.for_user(user)
 
         return Response(
@@ -55,17 +56,20 @@ class LoginView(APIView):
                 "refresh": str(refresh),
                 "access": str(refresh.access_token),
                 "user": {
+                    "id": user.id,
+                    "username": user.username,
                     "email": user.email,
-                    "username": user.username
+                    "role": user.role
                 }
-            },
-            status=200
+            }
         )
 
 
 class ForgotPasswordView(APIView):
 
-    permission_classes = [AllowAny]
+    permission_classes = [
+        AllowAny
+    ]
 
     def post(self, request):
 
@@ -77,7 +81,6 @@ class ForgotPasswordView(APIView):
             )
 
         except Utilisateur.DoesNotExist:
-
             return Response(
                 {
                     "error": "No account with this email."
@@ -89,7 +92,9 @@ class ForgotPasswordView(APIView):
             force_bytes(user.pk)
         )
 
-        token = default_token_generator.make_token(user)
+        token = default_token_generator.make_token(
+            user
+        )
 
         reset_link = (
             f"{os.getenv('FRONTEND_URL')}"
@@ -104,49 +109,60 @@ class ForgotPasswordView(APIView):
             }
         )
 
-        email = EmailMultiAlternatives(
+        email_message = EmailMultiAlternatives(
             subject="Reset your EnergyFlow password",
             body=strip_tags(html),
             from_email=settings.DEFAULT_FROM_EMAIL,
             to=[user.email]
         )
 
-        email.attach_alternative(
+        email_message.attach_alternative(
             html,
             "text/html"
         )
 
-        email.send()
+        email_message.send()
 
         return Response(
             {
-                "message":
-                "Password reset link sent successfully."
-            }
+                "message": "Password reset link sent successfully."
+            },
+            status=200
         )
 
 
 class ResetPasswordView(APIView):
 
-    permission_classes = [AllowAny]
+    permission_classes = [
+        AllowAny
+    ]
 
-    def post(self, request, uid, token):
+    def post(
+        self,
+        request,
+        uid,
+        token
+    ):
 
         try:
-
-            uid = urlsafe_base64_decode(uid).decode()
+            user_id = urlsafe_base64_decode(
+                uid
+            ).decode()
 
             user = Utilisateur.objects.get(
-                pk=uid
+                pk=user_id
             )
 
-        except (Utilisateur.DoesNotExist, ValueError, TypeError, UnicodeDecodeError):
-
+        except (
+            Utilisateur.DoesNotExist,
+            ValueError,
+            TypeError,
+            UnicodeDecodeError
+        ):
             return Response(
                 {
                     "error": "Invalid or expired reset link."
                 },
-
                 status=400
             )
 
@@ -154,7 +170,6 @@ class ResetPasswordView(APIView):
             user,
             token
         ):
-
             return Response(
                 {
                     "error": "Invalid link"
@@ -162,11 +177,15 @@ class ResetPasswordView(APIView):
                 status=400
             )
 
-        password = request.data.get("password")
-        confirm = request.data.get("password_confirm")
+        password = request.data.get(
+            "password"
+        )
 
-        if password != confirm:
+        password_confirm = request.data.get(
+            "password_confirm"
+        )
 
+        if password != password_confirm:
             return Response(
                 {
                     "error": "Passwords do not match"
@@ -174,12 +193,15 @@ class ResetPasswordView(APIView):
                 status=400
             )
 
-        user.set_password(password)
+        user.set_password(
+            password
+        )
+
         user.save()
 
         return Response(
             {
-                "message":
-                "Password reset successfully"
-            }
+                "message": "Password reset successfully"
+            },
+            status=200
         )

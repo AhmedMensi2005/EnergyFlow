@@ -60,6 +60,13 @@ export default function Login() {
             data.refresh
         );
 
+        localStorage.setItem(
+          "user",
+          JSON.stringify(data.user)
+      );
+
+
+
 
         navigate("/main");
 
