@@ -156,6 +156,40 @@
   font-size: 14px;
 }
 
+
+.export-btn {
+  align-self: center;
+  margin-top: auto;
+  margin-bottom: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  width: fit-content;
+  padding: 10px 20px;
+
+  background: var(--gradient-primary);
+  color: var(--text-white);
+
+  border: none;
+  border-radius: var(--radius-sm);
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: var(--transition);
+
+  box-shadow: var(--shadow-primary);
+}
+
+.export-btn:hover {
+  background: var(--gradient-hover);
+  transform: translateY(-1px);
+}
+
 /* ======================
    FOOTER
 ====================== */

@@ -13,4 +13,10 @@ urlpatterns = [
     path("devices/<int:id>/mesurements/latest/", LatestDeviceMeasurementAPIView.as_view(), name="device-measurements-latest"),
     path("measurements/latest/", LatestMeasuremenstListAPIView.as_view(), name="device-measurements"),
 
+    #export
+    path("measurements/export/",ExportMeasurementsAPIView.as_view()),
+
+    #scheduler
+    path("import/", ImportDevicesAPIView.as_view()),
+
 ]

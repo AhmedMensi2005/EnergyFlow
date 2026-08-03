@@ -1,41 +1,43 @@
-import json
 from django.core.management.base import BaseCommand
-from devices.services.importer import device_importer,mesurments_importer
+
+from devices.services.smartThings import SmartThingsClient
+from devices.services.importer import ( device_importer, measurements_importer,)
+
 
 class Command(BaseCommand):
 
     help = "Import SmartThings devices"
 
-    def add_arguments(self, parser):
-
-        parser.add_argument(
-            "json_file",
-            type=str
-        )
-
     def handle(self, *args, **options):
 
-        with open(options["json_file"], encoding="utf-8") as f:
-            data = json.load(f)
+        client = SmartThingsClient()
+        devices = client.get_devices()
+        imported = 0
 
-        # if the json contains one device
+        for device in devices:
+            try:
+                # Fetch complete device (metadata + status)
+                data = client.get_complete_device(device["deviceId"])
+                db_device = device_importer(data)
+                measurements_importer(data, db_device)
 
-        if isinstance(data, dict):
+                imported += 1
 
-            device = device_importer(data)
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"✓ Imported {db_device.name}"
+                    )
+                )
 
-            mesurments_importer(data, device)
-
-        # if the json contains many devices
-
-        elif isinstance(data, list):
-
-            for item in data:
-
-                device = device_importer(item)
-
-                mesurments_importer(item, device)
+            except Exception as e:
+                self.stdout.write(
+                    self.style.ERROR(
+                        f"✗ Failed to import {device['deviceId']}: {e}"
+                    )
+                )
 
         self.stdout.write(
-            self.style.SUCCESS("Import completed.")
+            self.style.SUCCESS(
+                f"\nImport completed. {imported} device(s) imported."
+            )
         )

@@ -1,7 +1,12 @@
 import api from "./api"
 
-export const getDevices = async () => {
-    const response = await api.get("devices/");
+export const getDevices = async ({search = "",ordering = "",} = {}) => {
+    const response = await api.get("devices/", {
+        params: {
+            search,
+            ordering,
+        },
+    });
     return response.data;
 };
 

@@ -1,21 +1,35 @@
 def get_capability(device_json, capability_name):
-    components = device_json.get("components", [])
+    return (
+        device_json
+        .get("components", {})
+        .get("main", {})
+        .get(capability_name, {})
+    )
 
-    if not components:
-        return None
 
-    capabilities = components[0].get("capabilities", [])
-
-    for capability in capabilities:
-        if capability["id"] == capability_name:
-            return capability.get("status", {})
-
-    return None
-
-def get_value(status, key, default=None):
-    item = status.get(key)
-
-    if item is None:
+def get_value(capability, attribute, default=None):
+    if not capability:
         return default
 
-    return item.get("value", default)
+    return capability.get(attribute, {}).get("value", default)
+
+
+def get_unit(capability, attribute):
+    if not capability:
+        return None
+
+    return capability.get(attribute, {}).get("unit")
+
+
+def get_timestamp(capability, attribute):
+    if not capability:
+        return None
+
+    return capability.get(attribute, {}).get("timestamp")
+
+def to_bool(value):
+    if value is None:
+        return None
+    if isinstance(value, bool):
+        return value
+    return str(value).lower() in ("on", "true", "enabled", "yes", "1")

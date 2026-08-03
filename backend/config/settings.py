@@ -1,6 +1,11 @@
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+from corsheaders.defaults import default_headers
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    "ngrok-skip-browser-warning",
+]
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR.parent / ".env")
@@ -8,7 +13,15 @@ load_dotenv(BASE_DIR.parent / ".env")
 SECRET_KEY = "django-insecure-=s4t5$b2hmp$&p)(eb*t*)ok7nz*!c1481j-6qi8oa1=&^56x6"
 
 DEBUG = True
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", 'pout-sandworm-angriness.ngrok-free.dev',]
+
+#--smartthings credentials
+SMARTTHINGS_TOKEN = os.getenv("SMARTTHINGS_TOKEN")
+SMARTTHINGS_CLIENT_ID = os.getenv("SMARTTHINGS_CLIENT_ID")
+SMARTTHINGS_CLIENT_SECRET = os.getenv("SMARTTHINGS_CLIENT_SECRET")
+SMARTTHINGS_REDIRECT_URI = os.getenv("SMARTTHINGS_REDIRECT_URI")
+#------------------------------------------------------------
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -17,6 +30,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    'integrations',
     
     "corsheaders",
     "rest_framework",

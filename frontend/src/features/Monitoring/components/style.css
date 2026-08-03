@@ -83,12 +83,10 @@
 }
 
 .operating_state.on{
-    background-color: rgba(70, 249, 70, 0.292);
     color:var(--green);
 }
 
 .operating_state.off{
-    background-color: rgba(250, 84, 84, 0.433);
     color:var(--red);
 }
 

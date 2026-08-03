@@ -37,6 +37,18 @@ services:
     depends_on:
       db:
         condition: service_healthy
+        
+  scheduler:
+    build: ./scheduler
+
+    depends_on:
+      backend:
+        condition: service_started
+
+    restart: unless-stopped
+
+    env_file:
+      - .env
 
   frontend:
     build: ./frontend

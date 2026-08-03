@@ -1,0 +1,222 @@
+.modal.export-modal{
+    width:1200px;
+    max-height:92vh;
+    overflow-y:auto;
+    padding:20px 24px;
+}
+
+.export-body{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+}
+
+.export-top{
+    display:flex;
+    gap:20px;
+
+    padding-bottom:16px;
+    border-bottom:1px solid var(--border);
+}
+
+.export-bottom{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.modal-section{
+    flex:1;
+
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+.modal-label{
+    font-size:12px;
+    font-weight:600;
+    color:var(--text-secondary);
+}
+
+.format-options{
+    display:flex;
+    gap:8px;
+}
+
+.format-chip{
+    flex:1;
+    padding:8px;
+
+    border:1px solid var(--border);
+    border-radius:12px;
+    background:var(--surface);
+
+    font-size:13px;
+    font-weight:600;
+    color:var(--text-secondary);
+
+    cursor:pointer;
+    transition:var(--transition);
+}
+
+.format-chip.active{
+    background:var(--gradient-primary);
+    color:white;
+    border-color:transparent;
+}
+
+.date-range{
+    display:flex;
+    align-items:center;
+    gap:8px;
+}
+
+.date-range input{
+    flex:1;
+    padding:7px 10px;
+
+    border:1px solid var(--border);
+    border-radius:12px;
+
+    font-size:13px;
+    outline:none;
+}
+
+.date-range input:focus{
+    border-color:var(--primary);
+}
+
+.date-range span{
+    font-size:12px;
+    color:var(--text-light);
+}
+
+.fields-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.select-all-btn{
+    background:none;
+    border:none;
+
+    font-size:12px;
+    font-weight:600;
+    color:var(--primary);
+
+    cursor:pointer;
+}
+
+.fields-section{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:10px;
+}
+
+.field-group{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+
+    padding:10px 12px;
+
+    border:1px solid var(--border);
+    border-radius:12px;
+
+    background:var(--surface);
+}
+
+.field-group-label{
+    font-size:10px;
+    font-weight:700;
+    letter-spacing:.4px;
+    text-transform:uppercase;
+    color:var(--text-light);
+}
+
+.fields-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:4px 8px;
+}
+
+.field-checkbox{
+    display:flex;
+    align-items:center;
+    gap:5px;
+
+    font-size:12px;
+    color:var(--text-primary);
+    cursor:pointer;
+}
+
+.field-checkbox input{
+    width:13px;
+    height:13px;
+}
+
+.modal-error{
+    font-size:12px;
+    color:var(--error);
+}
+
+/* ============ Selected field checkboxes ============ */
+
+.field-checkbox{
+    padding:5px 6px;
+    border-radius:8px;
+
+    transition:var(--transition-fast);
+}
+
+
+
+/* Highlights the whole row (not just the box) when checked */
+
+
+.field-checkbox input[type="checkbox"]{
+    width:14px;
+    height:14px;
+
+    accent-color:var(--primary);
+    cursor:pointer;
+}
+
+/* Give the checked group a subtle border tint too, so a fully/partially
+   selected group is visually distinct from an empty one */
+.field-group:has(input:checked){
+    border-color:var(--primary);
+}
+
+/* ============ Date range inputs ============ */
+
+.date-range input[type="datetime-local"]{
+    background:var(--card);
+    color:var(--text-primary);
+
+    accent-color:var(--primary);
+    color-scheme:light;
+}
+
+.date-range input:focus{
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px var(--hover);
+}
+
+/* Tints the native calendar/clock icon toward your brand green.
+   Webkit/Blink only (Chrome, Edge, Safari) — Firefox ignores this rule
+   silently and just shows its default icon, which is a safe fallback. */
+.date-range input[type="datetime-local"]::-webkit-calendar-picker-indicator{
+    cursor:pointer;
+    opacity:0.6;
+
+    filter:invert(48%) sepia(79%) saturate(468%) hue-rotate(118deg) brightness(95%);
+
+    transition:var(--transition-fast);
+}
+
+.date-range input[type="datetime-local"]::-webkit-calendar-picker-indicator:hover{
+    opacity:1;
+}

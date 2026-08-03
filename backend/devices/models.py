@@ -28,6 +28,14 @@ class Device(TimeStampedModel):
     model_number = models.CharField(max_length=150, blank=True)
     serial_number = models.CharField(max_length=150, blank=True)
 
+
+    firmware_version = models.CharField(max_length=100, blank=True)
+    presentation_id = models.CharField(max_length=100, blank=True)
+    location_id = models.CharField(max_length=100, blank=True)
+    owner_id = models.CharField(max_length=100, blank=True)
+    device_type = models.CharField(max_length=100, blank=True)
+
+
     status = models.CharField(max_length=20, choices=Status.choices, default=Status.ACTIVE)
     installed_at = models.DateField(null=True, blank=True)
 
@@ -79,6 +87,21 @@ class Measurement(models.Model):
     operating_state = models.CharField(max_length=30, blank=True)   # "on" / "off" / "idle"
     mode = models.CharField(max_length=50, blank=True)              # "cool" / "heat" / "auto"...
     fan_mode = models.CharField(max_length=30, blank=True)          # "low" / "high" / "turbo"...
+
+
+    fan_speed = models.IntegerField(null=True, blank=True)
+    swing_mode = models.CharField(max_length=30, blank=True)
+    eco_mode = models.BooleanField(null=True)
+    sleep_mode = models.BooleanField(null=True)
+    wind_free = models.BooleanField(null=True)
+    filter_status = models.CharField(max_length=30, blank=True)
+    defrost = models.BooleanField(null=True)
+    air_quality = models.FloatField(null=True, blank=True)
+    co2 = models.FloatField(null=True, blank=True)
+    pm10 = models.FloatField(null=True, blank=True)
+    pm25 = models.FloatField(null=True, blank=True)
+    pm100 = models.FloatField(null=True, blank=True)
+
 
     # --- Everything else: device/manufacturer-specific, kept for completeness & debugging ---
     extra_data = models.JSONField(default=dict, blank=True)
