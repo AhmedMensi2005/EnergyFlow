@@ -10,6 +10,7 @@ urlpatterns = [
 
     path("devices/<int:id>/mesurements/", DeviceMeasurementsAPIView.as_view(), name="device-measurements"),
 
+    path("devices/<int:id>/measurements/chart/",ChartDeviceMeasurementAPIView.as_view()),
     path("devices/<int:id>/mesurements/latest/", LatestDeviceMeasurementAPIView.as_view(), name="device-measurements-latest"),
     path("measurements/latest/", LatestMeasuremenstListAPIView.as_view(), name="device-measurements"),
 

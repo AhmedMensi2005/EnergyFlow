@@ -40,7 +40,7 @@ export default function DeviceCard({
                     
                     <div className="room">
                         <MdMeetingRoom />
-                        {device.room?.name}
+                        {device.label}
                     </div>
                 </div>
                 

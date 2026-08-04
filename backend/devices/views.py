@@ -24,7 +24,6 @@ from django.core.management import call_command
 
 class DeviceListAPIView(APIView):
     
-    permission_classes = [AllowAny]
 
     def get(self, request):
 
@@ -83,7 +82,6 @@ class DeviceDetailAPIView(APIView):
 #Measurements views
 
 class MeasuremenstListAPIView(APIView):
-    permission_classes = [AllowAny]    
     def get(self, request):
         search = request.query_params.get("search")
         if search:
@@ -140,6 +138,28 @@ class LatestDeviceMeasurementAPIView(APIView):
         measurements = Measurement.objects.filter(device_id=id).first
         serializer = MeasurementSerializer(measurements)
         return Response(serializer.data)
+
+class ChartDeviceMeasurementAPIView(APIView):
+
+    def get(self, request, id):
+        measurements = (
+            Measurement.objects
+            .filter(device_id=id)
+            .order_by("-timestamp")[:6]
+        )
+
+        # Reverse them so they appear oldest -> newest in the chart
+        measurements = reversed(measurements)
+
+        data = [
+            {
+                "time": m.timestamp.strftime("%H:%M"),
+                "power": m.power
+            }
+            for m in measurements
+        ]
+
+        return Response(data)
 
 
 
@@ -253,7 +273,9 @@ class ExportMeasurementsAPIView(APIView):
             return response
 
 
-
+#--------------------------
+#scheduler
+#----------------------------
 class ImportDevicesAPIView(APIView):
     permission_classes = [AllowAny]   # later replace with authentication
 
@@ -264,3 +286,5 @@ class ImportDevicesAPIView(APIView):
             "success": True,
             "message": "Import completed."
         })
+
+    

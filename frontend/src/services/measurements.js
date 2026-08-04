@@ -28,4 +28,7 @@ export const getLatestDeviceMeasurement = async (id) => {
     return response.data;
 };
 
-
+export const getDeviceChart = async (id) => {
+    const response = await api.get(`devices/${id}/measurements/chart/`);
+    return response.data;
+};

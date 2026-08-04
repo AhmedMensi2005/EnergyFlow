@@ -4,7 +4,7 @@ import DeviceCard from "./components/DeviceCard";
 import "./Monitoring.css";
 
 import { getDevices } from "../../services/devices";
-import { getLatestMeasurements } from "../../services/measurements";
+import { getLatestMeasurements, getDeviceChart } from "../../services/measurements";
 
 export default function Monitoring() {
 
@@ -13,27 +13,27 @@ export default function Monitoring() {
 
     const loadData = async () => {
       try {
-          const devicesData = await getDevices();
-          const measurementsData = await getLatestMeasurements();
-          const mergedDevices = devicesData.map((device) => {
-            const measurement =
-                measurementsData.find(
-                    (m) => m.device === device.id
-                ) || {};
-            return {
-                ...device,
-                measurement,
-                chart: [
-                    { time: "09:00", power: 650 },
-                    { time: "10:00", power: 720 },
-                    { time: "11:00", power: 780 },
-                    { time: "12:00", power: 850 },
-                    { time: "13:00", power: 820 },
-                    { time: "14:00", power: 870 },
-                ],
-            };
-          });
-          setDevices(mergedDevices);
+        const devicesData = await getDevices();
+        const measurementsData = await getLatestMeasurements();
+        const mergedDevices = await Promise.all(
+            devicesData.map(async (device) => {
+
+                const measurement =
+                    measurementsData.find(
+                        (m) => m.device === device.id
+                    ) || {};
+
+                const chart = await getDeviceChart(device.id);
+
+                return {
+                    ...device,
+                    measurement,
+                    chart,
+                };
+            })
+        );
+
+        setDevices(mergedDevices);
 
       } catch (error) {
           console.error("Error loading monitoring data:", error);
