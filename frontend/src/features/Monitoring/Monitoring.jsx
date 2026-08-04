@@ -1,28 +1,76 @@
-import ACCard from "./components/ACCard";
+import { useEffect, useState } from "react";
 
-const data = [
-  { time: "10:00", value: 2.1 },
-  { time: "10:05", value: 2.3 },
-  { time: "10:10", value: 2.2 },
-  { time: "10:15", value: 2.6 },
-  { time: "10:20", value: 2.4 },
-  { time: "10:25", value: 2.7 },
-  { time: "10:30", value: 2.5 },
-];
+import DeviceCard from "./components/DeviceCard";
+import "./Monitoring.css";
+
+import { getDevices } from "../../services/devices";
+import { getLatestMeasurements, getDeviceChart } from "../../services/measurements";
 
 export default function Monitoring() {
-  return (
-    <div style={{ padding: 40 }}>
-      <ACCard
-        name="AC-101"
-        room="Server Room"
-        status="Online"
-        temperature={18}
-        power={2.4}
-        mode="Cooling"
-        updated="4s ago"
-        consumptionData={data}
-      />
-    </div>
-  );
+
+    const [devices, setDevices] = useState([]);
+
+
+    const loadData = async () => {
+      try {
+        const devicesData = await getDevices();
+        const measurementsData = await getLatestMeasurements();
+        const mergedDevices = await Promise.all(
+            devicesData.map(async (device) => {
+
+                const measurement =
+                    measurementsData.find(
+                        (m) => m.device === device.id
+                    ) || {};
+
+                const chart = await getDeviceChart(device.id);
+
+                return {
+                    ...device,
+                    measurement,
+                    chart,
+                };
+            })
+        );
+
+        setDevices(mergedDevices);
+
+      } catch (error) {
+          console.error("Error loading monitoring data:", error);
+      }
+
+    };
+
+
+    useEffect(() => {
+        loadData();
+    }, []);
+
+    return (
+
+        <div className="monitoring-page">
+
+            <div className="fade-top"></div>
+
+            <div className="devices-container">
+
+                {devices.map((device) => (
+
+                    <DeviceCard
+                        key={device.id}
+                        device={device}
+                        measurement={device.measurement}
+                        chartData={device.chart}
+                    />
+
+                ))}
+
+            </div>
+
+            <div className="fade-bottom"></div>
+
+        </div>
+
+    );
+
 }
