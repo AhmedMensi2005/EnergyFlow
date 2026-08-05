@@ -1,8 +1,13 @@
-from apscheduler.schedulers.blocking import BlockingScheduler
+import os
+
 import requests
+from dotenv import load_dotenv
+from apscheduler.schedulers.blocking import BlockingScheduler
 
-BACKEND_URL = "https://pout-sandworm-angriness.ngrok-free.dev/api/import/"
+load_dotenv()
 
+BACKEND_URL = os.getenv("BACKEND_URL")
+print(BACKEND_URL)
 
 def import_devices():
     print("Importing devices...")
@@ -16,11 +21,7 @@ def import_devices():
 
 
 scheduler = BlockingScheduler()
-
 scheduler.add_job(import_devices, "interval", minutes=10)
-
 print("Scheduler started")
-
 import_devices()
-
 scheduler.start()

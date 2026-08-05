@@ -186,7 +186,7 @@ class ExportMeasurementsAPIView(APIView):
         export_format = request.query_params.get("export_format", "csv")
 
         device_fields = [f for f in fields if f.startswith("device.")]
-        measurement_fields = [f for f in fields if not f.startswith("device.")]
+        measurement_fields =[f for f in fields if not f.startswith("device.")]
 
         def get_device_value(device, field):
             attribute = field.replace("device.", "")
@@ -232,19 +232,13 @@ class ExportMeasurementsAPIView(APIView):
             ws = wb.active
             ws.title = "Export"
 
-            for entry in devices_data:
-                # Device info block, written once per device
-                for key, value in entry["device"].items():
-                    ws.append([key, value])
-                ws.append([])  # spacer row
+            ws.append(["external_id"] + measurement_fields)
 
-                # Measurement table header + rows for this device
+            for entry in devices_data:
                 if measurement_fields:
-                    ws.append(measurement_fields)
                     for m in entry["measurements"]:
-                        ws.append([m.get(f) for f in measurement_fields])
-                ws.append([])  # spacer before next device
-                ws.append([])
+                        ws.append([entry["device"]["device.external_id"]]+[m.get(f) for f in measurement_fields])
+
 
             response = HttpResponse(
                 content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -258,18 +252,11 @@ class ExportMeasurementsAPIView(APIView):
             response["Content-Disposition"] = 'attachment; filename="measurements.csv"'
             writer = csv.writer(response)
 
+            writer.writerow(["external_id"]+measurement_fields)
             for entry in devices_data:
-                for key, value in entry["device"].items():
-                    writer.writerow([key, value])
-                writer.writerow([])
-
                 if measurement_fields:
-                    writer.writerow(measurement_fields)
                     for m in entry["measurements"]:
-                        writer.writerow([m.get(f) for f in measurement_fields])
-                writer.writerow([])
-                writer.writerow([])
-
+                        writer.writerow([entry["device"]["device.external_id"]]+[m.get(f) for f in measurement_fields])
             return response
 
 
@@ -277,6 +264,7 @@ class ExportMeasurementsAPIView(APIView):
 #scheduler
 #----------------------------
 class ImportDevicesAPIView(APIView):
+
     permission_classes = [AllowAny]   # later replace with authentication
 
     def post(self, request):
