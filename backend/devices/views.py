@@ -24,7 +24,7 @@ from django.core.management import call_command
 
 class DeviceListAPIView(APIView):
     
-
+    permission_classes=[AllowAny]
     def get(self, request):
 
         devices = Device.objects.all()

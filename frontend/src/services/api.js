@@ -20,7 +20,10 @@ api.interceptors.request.use((config) => {
         "/auth/login/",
         "/auth/forgot-password/",
         "/auth/reset-password/",
-        "/auth/refresh/"
+        "/auth/refresh/",
+        "/users/create-account/"
+
+
 
     ];
 
@@ -82,7 +85,7 @@ api.interceptors.response.use(
 
                 const response = await axios.post(
 
-                    "http://127.0.0.1:8000/api/auth/refresh/",
+                    "/auth/refresh/",
 
                     {
                         refresh: refresh

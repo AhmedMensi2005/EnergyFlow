@@ -16,13 +16,8 @@ export default function SidebarNav({activePage, setActivePage, onExport,}) {
       <SidebarItem label="Monitoring" active={activePage === "Monitoring"} onClick={setActivePage} icon={<img src={MonitoringIcon} alt="monitoring"></img>} />
       <SidebarItem label="Analytics" active={activePage === "Analytics"} onClick={setActivePage} icon={<img src={AnalyticsIcon} alt="analitics"></img>} />
       <SidebarItem label="Rooms" active={activePage === "Rooms"} onClick={setActivePage} icon={<img src={RoomsIcon} alt="rooms"></img>} />
-<<<<<<< HEAD
-      <SidebarItem label="Air Conditioners" active={activePage === "Air Conditioners"} onClick={setActivePage} icon={<img src={AirConditionerIcon} alt="airconditioners"></img>} />
       <SidebarItem label="Users" active={activePage === "Users"} onClick={setActivePage} icon={<img src={OperatorsIcon} alt="Users"></img>} />
-=======
       <SidebarItem label="Devices" active={activePage === "Devices"} onClick={setActivePage} icon={<img src={AirConditionerIcon} alt="airconditioners"></img>} />
-      <SidebarItem label="Operators" active={activePage === "Operators"} onClick={setActivePage} icon={<img src={OperatorsIcon} alt="operators"></img>} />
->>>>>>> origin/feature/devices
       <SidebarItem label="Alerts" active={activePage === "Alerts"} onClick={setActivePage} icon={<img src={AlertsIcon} alt="alerts"></img>} />
       <button className="export-btn" onClick={onExport}>
           <FiDownload />
