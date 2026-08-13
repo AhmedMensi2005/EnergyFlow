@@ -2,7 +2,7 @@ import api from "./api"
 
 // GET all rooms
 export const getRooms = async () => {
-    const response = await api.get("rooms/");
+    const response = await api.get(`rooms/`);
     return response.data;
 };
 
@@ -14,7 +14,7 @@ export const getRoom = async (id) => {
 
 // CREATE room
 export const createRoom = async (room) => {
-    const response = await api.post("rooms/", room);
+    const response = await api.post(`rooms/`, room);
     return response.data;
 };
 

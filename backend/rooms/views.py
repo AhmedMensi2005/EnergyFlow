@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from django.shortcuts import get_object_or_404
+from django.db.models import Count, Sum
 
 from .models import Room
 from .serializer import RoomSerializer
@@ -12,15 +13,40 @@ from .serializer import RoomSerializer
 
 class RoomListAPIView(APIView):
     
+    ORDERING_FIELDS = [
+        "id",
+        "name",
+        "area",
+        "floor",
+        "device_count",
+        "consumption",
+        "description",
+    ]
+
     def get(self, request):
-        search = request.query_params.get("search")
+
+        search = request.query_params.get("search", "")
+        ordering = request.query_params.get("ordering", "name")
+
+        # Search
+        rooms = Room.objects.all()
+
         if search:
-            rooms = Room.objects.filter(name__icontains=search)
+            rooms = rooms.filter(
+                name__icontains=search
+            )
+
+        ordering_field = ordering.lstrip("-")
+
+        if ordering_field in self.ORDERING_FIELDS:
+            rooms = rooms.order_by(ordering)
+
         else:
-            rooms = Room.objects.all()
+            # Default ordering if invalid field is supplied
+            rooms = rooms.order_by("name")
 
         serializer = RoomSerializer(rooms,many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.data,status=status.HTTP_200_OK)
 
 
     def post(self, request):

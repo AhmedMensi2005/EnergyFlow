@@ -58,52 +58,42 @@ function Devices() {
         loadData();
     }, [search, sort, sortSens]);
 
-const updateStatus = async (device, status) => {
-    try {
-        
-        await updateDevice(device.id, {
-            room: device.room?.id,
-            category: device.category,
-            name: device.name,
-            label: device.label,
-            external_id: device.external_id,
-            manufacturer: device.manufacturer,
-            model_number: device.model_number,
-            serial_number: device.serial_number,
-            status: status,
-            installed_at: device.installed_at,
-            metadata: device.metadata,
-            last_seen_at: device.last_seen_at,
-            last_operating_state: device.last_operating_state,
-        });
-        setDevices((prev) =>
-            prev.map((d) =>
-                d.id === device.id
-                    ? { ...d, status }
-                    : d
+    const updateStatus = async (device, status) => {
+        try {
+            await updateDevice(device.id, {
+                room: device.room?.id,
+                category: device.category,
+                name: device.name,
+                label: device.label,
+                external_id: device.external_id,
+                manufacturer: device.manufacturer,
+                model_number: device.model_number,
+                serial_number: device.serial_number,
+                status: status,
+                installed_at: device.installed_at,
+                metadata: device.metadata,
+                last_seen_at: device.last_seen_at,
+                last_operating_state: device.last_operating_state,
+            });
+            setDevices((prev) =>
+                prev.map((d) =>
+                    d.id === device.id
+                        ? { ...d, status }
+                        : d
+                )
             )
-        )
-
-        
-
-    } catch (error) {
-        console.error(error);
-    }
-
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     if (loading) {
         return <div>Loading devices...</div>;
     }
-
+    console.log(devices);
 
     return (
-
-
-        
-
         <div className="devices-page">
-
             <DevicesHeader
 
                 search={search}

@@ -69,7 +69,7 @@ api.interceptors.response.use(
             try {
 
                 const response = await axios.post(
-                    "/auth/refresh/",
+                    `${import.meta.env.VITE_API_URL}/auth/refresh/`,
                     {
                         refresh: refresh
                     }

@@ -1,10 +1,12 @@
 import "./styleRoom.css";
-import { FiEdit2, FiTrash2 } from "react-icons/fi";
+import { FiEdit2, FiTrash2, FiPlus, FiPackage} from "react-icons/fi";
 
 function RoomItem({
     room,
     onEdit,
     onDelete,
+    onAddDevice,
+    
 }) {
     return (
         <div className="room-item">
@@ -18,7 +20,7 @@ function RoomItem({
             </div>
 
             <div className="room-cell">
-                {room.airConditioners} AC
+                {room.device_count} ACs
             </div>
 
             <div className="room-cell">
@@ -39,11 +41,19 @@ function RoomItem({
                 </button>
 
                 <button
+                    className="action-btn"
+                    onClick={() => onAddDevice(room)}
+                >
+                    <FiPlus />
+                </button>
+
+                <button
                     className="action-btn delete"
                     onClick={() => onDelete(room)}
                 >
                     <FiTrash2 />
                 </button>
+
 
             </div>
 

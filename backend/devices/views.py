@@ -71,7 +71,7 @@ class DeviceDetailAPIView(APIView):
     
     def put(self,request,id):
         device = self.get_object(id)
-        serializer = DeviceSerializer(device,data=request.data)
+        serializer = DeviceSerializer(device,data=request.data,partial=True)
         
         if serializer.is_valid():
             serializer.save()

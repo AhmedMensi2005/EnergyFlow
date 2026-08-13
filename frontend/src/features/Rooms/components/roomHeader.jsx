@@ -6,24 +6,23 @@ const sortOptions = [
     { value: "name", label: "Name" },
     { value: "area", label: "Area" },
     { value: "floor", label: "Floor" },
-    { value: "airConditioners", label: "Air Conditioners" },
+    { value: "device_count", label: "Devices" },
     { value: "consumption", label: "Consumption" },
 ];
 
 function RoomsHeader({
-    search,
-    setSearch,
-    sort,
-    setSort,
-    sortSens,
-    setSortSens,
-    onCreate,
-}) {
+        search,
+        setSearch,
+        sort,
+        setSort,
+        sortSens,
+        setSortSens,
+        onCreate,
+    }) {
 
     const [open, setOpen] = useState(false);
 
-    const current =
-        sortOptions.find(option => option.value === sort)?.label || "Name";
+    const current = sortOptions.find(option => option.value === sort)?.label || "Name";
 
     return (
         <div className="rooms-header">

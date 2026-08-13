@@ -1,6 +1,7 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./style.css";
 import { FiEdit2, FiChevronDown } from "react-icons/fi";
+import { getRoom } from "../../../services/rooms";
 
 const statusOptions = [
     { value: "active", label: "Active" },
@@ -19,6 +20,21 @@ function DeviceItem({
 
     const open = openedStatus === device.id;
     const current =statusOptions.find(option => option.value === device.status.toLowerCase())?.label || device.status;
+
+    const [room,setRoom]=useState(device.room)
+
+    if (device.room){
+        async function loadRoom(id) {
+            try{
+                const response = await getRoom(id);
+                setRoom(response);
+            }
+            catch(err){
+                console.error(err)
+            }
+        }
+        loadRoom(device.id);
+    }
 
 
     return (
@@ -125,7 +141,7 @@ function DeviceItem({
 
                 <div className="device-info-box">
                     <span>Room</span>
-                    <strong>{device.room?.name ?? "No room"}</strong>
+                    <strong>{room?.name ?? "No room"}</strong>
                 </div>
 
             </div>
