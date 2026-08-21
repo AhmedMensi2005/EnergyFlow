@@ -9,13 +9,13 @@
 
 /* Scroll Area */
 
-.devices-container{
+.devices-container-cards{
 
     height:100%;
 
     overflow-y:auto;
 
-    padding:40px;
+    padding:20px;
 
     display:flex;
 
@@ -33,13 +33,13 @@
 
 /* Hide scrollbar */
 
-.devices-container::-webkit-scrollbar{
+.devices-container-cards::-webkit-scrollbar{
 
     display:none;
 
 }
 
-.devices-container{
+.devices-container-cards{
 
     scrollbar-width:none;
 

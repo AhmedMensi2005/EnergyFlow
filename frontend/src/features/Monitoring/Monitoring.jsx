@@ -52,7 +52,7 @@ export default function Monitoring() {
 
             <div className="fade-top"></div>
 
-            <div className="devices-container">
+            <div className="devices-container-cards">
 
                 {devices.map((device) => (
 

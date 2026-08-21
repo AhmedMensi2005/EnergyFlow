@@ -199,7 +199,7 @@ export default function DeviceCard({
             <div className="device-footer">
 
                 <div className="mode">
-                    {measurement.mode.toUpperCase()}
+                    {(measurement.mode || "—").toUpperCase()}
                 </div>
 
                 <div className={`status ${statusClass}`}>

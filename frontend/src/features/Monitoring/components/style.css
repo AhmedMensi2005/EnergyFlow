@@ -18,17 +18,16 @@
 .device-card{
 
     width:350px;
-    height: 117%;
     background:white;
 
     border-radius:22px;
     border:1px solid var(--border);
 
-    padding:28px;
+    padding:16px;
 
     display:flex;
     flex-direction:column;
-    gap:26px;
+    gap:17px;
 
     box-shadow:0 10px 30px rgba(0,0,0,.06);
     transition:.25s;
