@@ -16,6 +16,7 @@ import Monitoring from "../Monitoring/Monitoring.jsx"
 import Rooms from "../Rooms/Rooms.jsx"
 import Users from "../Users/pages/Users.jsx";
 import Devices from "../Devices/Devices.jsx";
+import Analytics from "../Analytics/Analytics.jsx";
 
 export default function Main() {
   const [activePage, setActivePage] = useState("Dashboard");
@@ -54,9 +55,7 @@ function DashboardPage() {
 }
 
 
-function Analytics() {
-  return <h1>Analytics</h1>;
-}
+
 
 
 

@@ -1,0 +1,281 @@
+.analytics-kpi {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+
+    padding: 15px;
+
+
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+    min-height: 110px;
+
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    min-width: 0;
+}
+
+.analytics-kpi:hover {
+
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+
+}
+
+
+/* ICON */
+
+.kpi-icon {
+    width: 44px;
+    height: 44px;
+
+    color: var(--text-white);
+
+    min-width: 44px;
+
+    border-radius: 14px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    font-size: 20px;
+    background: var(--primary-dark-transparent);
+}
+
+
+
+/* CONTENT */
+
+.kpi-content {
+
+    min-width: 0;
+
+}
+.kpi-separation{
+    color: var(--text-light);
+}
+
+.kpi-title {
+
+    display: block;
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 600;
+    margin-bottom: 5px;
+
+}
+
+.kpi-value {
+    color: var(--text-primary);
+    font-size: 23px;
+    font-weight: 700;
+    line-height: 1.2;
+
+}
+
+.kpi-unit {
+
+    margin-left: 5px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-secondary);
+
+}
+
+.kpi-subtitle {
+
+    display: block;
+    margin-top: 5px;
+
+    color: var(--text-secondary);
+
+    font-size: 10px;
+
+}
+
+.consumption-bar-chart {
+    width: 100%;
+    height: 300px;
+
+    background: var(--card);
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    padding: 18px 12px 12px 8px;
+
+    box-sizing: border-box;
+
+    box-shadow: var(--shadow-sm);
+}
+
+/* Recharts */
+
+.consumption-chart .recharts-wrapper {
+    font-family: inherit;
+}
+
+/* Axis labels */
+
+.consumption-chart .recharts-yAxis
+.recharts-cartesian-axis-tick-value {
+
+    fill: var(--text-primary);
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+/* X axis values */
+
+.consumption-chart .recharts-xAxis
+.recharts-cartesian-axis-tick-value {
+
+    fill: var(--text-secondary);
+
+    font-size: 11px;
+}
+
+/* Remove axis lines */
+
+.consumption-chart .recharts-cartesian-axis-line {
+    stroke: transparent;
+}
+
+.consumption-chart .recharts-cartesian-axis-tick-line {
+    stroke: transparent;
+}
+
+/* Grid */
+
+.consumption-chart .recharts-cartesian-grid-horizontal line {
+    stroke: #eef2f7;
+}
+
+.consumption-chart .recharts-cartesian-grid-vertical line {
+    stroke: #f1f5f9;
+}
+
+/* Bars */
+
+.consumption-chart .recharts-bar-rectangle {
+
+    transition:
+        opacity .2s ease,
+        transform .2s ease;
+}
+
+/* Tooltip */
+
+.consumption-chart .recharts-tooltip-wrapper {
+    outline: none;
+}
+
+.consumption-chart .recharts-default-tooltip {
+
+    background: var(--card) !important;
+
+    border: 1px solid var(--border) !important;
+
+    border-radius: 12px !important;
+
+    box-shadow: var(--shadow-md) !important;
+
+    padding: 10px 14px !important;
+}
+
+.consumption-chart .recharts-tooltip-label {
+
+    color: var(--text-primary) !important;
+
+    font-weight: 600;
+
+    margin-bottom: 5px;
+}
+
+.consumption-chart .recharts-tooltip-item {
+
+    font-size: 12px;
+}
+
+.pie-chart {
+
+    width: 100%;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+}
+
+
+/* TOOLTIP */
+
+.recharts-tooltip-wrapper {
+    outline: none;
+}
+
+
+/* LEGEND */
+
+.recharts-legend-item {
+
+    font-size: 12px;
+    color: var(--text-secondary);
+
+}
+
+.pie-tooltip {
+
+    min-width: 130px;
+    background: rgba(255, 255, 255, 0.98);
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 10px 14px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.10);
+    pointer-events: none;
+
+}
+
+
+.pie-tooltip-room {
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 4px;
+
+}
+
+
+.pie-tooltip-dot {
+
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+
+}
+
+
+.pie-tooltip-value {
+
+    color: #0f172a;
+    font-size: 16px;
+    font-weight: 700;
+
+}

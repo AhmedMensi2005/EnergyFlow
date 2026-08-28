@@ -1,0 +1,383 @@
+/* Desktop */
+.analytics-kpis {
+
+    display: grid;
+
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+
+    gap: 16px;
+
+    width: 100%;
+
+}
+
+
+/* Medium screens */
+@media (max-width: 1400px) {
+
+    .analytics-kpis {
+
+        grid-template-columns: repeat(3, 1fr);
+
+    }
+
+}
+
+
+/* Tablet */
+@media (max-width: 900px) {
+
+    .analytics-kpis {
+
+        grid-template-columns: repeat(2, 1fr);
+
+    }
+
+}
+
+
+/* Mobile */
+@media (max-width: 600px) {
+
+    .analytics-kpis {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+
+.consumption-section {
+
+    width: 100%;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 22px;
+
+    padding: 24px;
+
+    box-shadow: var(--shadow-sm);
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.consumption-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    margin-bottom: 20px;
+
+}
+
+
+.consumption-title h2 {
+
+    margin: 0;
+
+    color: var(--text-primary);
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+}
+
+
+.consumption-title p {
+
+    margin: 5px 0 0;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+}
+
+
+/* =========================
+   PERIOD SELECT
+========================= */
+
+.consumption-period {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: var(--text-secondary);
+
+}
+
+
+.period-select {
+
+    min-width: 140px;
+
+    height: 36px;
+
+    padding: 0 12px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    background: var(--surface);
+
+    color: var(--text-primary);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+}
+
+
+.period-select svg {
+
+    transition: .2s;
+
+}
+
+
+.period-select svg.open {
+
+    transform: rotate(180deg);
+
+}
+
+
+.period-menu {
+
+    position: absolute;
+
+    top: 44px;
+
+    right: 0;
+
+    width: 160px;
+
+    padding: 6px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 14px;
+
+    box-shadow: var(--shadow-md);
+
+    z-index: 50;
+
+}
+
+
+.period-option {
+
+    width: 100%;
+
+    height: 36px;
+
+    border: none;
+
+    border-radius: 9px;
+
+    background: transparent;
+
+    text-align: left;
+
+    padding: 0 10px;
+
+    cursor: pointer;
+
+    color: var(--text-primary);
+
+}
+
+
+.period-option:hover {
+
+    background: var(--hover);
+
+}
+
+
+.period-option.active {
+
+    background: var(--gradient-primary);
+
+    color: white;
+
+}
+
+
+/* =========================
+   CHART
+========================= */
+
+.consumption-chart {
+    width: 100%;
+    min-height: 300px;
+    padding-bottom: 1%;
+
+}
+
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 700px) {
+
+    .consumption-header {
+
+        flex-direction: column;
+
+        gap: 16px;
+
+    }
+
+    .consumption-period {
+
+        width: 100%;
+
+    }
+
+    .period-select {
+
+        width: 100%;
+
+    }
+
+}
+
+
+.consumption-section {
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    padding: 24px;
+
+    box-shadow: var(--shadow-sm);
+
+    min-width: 0;
+}
+
+.section-header {
+    margin-bottom: 18px;
+}
+
+.section-header h2 {
+    margin: 0;
+
+    color: var(--text-primary);
+
+    font-size: 17px;
+
+    font-weight: 700;
+}
+
+.section-header span {
+    display: block;
+
+    margin-top: 5px;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+}
+
+.consumption-chart {
+    width: 100%;
+}
+
+.room-distribution-section {
+
+    width: 100%;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 20px;
+
+    padding: 24px;
+
+    box-sizing: border-box;
+
+    box-shadow: var(--shadow-sm);
+
+}
+
+
+.room-distribution-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 10px;
+
+}
+
+
+.room-distribution-header h2 {
+
+    margin: 0;
+
+    color: var(--text-primary);
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+}
+
+
+.room-distribution-header p {
+
+    margin: 6px 0 0;
+
+    color: var(--text-secondary);
+
+    font-size: 13px;
+
+}
+
+
+.room-distribution-chart {
+
+    width: 100%;
+
+    margin-top: 10px;
+
+}
