@@ -17,6 +17,7 @@ import Rooms from "../Rooms/Rooms.jsx"
 import Users from "../Users/pages/Users.jsx";
 import Devices from "../Devices/Devices.jsx";
 import Analytics from "../Analytics/Analytics.jsx";
+import DashboardPage from "../Dashboard/Dashboard.jsx";
 
 export default function Main() {
   const [activePage, setActivePage] = useState("Dashboard");
@@ -50,9 +51,7 @@ export default function Main() {
   );
 }
 
-function DashboardPage() {
-  return <h1>Dashboard</h1>;
-}
+
 
 
 

@@ -8,45 +8,33 @@ from django.db.models import Count, Sum
 from .models import Room
 from .serializer import RoomSerializer
 
-# Create your views here.
-
-
 class RoomListAPIView(APIView):
-    
+
     ORDERING_FIELDS = [
-        "id",
-        "name",
-        "area",
-        "floor",
-        "device_count",
-        "consumption",
-        "description",
+        "id", "name", "area", "floor",
+        "device_count", "consumption", "description",
     ]
 
     def get(self, request):
-
         search = request.query_params.get("search", "")
         ordering = request.query_params.get("ordering", "name")
 
-        # Search
-        rooms = Room.objects.all()
+        rooms = Room.objects.annotate(
+            device_count=Count("devices", distinct=True),
+            consumption=Sum("devices__measurements__energy_delta"),
+        )
 
         if search:
-            rooms = rooms.filter(
-                name__icontains=search
-            )
+            rooms = rooms.filter(name__icontains=search)
 
         ordering_field = ordering.lstrip("-")
-
         if ordering_field in self.ORDERING_FIELDS:
             rooms = rooms.order_by(ordering)
-
         else:
-            # Default ordering if invalid field is supplied
             rooms = rooms.order_by("name")
 
-        serializer = RoomSerializer(rooms,many=True)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        serializer = RoomSerializer(rooms, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
     def post(self, request):

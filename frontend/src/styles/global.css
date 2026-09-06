@@ -122,3 +122,18 @@ img{
 
     scrollbar-color:var(--border-dark) transparent;
 }
+
+/* Recharts adds tabIndex to bars/sectors/points for keyboard accessibility,
+   which triggers the browser's default focus outline on click. This
+   replaces that default black ring with a subtle, on-theme one instead
+   of removing it entirely (fully removing it would hurt keyboard users). */
+
+.recharts-wrapper svg:focus,
+.recharts-wrapper svg *:focus {
+  outline: none;
+}
+
+.recharts-wrapper svg *:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}

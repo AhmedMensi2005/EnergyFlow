@@ -1,0 +1,399 @@
+
+
+
+/* ==========================
+   Legend
+========================== */
+
+.chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+
+    padding-top: 8px;
+}
+
+.chart-legend-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 4px 10px;
+    border-radius: 999px;
+
+    background: var(--surface);
+
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+
+    transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+.chart-legend-pill:hover {
+    transform: translateY(-1px);
+    background: var(--hover);
+}
+
+.chart-legend-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+
+/* ==========================
+   Alerts Heatmap
+========================== */
+
+.alerts-heatmap {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    background: var(--card);
+
+    font-family: var(--font-family);
+
+    overflow: visible;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ==========================
+   Body
+========================== */
+
+.heatmap-body {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+
+    min-height: 0;
+}
+
+
+/* ==========================
+   Weekday labels
+========================== */
+
+.heatmap-weekdays {
+    flex: 0 0 28px;
+
+    display: grid;
+
+    grid-template-rows: repeat(7, 24px);
+
+    gap: 2px;
+
+    font-size: 9px;
+
+    color: var(--text-secondary);
+
+    text-align: right;
+}
+
+.heatmap-weekdays span {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    height: 24px;
+}
+
+
+/* ==========================
+   Grid
+========================== */
+
+.heatmap-grid {
+    display: grid;
+
+    grid-auto-flow: column;
+
+    grid-template-rows: repeat(7, 24px);
+
+    gap: 2px;
+
+    grid-auto-columns: 24px;
+
+    width: auto;
+    height: auto;
+
+    justify-content: center;
+
+    min-width: 0;
+}
+
+
+/* ==========================
+   Cells
+========================== */
+
+.heatmap-cell {
+    width: 24px;
+    height: 24px;
+
+    border-radius: 4px;
+
+    cursor: pointer;
+
+    position: relative;
+
+    opacity: 0;
+
+    transform: scale(0.4);
+
+    animation: cellIn 0.35s ease forwards;
+
+    animation-delay: calc(var(--i, 0) * 3ms);
+
+    transition:
+        box-shadow 0.15s ease;
+}
+
+.heatmap-cell.empty {
+    background: transparent;
+
+    cursor: default;
+
+    animation: none;
+}
+
+/* ==========================
+   Cell animation
+========================== */
+
+@keyframes cellIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* ==========================
+   Hover
+========================== */
+
+.heatmap-cell:not(.empty):hover {
+    z-index: 20;
+
+}
+
+/* ==========================
+   Tooltip
+========================== */
+
+.heatmap-cell:not(.empty)::after {
+    content: attr(data-tooltip);
+
+    position: absolute;
+
+    bottom: calc(100% + 8px);
+
+    left: 50%;
+
+    transform:
+        translateX(-50%)
+        translateY(4px);
+
+    padding: 6px 10px;
+
+    border-radius: var(--radius-sm);
+
+    background: var(--text-primary);
+
+    color: var(--text-white);
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.15s ease,
+        transform 0.15s ease;
+
+    z-index: 50;
+}
+
+.heatmap-cell:not(.empty):hover::after {
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+
+/* Tooltip arrow */
+
+.heatmap-cell:not(.empty)::before {
+    content: "";
+
+    position: absolute;
+
+    bottom: calc(100% + 3px);
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    border: 5px solid transparent;
+
+    border-top-color: var(--text-primary);
+
+    opacity: 0;
+
+    transition: opacity 0.15s ease;
+
+    z-index: 50;
+}
+
+.heatmap-cell:not(.empty):hover::before {
+    opacity: 1;
+}
+
+
+/* ==========================
+   Legend
+========================== */
+
+.heatmap-legend {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 5px;
+
+    margin-top: 10px;
+
+    font-size: 10px;
+
+    color: var(--text-secondary);
+}
+
+.legend-cell {
+    width: 11px;
+    height: 11px;
+
+    border-radius: 3px;
+
+    transition: transform 0.15s ease;
+}
+
+.legend-cell:hover {
+    transform: scale(1.3);
+}
+
+/* ==========================
+   KPI Card
+========================== */
+
+.kpi-card {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 14px 16px;
+
+    box-sizing: border-box;
+
+    border: none;
+    border-radius: var(--radius);
+
+    background: var(--card);
+
+    color: var(--text-primary);
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+/* Very subtle hover */
+
+
+
+
+
+/* ==========================
+   Title
+========================== */
+
+.kpi-title {
+    font-size: 12px;
+    font-weight: 600;
+
+    color: var(--text-secondary);
+}
+
+
+/* ==========================
+   Gauge
+========================== */
+
+.kpi-gauge-container {
+    position: relative;
+
+    width: 100%;
+    height: 100px;
+
+    margin-top: 2px;
+}
+
+
+/* Number inside gauge */
+
+.kpi-gauge-number {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 25px;
+    line-height: 1;
+
+    font-weight: 700;
+
+    pointer-events: none;
+}
+
+
+/* ==========================
+   Total
+========================== */
+
+.kpi-total {
+    margin-top: -2px;
+
+    font-size: 11px;
+    font-weight: 500;
+
+    color: var(--text-secondary);
+}

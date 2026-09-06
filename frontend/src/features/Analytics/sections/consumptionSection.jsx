@@ -32,11 +32,11 @@ function ConsumptionSection({period, metric}) {
                 <div className="consumption-title">
 
                     <h2>
-                        Total {metric} Consumption
+                        Total {metric.charAt(0).toUpperCase() + metric.slice(1)} Consumption
                     </h2>
 
                     <p>
-                        {metric} consumption over time
+                        {metric.charAt(0).toUpperCase() + metric.slice(1)} consumption over time
                     </p>
 
                 </div>

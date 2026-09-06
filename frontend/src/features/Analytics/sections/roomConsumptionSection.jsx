@@ -27,7 +27,7 @@ function RoomConsumptionSection({ period, metric }) {
 
             <div className="section-header">
                 <div>
-                    <h2>{metric} intensity by room</h2>
+                    <h2>{metric.charAt(0).toUpperCase() + metric.slice(1)} intensity by room</h2>
                     <span>Consumption per room</span>
                 </div>
             </div>

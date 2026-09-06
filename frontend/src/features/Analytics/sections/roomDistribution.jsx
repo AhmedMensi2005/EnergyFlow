@@ -31,7 +31,7 @@ function RoomDistributionSection({ period, metric}) {
                 <div>
 
                     <h2>
-                        {metric} Distribution by Room
+                        {metric.charAt(0).toUpperCase() + metric.slice(1)} Distribution by Room
                     </h2>
 
                     <p>

@@ -18,6 +18,7 @@ def import_devices():
         print(r.text)
     except Exception as e:
         print(e)
+        
 
 
 scheduler = BlockingScheduler()

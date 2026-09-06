@@ -26,7 +26,7 @@ function DeviceConsumptionSection({ period, metric }) {
 
             <div className="section-header">
                 <div>
-                    <h2>{metric} consumption by device</h2>
+                    <h2>{metric.charAt(0).toUpperCase() + metric.slice(1)} consumption by device</h2>
                     <span>Consumption per device</span>
                 </div>
             </div>

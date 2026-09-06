@@ -22,7 +22,6 @@ class Command(BaseCommand):
                 measurements_importer(data, db_device)
 
                 imported += 1
-                print(data)
                 self.stdout.write(
                     self.style.SUCCESS(
                         f"✓ Imported {db_device.name}"

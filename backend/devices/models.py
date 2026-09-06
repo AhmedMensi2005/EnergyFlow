@@ -33,6 +33,7 @@ class Device(TimeStampedModel):
     presentation_id = models.CharField(max_length=100, blank=True)
     location_id = models.CharField(max_length=100, blank=True)
     owner_id = models.CharField(max_length=100, blank=True)
+    
     device_type = models.CharField(max_length=100, blank=True)
 
 
@@ -64,44 +65,35 @@ class Device(TimeStampedModel):
 
 #device data in a selected time
 class Measurement(models.Model):
-    
+
     device = models.ForeignKey(Device, on_delete=models.CASCADE, related_name="measurements")
 
-    timestamp = models.DateTimeField(db_index=True)   # when the reading occurred (device clock)
+    timestamp = models.DateTimeField(db_index=True)
     ingested_at = models.DateTimeField(auto_now_add=True)
 
-    
-    # --- Common electrical / energy fields (present across most device categories) ---
+    # --- Electrical / energy (present for this device category) ---
     power = models.FloatField(null=True, blank=True, help_text="Watts, instantaneous")
     energy_total = models.FloatField(null=True, blank=True, help_text="Wh, cumulative counter")
     energy_delta = models.FloatField(null=True, blank=True, help_text="Wh, since previous reading")
-    voltage = models.FloatField(null=True, blank=True, help_text="Volts")
-    current = models.FloatField(null=True, blank=True, help_text="Amps")
+    energy_saved = models.FloatField(null=True, blank=True, help_text="Wh, saved via eco/optimizations")
+    power_energy = models.FloatField(null=True, blank=True, help_text="Derived energy-cost figure reported by the API")
 
-    # --- Common environmental fields (HVAC, fridge, ventilation...) ---
+    # --- Environmental ---
     temperature = models.FloatField(null=True, blank=True, help_text="°C")
     target_temperature = models.FloatField(null=True, blank=True, help_text="°C, setpoint")
     humidity = models.FloatField(null=True, blank=True, help_text="%")
 
-    # --- Common operating fields (switch/mode/fan — applies to AC, heater, fan, lighting...) ---
+    # --- Operating state ---
     operating_state = models.CharField(max_length=30, blank=True)   # "on" / "off" / "idle"
     mode = models.CharField(max_length=50, blank=True)              # "cool" / "heat" / "auto"...
     fan_mode = models.CharField(max_length=30, blank=True)          # "low" / "high" / "turbo"...
-
-
-    fan_speed = models.IntegerField(null=True, blank=True)
     swing_mode = models.CharField(max_length=30, blank=True)
-    eco_mode = models.BooleanField(null=True)
     sleep_mode = models.BooleanField(null=True)
     wind_free = models.BooleanField(null=True)
-    filter_status = models.CharField(max_length=30, blank=True)
-    defrost = models.BooleanField(null=True)
-    air_quality = models.FloatField(null=True, blank=True)
-    co2 = models.FloatField(null=True, blank=True)
-    pm10 = models.FloatField(null=True, blank=True)
-    pm25 = models.FloatField(null=True, blank=True)
-    pm100 = models.FloatField(null=True, blank=True)
 
+    # --- Maintenance ---
+    filter_status = models.CharField(max_length=30, blank=True)     # "wash" / "clean" / ...
+    filter_usage = models.FloatField(null=True, blank=True, help_text="% of filter capacity used")
 
     # --- Everything else: device/manufacturer-specific, kept for completeness & debugging ---
     extra_data = models.JSONField(default=dict, blank=True)
@@ -109,10 +101,9 @@ class Measurement(models.Model):
     class Meta:
         ordering = ["-timestamp"]
         indexes = [
-            models.Index(fields=["device", "-timestamp"]),   # dashboard query #1
-            models.Index(fields=["timestamp"]),               # global time-range queries, BRIN candidate
+            models.Index(fields=["device", "-timestamp"]),
+            models.Index(fields=["timestamp"]),
         ]
         constraints = [
-            # Prevents duplicate ingestion if the same JSON file is reprocessed
             models.UniqueConstraint(fields=["device", "timestamp"], name="unique_device_timestamp")
         ]
