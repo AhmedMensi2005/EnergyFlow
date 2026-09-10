@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     "authentication",
     'devices',
     'rooms',
-    'alerts',
+    'alerts.apps.AlertsConfig',
+
+
 ]
 
 MIDDLEWARE = [

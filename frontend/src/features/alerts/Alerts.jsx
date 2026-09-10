@@ -331,216 +331,112 @@ const Alerts = () => {
 
     return (
         <div className="alerts-page">
-
-            {/* =================================================
-                HEADER
-            ================================================= */}
-
+    
+            {/* HEADER — OUTSIDE SCROLLABLE CONTENT */}
             <header className="alerts-header">
-
-                <div>
-                    <p className="alerts-eyebrow">
-                        EnergyFlow
-                    </p>
-
-                    
-
-                    <p>
-                        Monitor alerts and manage your
-                        energy monitoring rules.
-                    </p>
-                </div>
-
-
+                <p className="alerts-subtitle">
+                    Monitor alerts and manage your energy monitoring rules.
+                </p>
+    
                 <button
                     type="button"
                     className="create-rule-btn"
-                    onClick={() =>
-                        setShowRulesModal(true)
-                    }
+                    onClick={() => setShowRulesModal(true)}
                 >
-                    + Create alert rule
+                    <span className="btn-icon">+</span>
+                    Create alert rule
                 </button>
-
             </header>
-
-
-            {/* =================================================
-                ALERT STATUS
-            ================================================= */}
-
-            <AlertStatus
-                counts={alertCounts}
-                activeStatus={statusFilter}
-                onStatusChange={setStatusFilter}
-            />
-
-
-            {/* =================================================
-                ALERT FILTERS
-            ================================================= */}
-
-            <AlertFilters
-                severity={severityFilter}
-                search={search}
-                sortBy={sortBy}
-
-                onSeverityChange={
-                    setSeverityFilter
-                }
-
-                onSearchChange={
-                    setSearch
-                }
-
-                onSortChange={
-                    setSortBy
-                }
-
-                onClear={
-                    handleClearFilters
-                }
-            />
-
-
-            {/* =================================================
-                ALERTS LIST
-            ================================================= */}
-
-            {loading ? (
-
-                <div className="alerts-empty">
-                    <p>
-                        Loading alerts...
-                    </p>
-                </div>
-
-            ) : filteredAlerts.length === 0 ? (
-
-                <div className="alerts-empty">
-
-                    <h3>
-                        No alerts found
-                    </h3>
-
-                    <p>
-                        There are no alerts matching
-                        your current filters.
-                    </p>
-
-                </div>
-
-            ) : (
-
-                <div className="alerts-list">
-
-                    {filteredAlerts.map((alert) => (
-
-                        <AlertCard
-                            key={alert.id}
-                            alert={alert}
-                            onViewDetails={
-                                handleViewDetails
-                            }
-                        />
-
-                    ))}
-
-                </div>
-
-            )}
-
-
-            {/* =================================================
-                ALERT RULES
-            ================================================= */}
-
-            <section className="rules-section">
-
-                <div className="rules-section-header">
-
-                    <div>
-
-                        <h2 className="rules-section-title">
-                            Alert rules
-                        </h2>
-
-                        <p className="rules-section-subtitle">
-                            All configured rules used to
-                            generate alerts.
-                        </p>
-
-                    </div>
-
-                </div>
-
-
-                {rulesLoading ? (
-
+    
+            {/* SCROLLABLE CONTENT */}
+            <main className="alerts-content">
+    
+                <AlertStatus
+                    counts={alertCounts}
+                    activeStatus={statusFilter}
+                    onStatusChange={setStatusFilter}
+                />
+    
+                <AlertFilters
+                    severity={severityFilter}
+                    search={search}
+                    sortBy={sortBy}
+                    onSeverityChange={setSeverityFilter}
+                    onSearchChange={setSearch}
+                    onSortChange={setSortBy}
+                    onClear={handleClearFilters}
+                />
+    
+                {loading ? (
                     <div className="alerts-empty">
+                        <p>Loading alerts...</p>
+                    </div>
+                ) : filteredAlerts.length === 0 ? (
+                    <div className="alerts-empty">
+                        <h3>No alerts found</h3>
                         <p>
-                            Loading alert rules...
+                            There are no alerts matching your current filters.
                         </p>
                     </div>
-
                 ) : (
-
-                    <AlertRules
-                        rules={rules}
-                        onRulesChange={
-                            handleRulesChange
-                        }
-                    />
-
+                    <div className="alerts-list">
+                        {filteredAlerts.map((alert) => (
+                            <AlertCard
+                                key={alert.id}
+                                alert={alert}
+                                onViewDetails={handleViewDetails}
+                            />
+                        ))}
+                    </div>
                 )}
-
-            </section>
-
-
-            {/* =================================================
-                ALERT DETAILS
-            ================================================= */}
-
+    
+                <section className="rules-section">
+                    
+                    <div className="rules-section-header">
+                        
+                        <div>
+                            <h2 className="rules-section-title">
+                                Alert rules
+                            </h2>
+                            <p className="rules-section-subtitle">
+                                All configured rules used to generate alerts.
+                            </p>
+                        </div>
+                    </div>
+    
+                    {rulesLoading ? (
+                        <div className="alerts-empty">
+                            <p>Loading alert rules...</p>
+                        </div>
+                    ) : (
+                        <AlertRules
+                            rules={rules}
+                            onRulesChange={handleRulesChange}
+                        />
+                    )}
+                </section>
+    
+            </main>
+    
+            {/* DETAILS */}
             {selectedAlert && (
-
                 <AlertDetails
                     alert={selectedAlert}
-
-                    onClose={
-                        handleCloseDetails
-                    }
-
-                    onAlertUpdated={
-                        handleAlertUpdated
-                    }
+                    onClose={handleCloseDetails}
+                    onAlertUpdated={handleAlertUpdated}
                 />
-
             )}
-
-
-            {/* =================================================
-                CREATE ALERT RULE MODAL
-            ================================================= */}
-
+    
+            {/* CREATE RULE MODAL */}
             {showRulesModal && (
-
                 <AlertRules
                     mode="create"
-
-                    onClose={() =>
-                        setShowRulesModal(false)
-                    }
-
-                    onCreated={
-                        handleRuleCreated
-                    }
+                    onClose={() => setShowRulesModal(false)}
+                    onCreated={handleRuleCreated}
                 />
-
             )}
-
+    
         </div>
-    );
-};
-
+)}
 
 export default Alerts;
