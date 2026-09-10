@@ -357,12 +357,11 @@ class ImportDevicesAPIView(APIView):
             "success": True,
             "message": "Import completed."
         })
-
 class OnDevicesAPIView(APIView):
 
     def get(self, request):
 
-        devices = Device.objects.all()
+        devices = Device.objects.select_related("room").all()
 
         on_devices = devices.filter(
             last_operating_state__iexact="on"
@@ -373,7 +372,16 @@ class OnDevicesAPIView(APIView):
             many=True
         )
 
+        on_devices_data = serializer.data
+
+        for device_data, device in zip(on_devices_data, on_devices):
+            device_data["room_name"] = (
+                device.room.name
+                if device.room
+                else None
+            )
+
         return Response({
             "total_devices": devices.count(),
-            "on_devices": serializer.data,
+            "on_devices": on_devices_data,
         }, status=status.HTTP_200_OK)
