@@ -15,7 +15,7 @@ load_dotenv(BASE_DIR.parent / ".env")
 SECRET_KEY = "django-insecure-=s4t5$b2hmp$&p)(eb*t*)ok7nz*!c1481j-6qi8oa1=&^56x6"
 
 DEBUG = True
-ALLOWED_HOSTS = ["localhost", "backend", "127.0.0.1", 'pout-sandworm-angriness.ngrok-free.dev',]
+ALLOWED_HOSTS = ["localhost", "backend", "127.0.0.1", 'pout-sandworm-angriness.ngrok-free.dev', "mastiff-darkroom-strobe.ngrok-free.dev"]
 
 #--smartthings credentials
 SMARTTHINGS_TOKEN = os.getenv("SMARTTHINGS_TOKEN")
@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "authentication",
     'devices',
     'rooms',
+    'alerts',
 ]
 
 MIDDLEWARE = [

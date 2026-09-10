@@ -6,7 +6,8 @@ import ResetPassword from "../features/authentication/pages/ResetPassword";
 import CreateAccount from "../features/authentication/pages/CreateAccount";
 import ProtectedRoute from "./ProtectedRoute";
 
-import Main from "../features/main/mainPage"
+import Main from "../features/main/mainPage";
+import Alerts from "../features/alerts/Alerts";
 
 
 export default function AppRoutes() {
@@ -58,6 +59,8 @@ export default function AppRoutes() {
                 path="/create-account/:invitation_id/:token"
                 element={<CreateAccount />}
             />
+
+            <Route path="/alerts" element={<Alerts />} />
 
             {/* Unknown routes */}
             <Route
