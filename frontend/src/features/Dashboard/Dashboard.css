@@ -1,0 +1,90 @@
+.dashboard {
+    width: 100%;
+    height: 80vh;
+
+    display: grid;
+
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-rows: repeat(8, minmax(0, 1fr));
+
+    gap: 16px;
+
+    min-width: 0;
+    min-height: 0;
+
+    overflow: hidden;
+
+    box-sizing: border-box;
+}
+
+.dashboard > div {
+    background-color: var(--card);
+    border-radius: var(--radius);
+
+    min-width: 0;
+    min-height: 0;
+
+    overflow: hidden;
+}
+
+/* Active Devices */
+
+.dashboard .active-devices-kpi {
+
+    grid-area: 5 / 6 / 7 / 7;
+
+}
+
+
+/* Total Consumption */
+
+.dashboard .unsolved-alerts-kpi {
+
+    grid-area: 7 / 6 / 9 / 7;
+
+}
+
+
+/* Main Energy Chart */
+
+.dashboard .environment-section {
+
+    grid-area: 1 / 7 / 9 / 9;
+
+}
+
+
+/* Overview */
+
+.dashboard .energy-overview-section {
+
+    grid-area: 1 / 1 / 5 / 5;
+
+}
+
+
+/* Device Status */
+
+.dashboard .device-status-section {
+
+    grid-area: 1 / 5 / 5 / 7;
+
+}
+
+
+/* Top Rooms */
+
+.dashboard .room-distribution-percentage-section {
+
+    grid-area: 5 / 1 / 9 / 4;
+
+}
+
+
+/* Recent Activity */
+
+.dashboard .dashboard-list-section {
+
+    grid-area: 5 / 4 / 9 / 6;
+
+}

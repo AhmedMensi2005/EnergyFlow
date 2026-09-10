@@ -6,6 +6,7 @@
 
   --primary: #10b981;
   --primary-dark: #059669;
+  --primary-dark-transparent: #05966886;
 
   --secondary: #06b6d4;
   --secondary-dark: #0891b2;
@@ -65,11 +66,18 @@
      CHART COLORS
   ================================= */
 
-  --chart-green: #10B981;
-  --chart-blue: #3B82F6;
-  --chart-cyan: #06B6D4;
-  --chart-orange: #F59E0B;
-  --chart-teal: #14B8A6;
+   --chart-green: #10B981;
+   --chart-blue: #3B82F6;
+   --chart-cyan: #06B6D4;
+   --chart-orange: #F59E0B;
+   --chart-teal: #14B8A6;
+   --chart-purple: #7C3AED;
+   --chart-red: #DC2626;
+   --chart-pink: #DB2777;
+   --chart-lime: #65A30D;
+   --chart-deep-orange: #EA580C;
+   --chart-indigo: #4F46E5;
+
 
   /* =================================
      MONITORING COMPONENTS

@@ -1,0 +1,202 @@
+.chart-filters {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.filter {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 8px 12px;
+
+    background: #f8fafc;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    transition: .2s;
+
+}
+
+.filter:hover {
+
+    border-color: #cbd5e1;
+
+    background: #ffffff;
+
+}
+
+
+.filter-icon {
+
+    color: #64748b;
+
+    font-size: 16px;
+
+}
+
+
+.filter-select {
+
+    border: none;
+
+    background: transparent;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #334155;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    padding: 2px;
+
+}
+
+
+.filter-chevron {
+
+    font-size: 15px;
+
+    transition: transform .2s;
+
+}
+
+
+.filter-chevron.open {
+
+    transform: rotate(180deg);
+
+}
+
+
+/* MENU */
+
+.filter-menu {
+
+    position: absolute;
+
+    top: calc(100% + 8px);
+
+    right: -15%;
+
+    min-width: 180px;
+
+    padding: 6px;
+
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 14px;
+
+    box-shadow: 0 12px 30px rgba(15, 23, 42, .10);
+
+    z-index: 50;
+
+}
+
+
+.filter-option {
+
+    width: 100%;
+
+    border: none;
+
+    background: transparent;
+
+    padding: 9px 10px;
+
+    border-radius: 9px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    color: #475569;
+
+    font-size: 13px;
+
+    cursor: pointer;
+
+    text-align: left;
+
+}
+
+
+.filter-option:hover {
+
+    background: #f8fafc;
+
+}
+
+
+.filter-option.active {
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-weight: 600;
+
+}
+
+
+.filter-option small {
+
+    color: #94a3b8;
+
+    font-size: 11px;
+
+}
+
+
+@media (max-width: 650px) {
+
+    .chart-filters {
+
+        width: 100%;
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+    .filter {
+
+        justify-content: space-between;
+
+    }
+
+    .filter-select {
+
+        width: 100%;
+
+        justify-content: space-between;
+
+    }
+
+}

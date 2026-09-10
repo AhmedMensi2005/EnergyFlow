@@ -5,11 +5,11 @@ import "./style.css";
 const sortOptions = [
     { value: "name", label: "Name" },
     { value: "status", label: "Status" },
-    { value: "manufacturer", label: "Manufacturer" },
-    { value: "model_number", label: "Model" },
+    { value: "power", label: "Power" },
+    { value: "temperature", label: "Temperature" },
+    {value: "operating_state",label: "Operating State"},
     { value: "created_at", label: "Created" },
 ];
-
 function DevicesHeader({
     search,
     setSearch,

@@ -1,0 +1,742 @@
+/*-------energyOverview Section---------*/
+
+.energy-overview {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+}
+
+.section-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+}
+
+.section-header h2 {
+    margin: 0;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    color: var(--text);
+}
+
+.section-header p {
+    margin: 3px 0 0;
+
+    font-size: 10px;
+
+    color: var(--text-secondary);
+}
+
+.energy-overview-chart {
+    flex: 1;
+
+    min-width: 0;
+    min-height: 0;
+}
+
+/* ==========================
+   Energy / Power selector
+========================== */
+
+.metric-navigation {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    padding: 3px;
+
+    gap: 2px;
+
+    border-radius: 10px;
+
+    background: var(--surface);
+
+    overflow: hidden;
+}
+
+
+/* Individual option */
+.metric-option {
+    position: relative;
+
+    min-width: 50px;
+    height: 26px;
+
+    padding: 0 9px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: var(--text-secondary);
+
+    font-family: var(--font-family);
+    font-size: 10px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        color 0.25s ease,
+        background-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.2s ease;
+}
+
+.metric-option:hover {
+    color: var(--text-primary);
+}
+
+.metric-option:active {
+    transform: scale(0.95);
+}
+
+.metric-option.active {
+    background: var(--card);
+
+    color: var(--text-primary);
+
+    box-shadow:
+        0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/*----------------Device Status Section--------------------- */
+.device-status {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px;
+    box-sizing: border-box;
+
+    overflow: hidden;
+}
+
+
+/*Header */
+.device-status .section-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+}
+
+.device-status .section-header h2 {
+    margin: 0;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    color: var(--text);
+}
+
+.device-status .section-header p {
+    margin: 3px 0 0;
+
+    font-size: 10px;
+
+    color: var(--text-secondary);
+}
+/* ==========================
+   Month navigation
+========================== */
+
+.month-navigation {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+
+    padding: 3px;
+
+    border-radius: 11px;
+
+    background: transparent;
+}
+
+
+/* ==========================
+   Navigation buttons
+========================== */
+
+.month-nav-button {
+    width: 26px;
+    height: 26px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 8px;
+
+    background: transparent;
+    color: var(--text-secondary);
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    opacity: 70%;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.15s ease;
+}
+
+.month-nav-button:hover:not(:disabled) {
+    background: var(--hover);
+    color: var(--text-primary);
+}
+
+.month-nav-button:active:not(:disabled) {
+    transform: scale(0.92);
+}
+
+.month-nav-button:disabled {
+    opacity: 0.25;
+    cursor: default;
+}
+
+
+/* ==========================
+   Current month
+========================== */
+
+.current-month {
+
+    min-width: 92px;
+
+    padding: 0 2px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: transparent;
+
+    color: var(--text-secondary);
+
+    font-family: var(--font-family);
+
+    font-size: 10px;
+    font-weight: 100;
+
+    white-space: nowrap;
+    opacity: 70%;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease;
+}
+
+.month-navigation:hover .current-month {
+    color: var(--text-primary);
+}
+
+.section-header span{
+    margin: 0;
+}
+
+/* ==========================
+   Dashboard List Section
+========================== */
+
+.dashboard-list-section {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+}
+
+
+/* ==========================
+   Section Header
+========================== */
+
+.dashboard-list-section .section-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+
+    flex-shrink: 0;
+}
+
+
+.dashboard-list-section .section-header h2 {
+    margin: 0;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    color: var(--text);
+}
+
+
+.dashboard-list-section .section-header p {
+    margin: 3px 0 0;
+
+    font-size: 10px;
+
+    color: var(--text-secondary);
+}
+
+
+/* ==========================
+   List
+========================== */
+
+.dashboard-list {
+    flex: 1;
+
+    min-width: 0;
+    min-height: 0;
+
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 2px;
+
+    scrollbar-width: thin;
+}
+
+
+/* Chrome / Edge / Safari */
+
+.dashboard-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+
+.dashboard-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.dashboard-list::-webkit-scrollbar-thumb {
+    background: var(--border);
+
+    border-radius: 999px;
+}
+
+
+/* ==========================
+   List Item
+========================== */
+
+.dashboard-list-item {
+    position: relative;
+
+    width: 90%;
+    min-height: 44px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+
+    padding: 7px 2px;
+
+    box-sizing: border-box;
+
+    /*
+        Initial state
+    */
+
+    opacity: 0;
+
+    transform:
+        translateY(12px);
+
+    /*
+        Entrance animation
+    */
+
+    animation-name: dashboardItemIn;
+
+    animation-duration: 550ms;
+
+    animation-timing-function:
+        cubic-bezier(0.16, 1, 0.3, 1);
+
+    animation-fill-mode: forwards;
+
+    animation-delay:
+        calc(var(--i, 0) * 70ms);
+
+    transition:
+        transform 200ms ease,
+        opacity 200ms ease;
+}
+
+
+/* ==========================
+   Item entrance
+========================== */
+
+@keyframes dashboardItemIn {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            translateY(12px);
+    }
+
+    60% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* ==========================
+   Item hover
+========================== */
+
+.dashboard-list-item:hover {
+    transform:
+        translateX(3px);
+}
+
+
+/* ==========================
+   Status Indicator
+========================== */
+
+.dashboard-list-indicator {
+    position: relative;
+
+    width: 7px;
+    height: 7px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+}
+
+
+/* ==========================
+   Online Indicator
+========================== */
+
+.indicator-online {
+    color: var(--online-color);
+
+    background: var(--online-color);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(16, 185, 129, 0.10);
+}
+
+
+/* ==========================
+   Alert Indicator
+========================== */
+
+.indicator-alert {
+    color: var(--chart-blue);
+
+    background: var(--chart-blue);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(239, 68, 68, 0.10);
+}
+
+
+/* ==========================
+   Indicator Pulse
+========================== */
+
+.dashboard-list-indicator::after {
+    content: "";
+
+    position: absolute;
+
+    inset: -3px;
+
+    border: 1px solid currentColor;
+
+    border-radius: 50%;
+
+    opacity: 0;
+
+    animation:
+        indicatorPulse
+        2.2s
+        ease-out
+        infinite;
+}
+
+
+@keyframes indicatorPulse {
+
+    0% {
+        transform: scale(0.7);
+
+        opacity: 0.45;
+    }
+
+    70% {
+        transform: scale(1.5);
+
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1.5);
+
+        opacity: 0;
+    }
+}
+
+
+/* ==========================
+   Information
+========================== */
+
+.dashboard-list-info {
+    flex: 1;
+
+    min-width: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+}
+
+
+/* ==========================
+   Name
+========================== */
+
+.dashboard-list-name {
+    display: block;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    line-height: 1.3;
+
+    color: var(--text-primary);
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* ==========================
+   Secondary text
+========================== */
+
+.dashboard-list-secondary {
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 9px;
+
+    line-height: 1.3;
+
+    color: var(--text-secondary);
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+
+
+/* ==========================
+   Status Pill
+========================== */
+
+.status-pill {
+    display: inline-block;
+
+    font-size: 8px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.3px;
+
+    line-height: 1;
+
+    transition:
+        transform 200ms ease,
+        opacity 200ms ease;
+}
+
+
+/* ==========================
+   Online
+========================== */
+
+.status-online {
+    color: var(--online-color);
+}
+
+
+/* ==========================
+   Alert
+========================== */
+
+.status-alert {
+    color: var(--chart-blue);
+}
+
+
+/* ==========================
+   Status hover
+========================== */
+
+.dashboard-list-item:hover .status-pill {
+    transform:
+        translateX(-2px);
+}
+
+
+/* ==========================
+   Empty State
+========================== */
+
+.dashboard-list-empty {
+    flex: 1;
+
+    min-height: 100px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: var(--text-secondary);
+
+    font-size: 11px;
+
+    text-align: center;
+}
+
+
+/* ==========================
+   Empty state text
+========================== */
+
+.dashboard-list-empty span {
+    opacity: 0.8;
+}
+
+
+/* ==========================
+   Energy Distribution
+========================== */
+
+.room-distribution-section {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 18px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+}
+
+.room-distribution-section .section-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 4px;
+}
+
+.room-distribution-section .section-header h2 {
+    margin: 0;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    color: var(--text);
+}
+
+.room-distribution-section .section-header p {
+    margin: 3px 0 0;
+
+    font-size: 10px;
+
+    color: var(--text-secondary);
+}
+
+.room-distribution-content {
+    flex: 1;
+
+    min-width: 0;
+    min-height: 0;
+}
+
+/* ==========================
+   Dashboard - Environment
+========================== */
+
+.dashboard .environment-section {
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    overflow: hidden;
+
+}

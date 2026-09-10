@@ -202,9 +202,6 @@ export default function DeviceCard({
                     {(measurement.mode || "—").toUpperCase()}
                 </div>
 
-                <div className={`status ${statusClass}`}>
-                    ● {device.status}
-                </div>
 
                 <div className="updated">
                     Last update

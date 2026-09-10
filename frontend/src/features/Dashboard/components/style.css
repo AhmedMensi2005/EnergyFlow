@@ -1,0 +1,1134 @@
+
+
+
+/* ==========================
+   Legend
+========================== */
+
+.chart-legend {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+
+    padding-top: 8px;
+}
+
+.chart-legend-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    padding: 4px 10px;
+    border-radius: 999px;
+
+    background: var(--surface);
+
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+
+    transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+.chart-legend-pill:hover {
+    transform: translateY(-1px);
+    background: var(--hover);
+}
+
+.chart-legend-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+
+
+/* ==========================
+   Alerts Heatmap
+========================== */
+
+.alerts-heatmap {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    background: var(--card);
+
+    font-family: var(--font-family);
+
+    overflow: visible;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* ==========================
+   Body
+========================== */
+
+.heatmap-body {
+    flex: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+
+    min-height: 0;
+}
+
+
+/* ==========================
+   Weekday labels
+========================== */
+
+.heatmap-weekdays {
+    flex: 0 0 28px;
+
+    display: grid;
+
+    grid-template-rows: repeat(7, 24px);
+
+    gap: 2px;
+
+    font-size: 9px;
+
+    color: var(--text-secondary);
+
+    text-align: right;
+}
+
+.heatmap-weekdays span {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    height: 24px;
+}
+
+
+/* ==========================
+   Grid
+========================== */
+
+.heatmap-grid {
+    display: grid;
+
+    grid-auto-flow: column;
+
+    grid-template-rows: repeat(7, 24px);
+
+    gap: 2px;
+
+    grid-auto-columns: 24px;
+
+    width: auto;
+    height: auto;
+
+    justify-content: center;
+
+    min-width: 0;
+}
+
+
+/* ==========================
+   Cells
+========================== */
+
+.heatmap-cell {
+    width: 24px;
+    height: 24px;
+
+    border-radius: 4px;
+
+    cursor: pointer;
+
+    position: relative;
+
+    opacity: 0;
+
+    transform: scale(0.4);
+
+    animation: cellIn 0.35s ease forwards;
+
+    animation-delay: calc(var(--i, 0) * 3ms);
+
+    transition:
+        box-shadow 0.15s ease;
+}
+
+.heatmap-cell.empty {
+    background: transparent;
+
+    cursor: default;
+
+    animation: none;
+}
+
+/* ==========================
+   Cell animation
+========================== */
+
+@keyframes cellIn {
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* ==========================
+   Hover
+========================== */
+
+.heatmap-cell:not(.empty):hover {
+    z-index: 20;
+
+}
+
+/* ==========================
+   Tooltip
+========================== */
+
+.heatmap-cell:not(.empty)::after {
+    content: attr(data-tooltip);
+
+    position: absolute;
+
+    bottom: calc(100% + 8px);
+
+    left: 50%;
+
+    transform:
+        translateX(-50%)
+        translateY(4px);
+
+    padding: 6px 10px;
+
+    border-radius: var(--radius-sm);
+
+    background: var(--text-primary);
+
+    color: var(--text-white);
+
+    font-size: 10px;
+
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    opacity: 0;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.15s ease,
+        transform 0.15s ease;
+
+    z-index: 50;
+}
+
+.heatmap-cell:not(.empty):hover::after {
+    opacity: 1;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+
+/* Tooltip arrow */
+
+.heatmap-cell:not(.empty)::before {
+    content: "";
+
+    position: absolute;
+
+    bottom: calc(100% + 3px);
+
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    border: 5px solid transparent;
+
+    border-top-color: var(--text-primary);
+
+    opacity: 0;
+
+    transition: opacity 0.15s ease;
+
+    z-index: 50;
+}
+
+.heatmap-cell:not(.empty):hover::before {
+    opacity: 1;
+}
+
+
+/* ==========================
+   KPI Card
+========================== */
+
+.kpi-card {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 14px 16px;
+
+    box-sizing: border-box;
+
+    border: none;
+    border-radius: var(--radius);
+
+    background: var(--card);
+
+    color: var(--text-primary);
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+
+/* Very subtle hover */
+
+
+
+
+
+/* ==========================
+   Title
+========================== */
+
+.kpi-title {
+    font-size: 12px;
+    font-weight: 600;
+
+    color: var(--text-secondary);
+}
+
+
+/* ==========================
+   Gauge
+========================== */
+
+.kpi-gauge-container {
+    position: relative;
+
+    width: 100%;
+    height: 100px;
+
+    margin-top: 2px;
+}
+
+
+/* Number inside gauge */
+
+.kpi-gauge-number {
+    position: absolute;
+
+    left: 0;
+    right: 0;
+    bottom: 5px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 25px;
+    line-height: 1;
+
+    font-weight: 700;
+
+    pointer-events: none;
+}
+
+
+/* ==========================
+   Total
+========================== */
+
+.kpi-total {
+    margin-top: -2px;
+
+    font-size: 11px;
+    font-weight: 500;
+
+    color: var(--text-secondary);
+}
+
+/* ==========================
+   Dashboard - Room Distribution
+========================== */
+
+.dashboard .room-distribution-section {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    padding: 18px;
+
+    box-sizing: border-box;
+
+    overflow: hidden;
+}
+
+.dashboard .room-distribution-section .section-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 4px;
+}
+
+.dashboard .room-distribution-section .section-header h2 {
+    margin: 0;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    color: var(--text);
+}
+
+.dashboard .room-distribution-section .section-header p {
+    margin: 3px 0 0;
+
+    font-size: 10px;
+
+    color: var(--text-secondary);
+}
+
+.dashboard .room-distribution-content {
+    flex: 1;
+
+    min-width: 0;
+    min-height: 0;
+}
+
+
+/* ==========================
+   Dashboard - Distribution Chart
+========================== */
+
+.dashboard .room-distribution-chart {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    min-height: 0;
+}
+
+
+/* ==========================
+   Center
+========================== */
+
+.dashboard .room-distribution-center {
+    position: absolute;
+
+    left: 50%;
+    top: 68%;
+
+    transform: translate(-50%, -50%);
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    pointer-events: none;
+
+    text-align: center;
+
+    
+}
+
+.dashboard .distribution-total {
+    font-size: 24px;
+    line-height: 1;
+
+    font-weight: 700;
+
+    color: var(--text-primary);
+}
+
+.dashboard .distribution-unit {
+    margin-top: 2px;
+
+    font-size: 9px;
+
+    color: var(--text-secondary);
+}
+
+.dashboard .distribution-label {
+    margin-top: 5px;
+
+    font-size: 8px;
+
+    color: var(--text-light);
+}
+
+
+/* ==========================
+   Tooltip
+========================== */
+
+.dashboard .room-distribution-tooltip {
+    min-width: 120px;
+
+    padding: 9px 11px;
+
+    border-radius: var(--radius-sm);
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    box-shadow: var(--shadow-md);
+
+    z-index: 1120;
+}
+
+.dashboard .tooltip-room-name {
+    margin-bottom: 4px;
+
+    font-size: 11px;
+    font-weight: 600;
+
+    color: var(--text-primary);
+}
+
+.dashboard .tooltip-room-value {
+    font-size: 14px;
+    font-weight: 700;
+
+}
+
+.dashboard .tooltip-room-consumption {
+    margin-top: 2px;
+
+    font-size: 9px;
+
+    color: var(--text-secondary);
+}
+
+/* =====================================================
+   Environment Panel
+===================================================== */
+
+.environment-panel {
+
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    min-height: 0;
+
+    overflow: hidden;
+
+    font-family: var(--font-family);
+
+}
+
+
+/* =====================================================
+   Header
+===================================================== */
+
+.environment-header {
+
+    position: absolute;
+
+    top: 16px;
+    left: 16px;
+    right: 16px;
+
+    z-index: 10;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+}
+
+
+.environment-location {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    color: var(--text-primary);
+
+    font-size: 10px;
+
+}
+
+
+.environment-location svg {
+
+    width: 13px;
+    height: 13px;
+
+    color: var(--text-primary);
+
+}
+
+
+.environment-status {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 4px 8px;
+
+    border-radius: 999px;
+
+    background: var(--hover);
+
+    color: var(--primary-dark);
+
+    font-size: 7px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.1em;
+
+}
+
+
+.environment-status-dot {
+
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: var(--primary);
+
+}
+
+
+/* =====================================================
+   Weather
+===================================================== */
+
+.environment-weather {
+
+    position: absolute;
+
+    z-index: 12;
+
+    top: 30%;
+
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 92%;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    text-align: center;
+
+}
+
+
+/* =====================================================
+   Weather Temperature
+===================================================== */
+
+.environment-temperature {
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: center;
+
+}
+
+.temperature-value {
+    font-size: 64px;
+    line-height: 0.85;
+
+    font-weight: 300;
+
+    letter-spacing: -0.08em;
+
+    color: var(--text-primary);
+}
+
+.temperature-unit {
+    margin-top: 5px;
+    margin-left: 6px;
+
+    font-size: 17px;
+    font-weight: 500;
+
+    color: var(--text-primary);
+}
+
+
+.environment-condition {
+
+    margin-top: 9px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    color: var(--text-primary);
+
+}
+
+
+.environment-feels {
+
+    margin-top: 4px;
+
+    font-size: 10px;
+
+    color: var(--text-light);
+
+}
+
+
+/* =====================================================
+   Weather Metrics
+===================================================== */
+
+.environment-metrics {
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    margin-top: 20px;
+
+}
+
+
+/* =====================================================
+   Metric Card
+===================================================== */
+
+.environment-metric {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    min-width: 110px;
+
+    padding: 10px 12px;
+
+}
+
+
+/* =====================================================
+   Metric Icons
+===================================================== */
+
+.metric-icon {
+
+    width: 32px;
+
+    height: 32px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 9px;
+
+}
+
+
+.metric-icon svg {
+
+    width: 15px;
+
+    height: 15px;
+
+}
+
+
+/* =====================================================
+   Humidity
+===================================================== */
+
+.humidity .metric-icon {
+
+    background: var(--hover);
+
+    color: var(--primary);
+
+}
+
+
+/* =====================================================
+   Wind
+===================================================== */
+
+.wind .metric-icon {
+
+    background: var(--hover);
+
+    color: var(--primary);
+
+}
+
+
+/* =====================================================
+   Metric Information
+===================================================== */
+
+.metric-information {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+
+}
+
+
+.metric-value {
+
+    font-size: 13px;
+
+    line-height: 1;
+
+    font-weight: 700;
+
+    color: var(--text-primary);
+
+}
+
+
+.metric-label {
+
+    margin-top: 4px;
+
+    font-size: 8px;
+
+    color: var(--text-light);
+
+}
+
+
+/* =====================================================
+   Hourly Weather
+===================================================== */
+
+.environment-hourly {
+
+    position: absolute;
+
+    z-index: 12;
+
+    top: 150%;
+
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 92%;
+
+    text-align: center;
+
+}
+
+
+.environment-hourly-title {
+
+    margin-bottom: 8px;
+
+    font-size: 8px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.08em;
+
+    color: var(--text-light);
+
+}
+
+
+/* =====================================================
+   Hourly List
+===================================================== */
+
+.environment-hourly-list {
+
+    display: grid;
+
+    grid-template-columns: repeat(
+        5,
+        minmax(0, 1fr)
+    );
+
+    gap: 6px;
+
+    width: 100%;
+
+}
+
+
+/* =====================================================
+   Hour
+===================================================== */
+
+.environment-hour {
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    padding: 7px 4px;
+
+    border-radius: var(--radius-sm);
+
+    background: var(--surface);
+
+}
+
+
+/* =====================================================
+   Hour Time
+===================================================== */
+
+.environment-hour-time {
+
+    font-size: 8px;
+
+    font-weight: 600;
+
+    color: var(--text-secondary);
+
+}
+
+
+/* =====================================================
+   Hourly Weather Icon
+===================================================== */
+
+.environment-hour-icon {
+
+    width: 28px;
+
+    height: 28px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #3b83f618;
+
+    color: var(--chart-blue);
+
+}
+
+
+.environment-hour-icon svg {
+
+    width: 15px;
+
+    height: 15px;
+
+}
+
+
+/* =====================================================
+   Hourly Temperature
+===================================================== */
+
+.environment-hour-temperature {
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    color: var(--text-primary);
+
+}
+
+
+/* =====================================================
+   Clock
+===================================================== */
+
+.environment-clock {
+
+    position: absolute;
+
+    z-index: 11;
+
+    left: 50%;
+
+    bottom: 22px;
+
+    transform: translateX(-50%);
+
+    width: 100%;
+
+    margin: 0;
+
+    text-align: center;
+
+}
+
+
+.clock-label {
+
+    margin-bottom: 5px;
+
+    font-size: 7px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.18em;
+
+    color: var(--text-light);
+
+}
+
+
+.clock-time {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    font-size: 42px;
+
+    line-height: 1;
+
+    font-weight: 300;
+
+    letter-spacing: -0.07em;
+
+    color: var(--text-primary);
+
+}
+
+
+.clock-colon {
+
+    margin-bottom: 1%;
+
+}
+
+
+.clock-seconds {
+
+    margin-top: 4px;
+
+    font-size: 8px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.16em;
+
+    color: var(--primary);
+
+}
+
+
+.clock-date {
+
+    margin-top: 15px;
+
+    font-size: 8px;
+
+    color: var(--text-light);
+
+    letter-spacing: 0.05em;
+
+}
+
+
+/* =====================================================
+   Energy Synchronization
+===================================================== */
+
+.environment-energy-status {
+
+    position: absolute;
+
+    z-index: 12;
+
+    bottom: 7px;
+
+    right: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+    font-size: 6px;
+
+    color: var(--text-light);
+
+}
+
+
+.environment-energy-status svg {
+
+    width: 8px;
+
+    height: 8px;
+
+    color: var(--primary);
+
+}

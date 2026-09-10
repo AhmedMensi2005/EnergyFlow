@@ -19,44 +19,119 @@ from .serializers import DeviceSerializer,MeasurementSerializer
 
 from django.core.management import call_command
 
+from django.db.models import OuterRef, Subquery
+
 
 #device models
 
 class DeviceListAPIView(APIView):
-    
-    permission_classes=[AllowAny]
+
+    permission_classes = [AllowAny]
+
     def get(self, request):
 
-        devices = Device.objects.all()
+        # --------------------------------
+        # Latest measurement for each device
+        # --------------------------------
 
+        latest_measurement = (
+            Measurement.objects
+            .filter(device=OuterRef("pk"))
+            .order_by("-timestamp")
+        )
+
+        devices = (
+            Device.objects
+            .annotate(
+
+                latest_power=Subquery(
+                    latest_measurement.values("power")[:1]
+                ),
+
+                latest_temperature=Subquery(
+                    latest_measurement.values("temperature")[:1]
+                ),
+
+            )
+        )
+
+        # --------------------------------
         # Search
+        # --------------------------------
+
         search = request.query_params.get("search")
+
         if search:
+
             devices = devices.filter(
                 name__icontains=search
             )
 
+        # --------------------------------
         # Sort
+        # --------------------------------
+
         ordering = request.query_params.get("ordering")
 
         allowed_fields = {
+
             "name",
             "status",
-            "manufacturer",
-            "model_number",
+
+            "latest_power",
+            "latest_temperature",
+
+            "last_operating_state",
+
             "created_at",
             "updated_at",
+
+        }
+
+        # Map frontend values → database values
+
+        ordering_map = {
+
+            "power": "latest_power",
+
+            "temperature": "latest_temperature",
+
+            "operating_state": "last_operating_state",
+
         }
 
         if ordering:
+
+            descending = ordering.startswith("-")
+
             field = ordering.lstrip("-")
 
+            # Convert frontend name
+            field = ordering_map.get(
+                field,
+                field
+            )
+
             if field in allowed_fields:
-                devices = devices.order_by(ordering)
 
-        serializer = DeviceSerializer(devices, many=True)
+                final_ordering = (
+                    f"-{field}"
+                    if descending
+                    else field
+                )
 
-        return Response(serializer.data)
+                devices = devices.order_by(
+                    final_ordering
+                )
+
+        serializer = DeviceSerializer(
+            devices,
+            many=True
+        )
+
+        return Response(
+            serializer.data
+        )
     
 class DeviceDetailAPIView(APIView):
 
@@ -186,7 +261,7 @@ class ExportMeasurementsAPIView(APIView):
         export_format = request.query_params.get("export_format", "csv")
 
         device_fields = [f for f in fields if f.startswith("device.")]
-        measurement_fields =[f for f in fields if not f.startswith("device.")]
+        measurement_fields = [f for f in fields if not f.startswith("device.")]
 
         def get_device_value(device, field):
             attribute = field.replace("device.", "")
@@ -198,18 +273,16 @@ class ExportMeasurementsAPIView(APIView):
             return getattr(measurement, field, None)
 
         def normalize(value):
-            # Strips timezone info and converts date/datetime to plain strings —
-            # avoids the openpyxl "no timezones" crash and keeps CSV/JSON consistent.
             if hasattr(value, "isoformat"):
                 return value.isoformat()
             return value
 
-        # Group measurements under their device instead of repeating device info per row
         grouped = {}
         for measurement in measurements.order_by("device_id", "timestamp"):
             device = measurement.device
             if device.id not in grouped:
                 grouped[device.id] = {
+                    "external_id": device.external_id,
                     "device": {f: normalize(get_device_value(device, f)) for f in device_fields},
                     "measurements": [],
                 }
@@ -227,18 +300,25 @@ class ExportMeasurementsAPIView(APIView):
             response["Content-Disposition"] = 'attachment; filename="measurements.json"'
             return response
 
-        elif export_format == "xlsx":
+        # For CSV/XLSX: external_id is always the first column (forced identifier).
+        # Any other selected device fields (name, room, etc.) become extra flat
+        # columns, so they show up once per measurement row rather than nested.
+        extra_device_fields = [f for f in device_fields if f != "device.external_id"]
+        extra_device_headers = [f.replace("device.", "") for f in extra_device_fields]
+
+        if export_format == "xlsx":
             wb = Workbook()
             ws = wb.active
             ws.title = "Export"
 
-            ws.append(["external_id"] + measurement_fields)
+            ws.append(["external_id"] + extra_device_headers + measurement_fields)
 
             for entry in devices_data:
-                if measurement_fields:
-                    for m in entry["measurements"]:
-                        ws.append([entry["device"]["device.external_id"]]+[m.get(f) for f in measurement_fields])
-
+                device_values = [entry["device"].get(f) for f in extra_device_fields]
+                for m in entry["measurements"]:
+                    ws.append(
+                        [entry["external_id"]] + device_values + [m.get(f) for f in measurement_fields]
+                    )
 
             response = HttpResponse(
                 content_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -252,11 +332,14 @@ class ExportMeasurementsAPIView(APIView):
             response["Content-Disposition"] = 'attachment; filename="measurements.csv"'
             writer = csv.writer(response)
 
-            writer.writerow(["external_id"]+measurement_fields)
+            writer.writerow(["external_id"] + extra_device_headers + measurement_fields)
             for entry in devices_data:
-                if measurement_fields:
-                    for m in entry["measurements"]:
-                        writer.writerow([entry["device"]["device.external_id"]]+[m.get(f) for f in measurement_fields])
+                device_values = [entry["device"].get(f) for f in extra_device_fields]
+                for m in entry["measurements"]:
+                    writer.writerow(
+                        [entry["external_id"]] + device_values + [m.get(f) for f in measurement_fields]
+                    )
+
             return response
 
 
@@ -274,5 +357,31 @@ class ImportDevicesAPIView(APIView):
             "success": True,
             "message": "Import completed."
         })
+class OnDevicesAPIView(APIView):
 
-    
+    def get(self, request):
+
+        devices = Device.objects.select_related("room").all()
+
+        on_devices = devices.filter(
+            last_operating_state__iexact="on"
+        )
+
+        serializer = DeviceSerializer(
+            on_devices,
+            many=True
+        )
+
+        on_devices_data = serializer.data
+
+        for device_data, device in zip(on_devices_data, on_devices):
+            device_data["room_name"] = (
+                device.room.name
+                if device.room
+                else None
+            )
+
+        return Response({
+            "total_devices": devices.count(),
+            "on_devices": on_devices_data,
+        }, status=status.HTTP_200_OK)

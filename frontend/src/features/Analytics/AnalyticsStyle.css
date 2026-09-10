@@ -1,0 +1,115 @@
+/* ==========================
+   ANALYTICS PAGE
+========================== */
+
+.analytics-page {
+
+    display: grid;
+
+    grid-template-rows: auto 1fr;
+
+    height: 100vh;
+
+    min-height: 0;
+
+    background: #f4f7fb;
+}
+
+
+/* ==========================
+   SCROLL AREA
+========================== */
+
+.analytics-container {
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    box-sizing: border-box;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 24px;
+
+    padding: 15px 0%;
+
+    margin-bottom: 10%;
+
+    scroll-behavior: smooth;
+
+    /* Fade at top and bottom */
+    mask-image: linear-gradient(
+        to bottom,
+        transparent 0,
+        black 15px,
+        black calc(100% - 15px),
+        transparent 100%
+    );
+
+    -webkit-mask-image: linear-gradient(
+        to bottom,
+        transparent 0,
+        black 15px,
+        black calc(100% - 15px),
+        transparent 100%
+    );
+
+    /* Hide scrollbar */
+    scrollbar-width: none;
+
+    -ms-overflow-style: none;
+}
+
+.analytics-container::-webkit-scrollbar {
+
+    display: none;
+}
+
+
+/* ==========================
+   CONSUMPTION COMPARISON
+========================== */
+
+.consumption-comparison {
+
+    width: 100%;
+
+    display: flex;
+
+    flex-direction: row;
+
+    gap: 24px;
+
+    align-items: stretch;
+}
+
+.consumption-comparison > * {
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+@media (max-width: 900px) {
+
+    .analytics-container {
+
+        padding-left: var(--space-lg);
+
+        padding-right: var(--space-lg);
+    }
+
+    .consumption-comparison {
+
+        flex-direction: column;
+    }
+
+}
