@@ -39,8 +39,8 @@ function KpiGauge({
                     <RadialBarChart
                         cx="50%"
                         cy="80%"
-                        innerRadius="120%"
-                        outerRadius="150%"
+                        innerRadius="140%"
+                        outerRadius="170%"
                         startAngle={180}
                         endAngle={0}
                         barSize={10}

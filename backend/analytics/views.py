@@ -10,6 +10,10 @@ from rest_framework import status
 
 from rooms.models import Room
 from devices.models import Device, Measurement
+import requests
+
+
+
 
 
 class AnalyticsKPIAPIView(APIView):
@@ -428,16 +432,16 @@ class RoomDistributionAnalyticsAPIView(APIView):
         response_data = []
 
         colors = [
-            "#2563eb",
-            "#16a34a",
-            "#f59e0b",
-            "#7c3aed",
-            "#dc2626",
-            "#0891b2",
-            "#db2777",
-            "#65a30d",
-            "#ea580c",
-            "#4f46e5",
+            "var(--chart-blue)",
+            "var(--online-color)",
+            "var(--chart-orange)",
+            "var(--chart-purple)",
+            "var(--chart-red)",
+            "var(--secondary-dark)",
+            "var(--chart-pink)",
+            "var(--chart-lime)",
+            "var(--chart-deep-orange)",
+            "var(--chart-indigo)",
         ]
 
         for index, item in enumerate(data):
@@ -455,3 +459,164 @@ class RoomDistributionAnalyticsAPIView(APIView):
             "unit": unit,
             "data": response_data,
         })
+
+class EnvironmentAPIView(APIView):
+
+    def get(self, request):
+
+        latitude = 36.8065
+        longitude = 10.1815
+
+        try:
+            response = requests.get(
+                "https://api.open-meteo.com/v1/forecast",
+                params={
+                    "latitude": latitude,
+                    "longitude": longitude,
+
+                    "current": (
+                        "temperature_2m,"
+                        "relative_humidity_2m,"
+                        "apparent_temperature,"
+                        "weather_code,"
+                        "wind_speed_10m"
+                    ),
+
+                    "hourly": (
+                        "temperature_2m,"
+                        "weather_code"
+                    ),
+
+                    "forecast_hours": 6,
+
+                    "timezone": "Africa/Tunis",
+                },
+                timeout=10,
+            )
+
+            response.raise_for_status()
+
+            data = response.json()
+
+            current = data["current"]
+
+            weather_codes = {
+                0: "Clear",
+                1: "Mainly clear",
+                2: "Partly cloudy",
+                3: "Overcast",
+                45: "Fog",
+                48: "Rime fog",
+                51: "Light drizzle",
+                53: "Drizzle",
+                55: "Heavy drizzle",
+                61: "Light rain",
+                63: "Rain",
+                65: "Heavy rain",
+                71: "Light snow",
+                73: "Snow",
+                75: "Heavy snow",
+                80: "Rain showers",
+                81: "Rain showers",
+                82: "Heavy rain showers",
+                95: "Thunderstorm",
+                96: "Thunderstorm with hail",
+                99: "Thunderstorm with heavy hail",
+            }
+
+            # =================================
+            # Next 5 hours
+            # =================================
+
+            hourly = data.get("hourly", {})
+
+            hourly_times = hourly.get("time", [])
+            hourly_temperatures = hourly.get(
+                "temperature_2m",
+                []
+            )
+            hourly_codes = hourly.get(
+                "weather_code",
+                []
+            )
+
+            next_hours = []
+
+            for i in range(min(5, len(hourly_times))):
+
+                next_hours.append(
+                    {
+                        "time": hourly_times[i],
+                        "temperature": hourly_temperatures[i],
+                        "weather_code": hourly_codes[i],
+                        "condition": weather_codes.get(
+                            hourly_codes[i],
+                            "Unknown",
+                        ),
+                    }
+                )
+
+            return Response(
+                {
+                    "location": "Tunis",
+
+                    "temperature": current.get(
+                        "temperature_2m"
+                    ),
+
+                    "feels_like": current.get(
+                        "apparent_temperature"
+                    ),
+
+                    "humidity": current.get(
+                        "relative_humidity_2m"
+                    ),
+
+                    "condition": weather_codes.get(
+                        current.get("weather_code"),
+                        "Unknown",
+                    ),
+
+                    "wind": current.get(
+                        "wind_speed_10m"
+                    ),
+
+                    "updated_at": current.get("time"),
+
+                    "next_hours": next_hours,
+                },
+
+                status=status.HTTP_200_OK,
+            )
+
+        except requests.RequestException as error:
+
+            print(
+                "OPEN METEO ERROR:",
+                error
+            )
+
+            return Response(
+                {
+                    "detail": "Unable to retrieve weather data.",
+                    "error": str(error),
+                },
+
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+
+        except Exception as error:
+
+            print(
+                "ENVIRONMENT API ERROR:",
+                error
+            )
+
+            return Response(
+                {
+                    "detail": "Environment API error.",
+                    "error": str(error),
+                },
+
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )

@@ -1,18 +1,14 @@
 import KpiGauge from "../components/KpiGauge";
 
 function ActiveDevicesKpi({
-    devices = [],
+    data = {},
     active,
     onClick,
 }) {
-    const totalDevices = devices.length;
+    const totalDevices = data.total_devices || 0;
 
-    const activeDevices = devices.filter(
-        (device) =>
-            device.status === "on" ||
-            device.status === "ON" ||
-            device.status === "active"
-    ).length;
+    const activeDevices =
+        data.on_devices?.length || 0;
 
     return (
         <KpiGauge

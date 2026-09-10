@@ -20,3 +20,8 @@ export const updateDevice = async (id, device) => {
     const response = await api.put(`devices/${id}/`, device);
     return response.data;
 };
+
+export async function getOnDevices() {
+    const response = await api.get(`devices/on/`);
+    return response.data;
+}

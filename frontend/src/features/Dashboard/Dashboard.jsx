@@ -1,48 +1,42 @@
 import "./Dashboard.css";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import EnergyOverviewSection from "./sections/EnergyOverviewSection";
 import DeviceStatusSection from "./sections/DeviceStatusSection";
 import ActiveDevicesKpi from "./sections/ActiveDevicesKpi";
 import UnsolvedAlertsKpi from "./sections/UnsolvedAlertsKpi";
 import DashboardListSection from "./sections/DashboardListSection";
+import RoomDistributionSection from "./sections/RoomDistributionSection.jsx";
+import EnvironmentSection from "./sections/EnvironmentSection.jsx";
 
+import { getOnDevices } from "../../services/devices.js";
 
 
 function DashboardPage() {
 
-    const [selectedView, setSelectedView] =
-        useState("devices");
+    // ==========================
+    // Selected dashboard view
+    // ==========================
 
-    const devices = [
-        {
-            id: 1,
-            name: "AC Living Room",
-            status: "on",
-            room: "Living Room",
-        },
-        {
-            id: 2,
-            name: "AC Bedroom",
-            status: "off",
-            room: "Bedroom",
-        },
-        {
-            id: 3,
-            name: "AC Office",
-            status: "on",
-            room: "Office",
-        },
-        {
-            id: 4,
-            name: "AC Kitchen",
-            status: "on",
-            room: "Kitchen",
-        },
-    ];
+    const [selectedView, setSelectedView] = useState("devices");
 
-    const alerts = [
+
+    // ==========================
+    // Devices data
+    // ==========================
+
+    const [devicesData, setDevicesData] = useState({
+        total_devices: 0,
+        on_devices: [],
+    });
+
+
+    // ==========================
+    // Alerts
+    // ==========================
+
+    const [alerts] = useState([
         {
             id: 1,
             name: "High temperature",
@@ -61,35 +55,74 @@ function DashboardPage() {
             description: "Office",
             resolved: false,
         },
-    ];
+    ]);
+
+
+    // ==========================
+    // Load devices
+    // ==========================
+
+    useEffect(() => {
+
+        const loadDevices = async () => {
+
+            try {
+
+                const response = await getOnDevices();
+                console.log("ON devices response:", response);
+                setDevicesData(response);
+
+            } catch (error) {
+
+                console.error(
+                    "Error loading devices:",
+                    error
+                );
+
+            }
+
+        };
+
+        loadDevices();
+
+    }, []);
 
 
     return (
 
         <div className="dashboard">
 
-            <div className="div1">
+            <div className="active-devices-kpi">
+
                 <ActiveDevicesKpi
-                    devices={devices}
+                    data={devicesData}
                     active={selectedView === "devices"}
-                    onClick={() =>
-                        setSelectedView("devices")
-                    }
+                    onClick={() =>setSelectedView("devices")}
                 />
+
             </div>
 
-            <div className="div2">
+
+            <div className="unsolved-alerts-kpi">
+
                 <UnsolvedAlertsKpi
                     alerts={alerts}
-                    active={selectedView === "alerts"}
+                    active={
+                        selectedView === "alerts"
+                    }
                     onClick={() =>
                         setSelectedView("alerts")
                     }
                 />
+
             </div>
 
-            <div className="div3">
+            <div className="environment-section">
+
+                <EnvironmentSection />
+
             </div>
+
 
             <div className="energy-overview-section">
 
@@ -97,21 +130,28 @@ function DashboardPage() {
 
             </div>
 
+
             <div className="device-status-section">
 
                 <DeviceStatusSection />
-            
+
             </div>
 
-            <div className="div6">
+
+            <div className="room-distribution-percentage-section">
+
+                <RoomDistributionSection />
+
             </div>
 
-            <div className="div7">
+            <div className="dashboard-list-section">
+
                 <DashboardListSection
                     view={selectedView}
-                    devices={devices}
+                    data={devicesData}
                     alerts={alerts}
                 />
+
             </div>
 
         </div>

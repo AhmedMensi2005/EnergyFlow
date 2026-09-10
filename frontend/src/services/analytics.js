@@ -24,3 +24,8 @@ export async function getRoomDistributionAnalytics(period, metric) {
     const response = await api.get(`/analytics/room-distribution/?period=${period}&metric=${metric}`);
     return response.data;
 }
+
+export const getEnvironment = async () => {
+    const response = await api.get(`analytics/environment/`);
+    return response.data;
+};

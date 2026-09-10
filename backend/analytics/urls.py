@@ -9,4 +9,6 @@ urlpatterns = [
     path("analytics/top-rooms/",TopRoomsAnalyticsAPIView.as_view(),name="analytics-top-rooms",),
     path("analytics/top-devices/",TopDevicesAnalyticsAPIView.as_view(),name="analytics-top-devices",),
     path("analytics/room-distribution/",RoomDistributionAnalyticsAPIView.as_view(),name="analytics-room-distribution",),
+
+    path("analytics/environment/",EnvironmentAPIView.as_view(),name="environment",),
 ]

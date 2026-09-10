@@ -5,17 +5,20 @@ import { getRoomDistributionAnalytics } from "../../../services/analytics.js";
 
 import "./style.css";
 
-function RoomDistributionSection({ period, metric}) {
+function RoomDistributionSection({ period, metric }) {
 
     const [data, setData] = useState([]);
-    
+
     const loadRoomDistribution = async () => {
         try {
-            const response = await getRoomDistributionAnalytics(period,metric);
+            const response = await getRoomDistributionAnalytics(period, metric);
             setData(response.data || []);
         } catch (error) {
-            console.error("Error loading distribution analytics:",error);
-        } 
+            console.error(
+                "Error loading distribution analytics:",
+                error
+            );
+        }
     };
 
     useEffect(() => {
@@ -24,9 +27,9 @@ function RoomDistributionSection({ period, metric}) {
 
     return (
 
-        <section className="room-distribution-section">
+        <section className="analytics-room-distribution-section">
 
-            <div className="room-distribution-header">
+            <div className="analytics-room-distribution-header">
 
                 <div>
 
@@ -42,11 +45,9 @@ function RoomDistributionSection({ period, metric}) {
 
             </div>
 
-            <div className="room-distribution-chart">
+            <div className="analytics-room-distribution-chart">
 
-                <PieChart
-                    data={data}
-                />
+                <PieChart data={data} />
 
             </div>
 
@@ -54,5 +55,4 @@ function RoomDistributionSection({ period, metric}) {
 
     );
 }
-
-export default RoomDistributionSection;
+export default RoomDistributionSection

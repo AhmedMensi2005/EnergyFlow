@@ -21,7 +21,7 @@ function UnsolvedAlertsKpi({
             total={totalAlerts}
             active={active}
             onClick={onClick}
-            color="var(--error)"
+            color="var(--chart-blue)"
         />
     );
 }

@@ -1,11 +1,11 @@
-import AnalyticsFilters from "./components/chartFilter.jsx"
+import AnalyticsHeader from "./sections/AnalyticsHeader.jsx";
 import KPIsSection from "./sections/kpisSection.jsx";
 import ConsumptionSection from "./sections/consumptionSection.jsx";
 import RoomConsumptionSection from "./sections/roomConsumptionSection.jsx";
 import DeviceConsumptionSection from "./sections/deviceConsumptionSection.jsx";
 import RoomDistributionSection from "./sections/roomDistribution.jsx";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import "./AnalyticsStyle.css";
 
@@ -16,42 +16,41 @@ function Analytics() {
 
     return (
 
-         <div className="analytics-page">
+        <div className="analytics-page">
+            <AnalyticsHeader
+                    period={period}
+                    setPeriod={setPeriod}
+                    metric={metric}
+                    setMetric={setMetric}
+            />
 
-            {/* TOP FADE */}
             <div className="fade-top"></div>
 
-            {/* SCROLLABLE CONTENT */}
             <div className="analytics-container">
 
                 <KPIsSection
                     period={period}
                 />
 
-                <AnalyticsFilters
-                    period={period}
-                    setPeriod={setPeriod}
-                    metric={metric}
-                    setMetric={setMetric}
-                />
-
-                <ConsumptionSection 
+                <ConsumptionSection
                     period={period}
                     metric={metric}
                 />
 
                 <div className="consumption-comparison">
+
                     <RoomConsumptionSection
                         period={period}
                         metric={metric}
                     />
+
                     <DeviceConsumptionSection
                         period={period}
                         metric={metric}
                     />
+
                 </div>
 
-                {/* ROOM DISTRIBUTION */}
                 <RoomDistributionSection
                     period={period}
                     metric={metric}
@@ -59,14 +58,9 @@ function Analytics() {
 
             </div>
 
-                
-
-            {/* BOTTOM FADE */}
             <div className="fade-bottom"></div>
 
         </div>
-
-
     );
 }
 

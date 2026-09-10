@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import {
     ResponsiveContainer,
     AreaChart,
@@ -8,25 +10,85 @@ import {
     Tooltip,
 } from "recharts";
 
+import { getConsumptionAnalytics } from "../../../services/analytics";
+
 import "./style.css";
 
+
 function EnergyOverviewChart({
-    data = [],
+    period = "1y",
     metric = "energy",
 }) {
+    const [data, setData] = useState([]);
+
+    const [unit, setUnit] = useState(
+        metric === "energy" ? "kWh" : "kW"
+    );
+
+
+    useEffect(() => {
+        let isMounted = true;
+
+        const fetchAnalytics = async () => {
+            try {
+                const response =
+                    await getConsumptionAnalytics(
+                        period,
+                        metric
+                    );
+
+                if (!isMounted) {
+                    return;
+                }
+
+                setData(response.data || []);
+
+                setUnit(
+                    response.unit ||
+                    (metric === "energy"
+                        ? "kWh"
+                        : "kW")
+                );
+
+            } catch (error) {
+                console.error(
+                    "Failed to load consumption analytics:",
+                    error
+                );
+
+                if (isMounted) {
+                    setData([]);
+                }
+            }
+        };
+
+
+        fetchAnalytics();
+
+
+        return () => {
+            isMounted = false;
+        };
+
+    }, [period, metric]);
+
+
     const isEnergy = metric === "energy";
 
-    const unit = isEnergy ? "kWh" : "kW";
-    const label = isEnergy ? "Energy" : "Power";
+    const label = isEnergy
+        ? "Energy"
+        : "Power";
 
-    // Chart colors
+
     const chartColor = isEnergy
-        ? "#10b981"   // Energy - green
-        : "#8b5cf6";  // Power - purple
+        ? "var(--primary)"
+        : "var(--chart-blue)";
+
 
     const gradientId = isEnergy
         ? "energyGradient"
         : "powerGradient";
+
 
     return (
         <ResponsiveContainer
@@ -36,15 +98,14 @@ function EnergyOverviewChart({
             <AreaChart
                 data={data}
                 margin={{
-                    top: 0,
+                    top: 5,
                     right: 0,
-                    left: -25,
+                    left: -20,
                     bottom: -10,
                 }}
             >
 
                 <defs>
-
                     <linearGradient
                         id={gradientId}
                         x1="0"
@@ -52,11 +113,16 @@ function EnergyOverviewChart({
                         x2="0"
                         y2="1"
                     >
-
                         <stop
                             offset="0%"
                             stopColor={chartColor}
-                            stopOpacity={0.30}
+                            stopOpacity={0.32}
+                        />
+
+                        <stop
+                            offset="55%"
+                            stopColor={chartColor}
+                            stopOpacity={0.12}
                         />
 
                         <stop
@@ -64,78 +130,103 @@ function EnergyOverviewChart({
                             stopColor={chartColor}
                             stopOpacity={0}
                         />
-
                     </linearGradient>
-
                 </defs>
 
+
                 <CartesianGrid
-                    stroke="#e5e7eb"
+                    stroke="var(--border)"
                     strokeDasharray="4 4"
                     vertical={false}
+                    opacity={0.7}
                 />
 
+
                 <XAxis
-                    dataKey="month"
+                    dataKey="date"
                     axisLine={false}
                     tickLine={false}
                     tick={{
                         fontSize: 11,
-                        fill: "#64748b",
+                        fill: "var(--text-secondary)",
                     }}
                 />
+
 
                 <YAxis
                     axisLine={false}
                     tickLine={false}
                     tick={{
                         fontSize: 11,
-                        fill: "#64748b",
+                        fill: "var(--text-secondary)",
                     }}
                 />
 
+
                 <Tooltip
+                    cursor={{
+                        stroke: chartColor,
+                        strokeWidth: 1,
+                        strokeDasharray: "4 4",
+                        opacity: 0.5,
+                    }}
+
                     contentStyle={{
-                        background: "#ffffff",
-                        border: "none",
-                        borderRadius: "12px",
-                        boxShadow: "0 8px 20px rgba(0,0,0,.10)",
+                        background: "var(--card)",
+                        border: "1px solid var(--border)",
+                        borderRadius: "var(--radius-sm)",
+                        boxShadow: "var(--shadow-md)",
                         fontSize: "13px",
                     }}
+
                     formatter={(value) => [
-                        `${value} ${unit}`,
+                        `${Number(value).toFixed(2)} ${unit}`,
                         label,
                     ]}
                 />
 
+
                 <Area
-                    key={metric}
-                    animationId={metric}
-                    isAnimationActive={true}
-                    animationDuration={700}
-                    animationEasing="ease-in-out"
+                    key={`${period}-${metric}`}
 
                     type="monotone"
-                    dataKey={metric}
+
+                    dataKey="value"
 
                     stroke={chartColor}
+
                     strokeWidth={3}
 
+                    strokeLinecap="round"
+
+                    strokeLinejoin="round"
+
                     fill={`url(#${gradientId})`}
+
+                    fillOpacity={1}
 
                     dot={false}
 
                     activeDot={{
                         r: 5,
                         fill: chartColor,
-                        stroke: "#ffffff",
+                        stroke: "var(--text-white)",
                         strokeWidth: 2,
                     }}
+
+                    isAnimationActive={true}
+
+                    animationBegin={100}
+
+                    animationDuration={1400}
+
+                    animationEasing="ease-out"
                 />
 
             </AreaChart>
         </ResponsiveContainer>
     );
 }
+
 
 export default EnergyOverviewChart;

@@ -43,7 +43,7 @@
     align-items: center;
 
     font-size: 20px;
-    background: var(--primary-dark-transparent);
+    background: var(--gradient-primary);
 }
 
 
@@ -62,8 +62,8 @@
 .kpi-title {
 
     display: block;
-    color: var(--text-secondary);
-    font-size: 11px;
+    color: var(--text-primary);
+    font-size: 20px;
     font-weight: 600;
     margin-bottom: 5px;
 

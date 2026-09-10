@@ -143,23 +143,6 @@ function AlertsHeatmap({ data = [], selectedMonth }) {
         </div>
       </div>
 
-      {/* Legend */}
-      <div className="heatmap-legend">
-        <span>Less</span>
-
-        {[0, 1, 2, 3, 4].map((level) => (
-          <span
-            key={level}
-            className="legend-cell"
-            style={{
-              backgroundColor:
-                ALERT_COLORS[level],
-            }}
-          />
-        ))}
-
-        <span>More</span>
-      </div>
 
     </div>
   );

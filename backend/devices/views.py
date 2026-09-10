@@ -358,4 +358,22 @@ class ImportDevicesAPIView(APIView):
             "message": "Import completed."
         })
 
-    
+class OnDevicesAPIView(APIView):
+
+    def get(self, request):
+
+        devices = Device.objects.all()
+
+        on_devices = devices.filter(
+            last_operating_state__iexact="on"
+        )
+
+        serializer = DeviceSerializer(
+            on_devices,
+            many=True
+        )
+
+        return Response({
+            "total_devices": devices.count(),
+            "on_devices": serializer.data,
+        }, status=status.HTTP_200_OK)

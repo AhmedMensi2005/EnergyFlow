@@ -2,23 +2,13 @@ import "./style.css";
 
 function DashboardListSection({
     view,
-    devices = [],
+    data = {},
     alerts = [],
 }) {
-    // ==========================
-    // Active devices
-    // ==========================
+    
 
-    const activeDevices = devices.filter(
-        (device) =>
-            device.status === "on" ||
-            device.status === "ON" ||
-            device.status === "active"
-    );
+    const activeDevices = data.on_devices || [];
 
-    // ==========================
-    // Unsolved alerts
-    // ==========================
 
     const unsolvedAlerts = alerts.filter(
         (alert) =>
@@ -33,9 +23,6 @@ function DashboardListSection({
         ? activeDevices
         : unsolvedAlerts;
 
-    // ==========================
-    // Header
-    // ==========================
 
     const title = isDevicesView
         ? "Active Devices"
@@ -49,9 +36,6 @@ function DashboardListSection({
               unsolvedAlerts.length === 1 ? "alert" : "alerts"
           } require attention`;
 
-    // ==========================
-    // Empty state
-    // ==========================
 
     const emptyMessage = isDevicesView
         ? "No active devices"
@@ -73,7 +57,6 @@ function DashboardListSection({
                 </div>
 
             </div>
-
 
             {/* ==========================
                 List
@@ -98,7 +81,9 @@ function DashboardListSection({
 
                         const secondary =
                             isDevicesView
-                                ? item.room ||
+                                ? item.room_name ||
+                                  item.room?.name ||
+                                  item.room ||
                                   item.location ||
                                   "No room"
                                 : item.description ||
@@ -126,7 +111,6 @@ function DashboardListSection({
                                     }`}
                                 />
 
-
                                 {/* ==========================
                                     Information
                                 ========================== */}
@@ -142,9 +126,6 @@ function DashboardListSection({
                                     </span>
 
                                 </div>
-
-
-                      
 
                             </div>
                         );

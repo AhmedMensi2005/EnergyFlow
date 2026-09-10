@@ -4,7 +4,8 @@ from .views import *
 urlpatterns = [
     path("devices/", DeviceListAPIView.as_view(), name="device-list"),
     path("devices/<int:id>/", DeviceDetailAPIView.as_view(), name="device-detail"),
-    
+    path("devices/on/",OnDevicesAPIView.as_view(),name="on-devices"),
+
     path("measurements/", MeasuremenstListAPIView.as_view(), name="measurement-detail"),
     path("measurements/<int:id>/", MeasurmentDetailAPIView.as_view(), name="measurement-detail"),
 
