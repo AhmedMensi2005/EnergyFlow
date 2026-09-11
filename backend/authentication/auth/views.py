@@ -97,8 +97,7 @@ class ForgotPasswordView(APIView):
         )
 
         reset_link = (
-            f"{os.getenv('FRONTEND_URL')}"
-            f"/reset-password/{uid}/{token}"
+            f"{os.getenv('FRONTEND_URL')}/reset-password/{uid}/{token}"
         )
 
         html = render_to_string(
