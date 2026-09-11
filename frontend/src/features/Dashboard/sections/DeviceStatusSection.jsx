@@ -1,12 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
 import {
     FiChevronLeft,
     FiChevronRight,
 } from "react-icons/fi";
+
 import AlertsHeatmap from "../components/AlertsHeatmap";
+import { getAlertHeatmap } from "../../../services/alertService";
+
 import "./style.css";
 
+
 function DeviceStatusSection() {
+
     const today = new Date();
 
     const [selectedMonth, setSelectedMonth] = useState(
@@ -15,26 +21,45 @@ function DeviceStatusSection() {
         ).padStart(2, "0")}`
     );
 
-    const alertData = [
-        { date: "2026-05-03", level: 1 },
-        { date: "2026-05-05", level: 2 },
-        { date: "2026-05-12", level: 3 },
-        { date: "2026-05-21", level: 4 },
+    const [alertData, setAlertData] = useState([]);
 
-        { date: "2026-06-07", level: 3 },
-        { date: "2026-06-21", level: 4 },
 
-        { date: "2026-07-15", level: 2 },
-        { date: "2026-07-19", level: 1 },
+    // Load real alerts for selected month
+    useEffect(() => {
 
-        { date: "2026-08-03", level: 3 },
-        { date: "2026-08-12", level: 4 },
-    ];
+        const loadAlerts = async () => {
+
+            try {
+
+                const response = await getAlertHeatmap(
+                    selectedMonth
+                );
+
+                setAlertData(response.data || []);
+
+            } catch (error) {
+
+                console.error(
+                    "Error loading alert heatmap:",
+                    error
+                );
+
+                setAlertData([]);
+
+            }
+
+        };
+
+        loadAlerts();
+
+    }, [selectedMonth]);
+
 
     // Calculate the 5 available months
     const monthOptions = [];
 
     for (let i = 4; i >= 0; i--) {
+
         const date = new Date(
             today.getFullYear(),
             today.getMonth() - i,
@@ -48,33 +73,45 @@ function DeviceStatusSection() {
         monthOptions.push(value);
     }
 
-    const currentIndex = monthOptions.indexOf(
-        selectedMonth
-    );
 
-    const canGoPrevious = currentIndex > 0;
+    const currentIndex =
+        monthOptions.indexOf(selectedMonth);
+
+    const canGoPrevious =
+        currentIndex > 0;
+
     const canGoNext =
         currentIndex < monthOptions.length - 1;
 
+
     const changeMonth = (direction) => {
-        const newIndex = currentIndex + direction;
+
+        const newIndex =
+            currentIndex + direction;
 
         if (
             newIndex >= 0 &&
             newIndex < monthOptions.length
         ) {
-            setSelectedMonth(monthOptions[newIndex]);
+            setSelectedMonth(
+                monthOptions[newIndex]
+            );
         }
     };
 
+
+    const [year, month] =
+        selectedMonth.split("-").map(Number);
+
     const currentMonth = new Date(
-        Number(selectedMonth.split("-")[0]),
-        Number(selectedMonth.split("-")[1]) - 1,
+        year,
+        month - 1,
         1
     ).toLocaleString("en-US", {
         month: "long",
         year: "numeric",
     });
+
 
     return (
         <section className="device-status">
@@ -85,7 +122,6 @@ function DeviceStatusSection() {
                     <h2>Alerts</h2>
                 </div>
 
-                {/* Month navigation */}
                 <div className="month-navigation">
 
                     <button
@@ -115,10 +151,12 @@ function DeviceStatusSection() {
             </div>
 
             <div className="device-status-chart">
+
                 <AlertsHeatmap
                     data={alertData}
                     selectedMonth={selectedMonth}
                 />
+
             </div>
 
         </section>

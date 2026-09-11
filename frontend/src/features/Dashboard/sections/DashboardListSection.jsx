@@ -10,12 +10,7 @@ function DashboardListSection({
     const activeDevices = data.on_devices || [];
 
 
-    const unsolvedAlerts = alerts.filter(
-        (alert) =>
-            alert.resolved === false ||
-            alert.is_resolved === false ||
-            alert.status === "unsolved"
-    );
+    const unsolvedAlerts = alerts.unsolved_alerts || [];
 
     const isDevicesView = view === "devices";
 
@@ -82,13 +77,11 @@ function DashboardListSection({
                         const secondary =
                             isDevicesView
                                 ? item.room_name ||
-                                  item.room?.name ||
-                                  item.room ||
-                                  item.location ||
-                                  "No room"
-                                : item.description ||
-                                  item.message ||
-                                  "Alert";
+                                "No room"
+                                : item.device_name ||
+                                item.room_name ||
+                                item.message ||
+                                "Alert";
 
                         return (
                             <div

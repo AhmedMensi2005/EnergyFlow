@@ -11,6 +11,7 @@ import RoomDistributionSection from "./sections/RoomDistributionSection.jsx";
 import EnvironmentSection from "./sections/EnvironmentSection.jsx";
 
 import { getOnDevices } from "../../services/devices.js";
+import { getUnsolvedAlerts } from "../../services/alertService";
 
 
 function DashboardPage() {
@@ -36,26 +37,10 @@ function DashboardPage() {
     // Alerts
     // ==========================
 
-    const [alerts] = useState([
-        {
-            id: 1,
-            name: "High temperature",
-            description: "Living Room",
-            resolved: false,
-        },
-        {
-            id: 2,
-            name: "High power",
-            description: "Bedroom",
-            resolved: true,
-        },
-        {
-            id: 3,
-            name: "Device offline",
-            description: "Office",
-            resolved: false,
-        },
-    ]);
+    const [alertsData, setAlertsData] = useState({
+        total_alerts: 0,
+        unsolved_alerts: [],
+    });
 
 
     // ==========================
@@ -87,6 +72,33 @@ function DashboardPage() {
 
     }, []);
 
+    useEffect(() => {
+
+        const loadAlerts = async () => {
+
+            try {
+
+                const response = await getUnsolvedAlerts();
+
+                console.log("UNSOLVED alerts response:", response);
+
+                setAlertsData(response);
+
+            } catch (error) {
+
+                console.error(
+                    "Error loading alerts:",
+                    error
+                );
+
+            }
+
+        };
+
+        loadAlerts();
+
+    }, []);
+
 
     return (
 
@@ -106,10 +118,8 @@ function DashboardPage() {
             <div className="unsolved-alerts-kpi">
 
                 <UnsolvedAlertsKpi
-                    alerts={alerts}
-                    active={
-                        selectedView === "alerts"
-                    }
+                    alerts={alertsData}
+                    active={selectedView === "alerts"}
                     onClick={() =>
                         setSelectedView("alerts")
                     }
@@ -149,7 +159,7 @@ function DashboardPage() {
                 <DashboardListSection
                     view={selectedView}
                     data={devicesData}
-                    alerts={alerts}
+                    alerts={alertsData}
                 />
 
             </div>

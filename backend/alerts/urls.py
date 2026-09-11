@@ -6,6 +6,8 @@ from .views import (
     AlertUpdateView,
     AlertRuleListCreateView,
     AlertRuleDetailView,
+    AlertHeatmapView,
+    UnsolvedAlertsAPIView,
 )
 
 
@@ -25,6 +27,18 @@ urlpatterns = [
         "<int:pk>/",
         AlertDetailView.as_view(),
         name="alert-detail"
+    ),
+
+    path(
+        "heatmap/",
+        AlertHeatmapView.as_view(),
+        name="alert-heatmap"
+    ),
+
+    path(
+        "unsolved/",
+        UnsolvedAlertsAPIView.as_view(),
+        name="unsolved-alerts"
     ),
 
     path(

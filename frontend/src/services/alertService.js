@@ -61,3 +61,25 @@ export const updateAlertRule = async (id, data) => {
 export const deleteAlertRule = async (id) => {
     await api.delete(`/alerts/rules/${id}/`);
 };
+
+
+export const getAlertHeatmap = async (month) => {
+    const response = await api.get(`/alerts/heatmap/`, {
+        params: {
+            month,
+        },
+    });
+
+    return response.data;
+};
+
+
+export const getUnsolvedAlerts = async (month) => {
+    const response = await api.get(`/alerts/unsolved/`, {
+        params: {
+            month,
+        },
+    });
+
+    return response.data;
+};

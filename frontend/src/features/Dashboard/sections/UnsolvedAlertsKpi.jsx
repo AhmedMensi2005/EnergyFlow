@@ -1,18 +1,16 @@
 import KpiGauge from "../components/KpiGauge";
 
 function UnsolvedAlertsKpi({
-    alerts = [],
+    alerts = {},
     active,
     onClick,
 }) {
-    const totalAlerts = alerts.length;
 
-    const unsolvedAlerts = alerts.filter(
-        (alert) =>
-            alert.resolved === false ||
-            alert.is_resolved === false ||
-            alert.status === "unsolved"
-    ).length;
+    const totalAlerts =
+        alerts.total_alerts || 0;
+
+    const unsolvedAlerts =
+        alerts.unsolved_alerts?.length || 0;
 
     return (
         <KpiGauge
