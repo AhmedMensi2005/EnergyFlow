@@ -91,3 +91,13 @@
     z-index:20;
 
 }
+
+
+.monitoring-loading {
+    width: 100%;
+    min-height: 300px;
+    margin-top: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

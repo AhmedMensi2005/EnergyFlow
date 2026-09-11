@@ -4,59 +4,73 @@ import { useState, useEffect } from "react";
 import { getDevices, updateDevice } from "../../services/devices";
 import { getLatestMeasurements } from "../../services/measurements";
 
-import DeviceFormModal from "./components/deviceModal"; 
+import DeviceFormModal from "./components/deviceModal";
 import DevicesHeader from "./components/header";
 import DeviceItem from "./components/listItem";
+import LoadingSpinner from "../../shared/LoadingSpinner/LoadingSpinner";
+
 
 function Devices() {
-    //loading
+    // loading
     const [loading, setLoading] = useState(true);
-    
-    //search
+
+    // search
     const [search, setSearch] = useState("");
 
-    //sort
+    // sort
     const [sort, setSort] = useState("name");
     const [sortSens, setSortSens] = useState("Ascendent");
 
-    //status menue
+    // status menu
     const [openedStatus, setOpenedStatus] = useState(null);
-    //data
+
+    // data
     const [devices, setDevices] = useState([]);
-    //edit modal
+
+    // edit modal
     const [showModal, setShowModal] = useState(false);
     const [selectedDevice, setSelectedDevice] = useState();
 
+
     const loadData = async () => {
+        setLoading(true);
+
         try {
             const ordering =
                 sortSens === "Ascendent"
                     ? sort
                     : `-${sort}`;
 
-            const devicesData = await getDevices({search, ordering,});
+            const devicesData = await getDevices({
+                search,
+                ordering,
+            });
+
             const measurementsData = await getLatestMeasurements();
-            const mergedDevices = devicesData.map(device => ({
+
+            const mergedDevices = devicesData.map((device) => ({
                 ...device,
                 measurement:
                     measurementsData.find(
-                        m => m.device === device.id
+                        (m) => m.device === device.id
                     ) || {},
             }));
+
             setDevices(mergedDevices);
 
         } catch (error) {
             console.error(error);
+
         } finally {
             setLoading(false);
         }
     };
 
 
-
     useEffect(() => {
         loadData();
     }, [search, sort, sortSens]);
+
 
     const updateStatus = async (device, status) => {
         try {
@@ -75,58 +89,63 @@ function Devices() {
                 last_seen_at: device.last_seen_at,
                 last_operating_state: device.last_operating_state,
             });
+
             setDevices((prev) =>
                 prev.map((d) =>
                     d.id === device.id
                         ? { ...d, status }
                         : d
                 )
-            )
+            );
+
         } catch (error) {
             console.error(error);
         }
     };
 
-    if (loading) {
-        return <div>Loading devices...</div>;
-    }
-    console.log(devices);
 
     return (
         <div className="devices-page">
-            <DevicesHeader
 
+            <DevicesHeader
                 search={search}
                 setSearch={setSearch}
-
                 sort={sort}
                 setSort={setSort}
-
                 sortSens={sortSens}
                 setSortSens={setSortSens}
-
             />
-            <div className="devices-list-container">
-                <div className="devices-list">
-                    {devices.map((device) => (
 
-                        <DeviceItem
-                            key={device.id}
-                            device={device}
-                            onEdit={(device) =>{
-                                setSelectedDevice(device);
-                                setShowModal(true);
-                            }}
-                            openedStatus={openedStatus}
-                            setOpenedStatus={setOpenedStatus}
-                            updateStatus={updateStatus}
-
-                        />
-
-                    ))}
-
+            {/* Only the content below the header loads */}
+            {loading ? (
+                <div className="devices-loading">
+                    <LoadingSpinner text="Loading devices..." />
                 </div>
-            </div>
+            ) : (
+                <div className="devices-list-container">
+                    <div className="devices-list">
+
+                        {devices.map((device) => (
+                            <DeviceItem
+                                key={device.id}
+                                device={device}
+
+                                onEdit={(device) => {
+                                    setSelectedDevice(device);
+                                    setShowModal(true);
+                                }}
+
+                                openedStatus={openedStatus}
+                                setOpenedStatus={setOpenedStatus}
+                                updateStatus={updateStatus}
+                            />
+                        ))}
+
+                    </div>
+                </div>
+            )}
+
+
             {showModal && (
                 <DeviceFormModal
                     device={selectedDevice}
@@ -134,8 +153,8 @@ function Devices() {
                     onSaved={loadData}
                 />
             )}
-        </div>
 
+        </div>
     );
 }
 

@@ -68,3 +68,13 @@
     gap:2%;
 
 }
+
+.devices-loading {
+    width: 100%;
+    min-height: 200px;
+
+    margin-bottom: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

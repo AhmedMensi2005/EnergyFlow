@@ -2,8 +2,10 @@ export default function SidebarHeader({title = "EnergyFlow",subTitle ,logo}) {
   return (
     <div className="sidebar-header">
       <div className="logo-icon">
-        ⚡︎
-      </div>
+                {logo ? (
+                    <img src={logo} alt="EnergyFlow logo" />
+                ) : ("⚡︎")}
+            </div>
 
       <div className="sidebar-header-text">
         <h2>{title}</h2>

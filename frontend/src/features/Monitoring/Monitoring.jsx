@@ -1,44 +1,59 @@
 import { useEffect, useState } from "react";
 
 import DeviceCard from "./components/DeviceCard";
+import LoadingSpinner from "../../shared/LoadingSpinner/LoadingSpinner";
+
 import "./Monitoring.css";
 
 import { getDevices } from "../../services/devices";
-import { getLatestMeasurements, getDeviceChart } from "../../services/measurements";
+import {
+    getLatestMeasurements,
+    getDeviceChart,
+} from "../../services/measurements";
+
 
 export default function Monitoring() {
 
     const [devices, setDevices] = useState([]);
+    const [loading, setLoading] = useState(true);
 
 
     const loadData = async () => {
-      try {
-        const devicesData = await getDevices();
-        const measurementsData = await getLatestMeasurements();
-        const mergedDevices = await Promise.all(
-            devicesData.map(async (device) => {
+        setLoading(true);
 
-                const measurement =
-                    measurementsData.find(
-                        (m) => m.device === device.id
-                    ) || {};
+        try {
+            const devicesData = await getDevices();
+            const measurementsData = await getLatestMeasurements();
 
-                const chart = await getDeviceChart(device.id);
+            const mergedDevices = await Promise.all(
+                devicesData.map(async (device) => {
 
-                return {
-                    ...device,
-                    measurement,
-                    chart,
-                };
-            })
-        );
+                    const measurement =
+                        measurementsData.find(
+                            (m) => m.device === device.id
+                        ) || {};
 
-        setDevices(mergedDevices);
+                    const chart = await getDeviceChart(device.id);
 
-      } catch (error) {
-          console.error("Error loading monitoring data:", error);
-      }
+                    return {
+                        ...device,
+                        measurement,
+                        chart,
+                    };
+                })
+            );
 
+            setDevices(mergedDevices);
+
+        } catch (error) {
+            console.error(
+                "Error loading monitoring data:",
+                error
+            );
+
+        } finally {
+            setLoading(false);
+        }
     };
 
 
@@ -46,31 +61,33 @@ export default function Monitoring() {
         loadData();
     }, []);
 
-    return (
 
+    return (
         <div className="monitoring-page">
 
             <div className="fade-top"></div>
 
-            <div className="devices-container-cards">
+            {loading ? (
+                <div className="monitoring-loading">
+                    <LoadingSpinner text="Loading monitoring data..." />
+                </div>
+            ) : (
+                <div className="devices-container-cards">
 
-                {devices.map((device) => (
+                    {devices.map((device) => (
+                        <DeviceCard
+                            key={device.id}
+                            device={device}
+                            measurement={device.measurement}
+                            chartData={device.chart}
+                        />
+                    ))}
 
-                    <DeviceCard
-                        key={device.id}
-                        device={device}
-                        measurement={device.measurement}
-                        chartData={device.chart}
-                    />
-
-                ))}
-
-            </div>
+                </div>
+            )}
 
             <div className="fade-bottom"></div>
 
         </div>
-
     );
-
 }
