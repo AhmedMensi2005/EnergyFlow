@@ -32,7 +32,7 @@ function RoomAddDevicesModal({ room, onClose, onSaved }) {
     // Devices currently assigned to this room
     const roomDevices = devices.filter(device => device.room === room.id);
     // Devices that belong to another room OR no room
-    const availableDevices = devices.filter(device => device.room !== room.id);
+    const availableDevices = devices.filter(device => device.room == null);
 
     async function addDevice(device) {
         try {
